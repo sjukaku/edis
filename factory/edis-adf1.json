@@ -1,0 +1,9 @@
+{
+	"name": "edis-adf1",
+	"location": "northcentralus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "425666f4-d5fd-414d-98d6-e93ae4d9055e",
+		"tenantId": "52396626-9694-4c25-b1ae-f526c756cc35"
+	}
+}
