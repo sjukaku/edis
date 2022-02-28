@@ -1,0 +1,9 @@
+{
+	"name": "edis-adf",
+	"location": "westus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "26b5fdb8-1999-48c5-8a59-f6fdbad89264",
+		"tenantId": "52396626-9694-4c25-b1ae-f526c756cc35"
+	}
+}
