@@ -1,0 +1,10 @@
+{
+	"name": "odsCorporateFinance",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://hiakeys.vault.azure.net/"
+		}
+	}
+}
