@@ -1,0 +1,568 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "edis-adf1"
+		},
+		"HttpSharepointCSV_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'HttpSharepointCSV'"
+		},
+		"Http_Sharepoint_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Http_Sharepoint'"
+		},
+		"PostgreSql1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'PostgreSql1'"
+		},
+		"Sharepoint_Odata_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Sharepoint_Odata'"
+		},
+		"edisdatalake_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'edisdatalake'"
+		},
+		"ods_corporate_finance_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ods_corporate_finance'"
+		},
+		"HttpSharepointCSV_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "@{linkedService().url}"
+		},
+		"HttpSharepointCSV_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sjukaku"
+		},
+		"Http_Sharepoint_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "@{linkedService().Baseurl}"
+		},
+		"Http_Sharepoint_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sjukaku"
+		},
+		"Salesforce1_properties_typeProperties_environmentUrl": {
+			"type": "string",
+			"defaultValue": "https://login.salesforce.com"
+		},
+		"Salesforce1_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "hia@hcg.com.prod"
+		},
+		"Sharepoint_Odata_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://huroncg.sharepoint.com/sites/"
+		},
+		"Sharepoint_Odata_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sjukaku"
+		},
+		"hiakeys_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://hiakeys.vault.azure.net/"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/ods_corporate_finance_full_load')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Load all facts and dimensions from ods_corporate_finance db to edis-gold container by creating appropriate directories",
+				"activities": [
+					{
+						"name": "load_each_table",
+						"description": "Load each table from ODS_corporate_finance db to edis-gold container. degree of parallelism is set to 10 and file name is a utc timestamp.",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "retrieve_table_list",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('retrieve_table_list').output.value",
+								"type": "Expression"
+							},
+							"batchCount": 10,
+							"activities": [
+								{
+									"name": "Copy given table data from ods to edis-gold",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "PostgreSqlSource"
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobStorageWriteSettings"
+											},
+											"formatSettings": {
+												"type": "ParquetWriteSettings"
+											}
+										},
+										"enableStaging": false,
+										"parallelCopies": 10,
+										"validateDataConsistency": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "postgres_ods_corporate_finance",
+											"type": "DatasetReference",
+											"parameters": {
+												"TableName": {
+													"value": "@item().table_name",
+													"type": "Expression"
+												},
+												"Schema": "public"
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "sink_edisdatalake",
+											"type": "DatasetReference",
+											"parameters": {
+												"FileName": {
+													"value": "@item().table_name",
+													"type": "Expression"
+												},
+												"ContainerName": "edis-gold",
+												"Directory": "ods_corporate_finance"
+											}
+										}
+									]
+								}
+							]
+						}
+					},
+					{
+						"name": "retrieve_table_list",
+						"description": "Lookup and retrieve table list from ods_corporate_finance db",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "PostgreSqlSource",
+								"query": "SELECT table_name  FROM information_schema.tables\n                      WHERE table_schema='public' \n                      and (table_name like 'fact%' or table_name like 'dim%')\n                      and table_name  not like '%_bak_%'\n                      and table_name  not like '%_daily%'\n                      and table_name  not like '%_weekly%'\n                      and table_name  not like '%_monthly%'\n                      and table_name  not like '%_history%'"
+							},
+							"dataset": {
+								"referenceName": "postgres_ods_corporate_finance",
+								"type": "DatasetReference",
+								"parameters": {
+									"TableName": "na",
+									"Schema": "Public"
+								}
+							},
+							"firstRowOnly": false
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/postgres_ods_corporate_finance')]",
+				"[concat(variables('factoryId'), '/datasets/sink_edisdatalake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/postgres_ods_corporate_finance')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ods_corporate_finance",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"TableName": {
+						"type": "string",
+						"defaultValue": "table"
+					},
+					"Schema": {
+						"type": "string",
+						"defaultValue": "public"
+					}
+				},
+				"annotations": [],
+				"type": "PostgreSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().Schema",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().TableName",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ods_corporate_finance')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sink_edisdatalake')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "edisdatalake",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"FileName": {
+						"type": "string"
+					},
+					"ContainerName": {
+						"type": "string",
+						"defaultValue": "edis-gold"
+					},
+					"Directory": {
+						"type": "string",
+						"defaultValue": "ods_corporate_finance"
+					}
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@utcnow()",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@concat(dataset().Directory, '/',dataset().FileName)",
+							"type": "Expression"
+						},
+						"container": {
+							"value": "@dataset().ContainerName",
+							"type": "Expression"
+						}
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/edisdatalake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HttpSharepointCSV')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"parameters": {
+					"url": {
+						"type": "string",
+						"defaultValue": "https://huroncg.sharepoint.com/:x:/s/HuronOperationalReporting/ERPcKQla1sZBkyR5tUqnNBgBOIbZb49WUKf7GNkLZC0xeg?e=2kVThy"
+					}
+				},
+				"annotations": [],
+				"type": "HttpServer",
+				"typeProperties": {
+					"url": "[parameters('HttpSharepointCSV_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Windows",
+					"userName": "[parameters('HttpSharepointCSV_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('HttpSharepointCSV_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Http_Sharepoint')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"parameters": {
+					"Baseurl": {
+						"type": "string",
+						"defaultValue": "https://huroncg.sharepoint.com/sites/HuronOperationalReporting/Shared%20Documents/"
+					}
+				},
+				"annotations": [],
+				"type": "HttpServer",
+				"typeProperties": {
+					"url": "[parameters('Http_Sharepoint_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Windows",
+					"userName": "[parameters('Http_Sharepoint_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('Http_Sharepoint_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PostgreSql1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "PostgreSql",
+				"typeProperties": {
+					"connectionString": "[parameters('PostgreSql1_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime2",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Salesforce1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "Salesforce",
+				"typeProperties": {
+					"environmentUrl": "[parameters('Salesforce1_properties_typeProperties_environmentUrl')]",
+					"username": "[parameters('Salesforce1_properties_typeProperties_username')]",
+					"password": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "hiakeys",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "sf-hia-password"
+					},
+					"securityToken": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "hiakeys",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "sf-hia-token"
+					},
+					"apiVersion": "53.0"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/hiakeys')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Sharepoint_Odata')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "OData",
+				"typeProperties": {
+					"url": "[parameters('Sharepoint_Odata_properties_typeProperties_url')]",
+					"authenticationType": "Windows",
+					"userName": "[parameters('Sharepoint_Odata_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('Sharepoint_Odata_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/edisdatalake')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('edisdatalake_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/hiakeys')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('hiakeys_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ods_corporate_finance')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "PostgreSql",
+				"typeProperties": {
+					"connectionString": "[parameters('ods_corporate_finance_connectionString')]",
+					"password": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "hiakeys",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "ods-corporate-finance-powerbi-key"
+					}
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime2",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime2')]",
+				"[concat(variables('factoryId'), '/linkedServices/hiakeys')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trigger1')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "ods_corporate_finance_full_load",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2022-03-02T19:00:00",
+						"timeZone": "India Standard Time",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								6
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/ods_corporate_finance_full_load')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/integrationRuntime2')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/corporate_finance_insight_zone_system_powerbi')]",
+			"type": "Microsoft.DataFactory/factories/credentials",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "ServicePrincipal",
+				"typeProperties": {
+					"tenant": "52396626-9694-4c25-b1ae-f526c756cc35",
+					"servicePrincipalId": "corporate_finance_insight_zone_system_powerbi",
+					"servicePrincipalKey": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "hiakeys",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "ods-corporate-finance-powerbi-key"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/hiakeys')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/credential1')]",
+			"type": "Microsoft.DataFactory/factories/credentials",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "ServicePrincipal",
+				"typeProperties": {
+					"tenant": "52396626-9694-4c25-b1ae-f526c756cc35",
+					"servicePrincipalId": "hia@hcg.com.prod",
+					"servicePrincipalKey": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "hiakeys",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "sf-hia-password"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/hiakeys')]"
+			]
+		}
+	]
+}

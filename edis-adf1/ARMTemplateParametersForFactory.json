@@ -1,0 +1,54 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "edis-adf1"
+		},
+		"HttpSharepointCSV_password": {
+			"value": ""
+		},
+		"Http_Sharepoint_password": {
+			"value": ""
+		},
+		"PostgreSql1_connectionString": {
+			"value": ""
+		},
+		"Sharepoint_Odata_password": {
+			"value": ""
+		},
+		"edisdatalake_connectionString": {
+			"value": ""
+		},
+		"ods_corporate_finance_connectionString": {
+			"value": ""
+		},
+		"HttpSharepointCSV_properties_typeProperties_url": {
+			"value": "@{linkedService().url}"
+		},
+		"HttpSharepointCSV_properties_typeProperties_userName": {
+			"value": "sjukaku"
+		},
+		"Http_Sharepoint_properties_typeProperties_url": {
+			"value": "@{linkedService().Baseurl}"
+		},
+		"Http_Sharepoint_properties_typeProperties_userName": {
+			"value": "sjukaku"
+		},
+		"Salesforce1_properties_typeProperties_environmentUrl": {
+			"value": "https://login.salesforce.com"
+		},
+		"Salesforce1_properties_typeProperties_username": {
+			"value": "hia@hcg.com.prod"
+		},
+		"Sharepoint_Odata_properties_typeProperties_url": {
+			"value": "https://huroncg.sharepoint.com/sites/"
+		},
+		"Sharepoint_Odata_properties_typeProperties_userName": {
+			"value": "sjukaku"
+		},
+		"hiakeys_properties_typeProperties_baseUrl": {
+			"value": "https://hiakeys.vault.azure.net/"
+		}
+	}
+}

@@ -1,0 +1,147 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "edis-adf1"
+		},
+		"HttpSharepointCSV_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'HttpSharepointCSV'"
+		},
+		"Http_Sharepoint_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Http_Sharepoint'"
+		},
+		"PostgreSql1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'PostgreSql1'"
+		},
+		"Sharepoint_Odata_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Sharepoint_Odata'"
+		},
+		"edisdatalake_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'edisdatalake'"
+		},
+		"ods_corporate_finance_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ods_corporate_finance'"
+		},
+		"HttpSharepointCSV_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "@{linkedService().url}"
+		},
+		"HttpSharepointCSV_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sjukaku"
+		},
+		"Http_Sharepoint_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "@{linkedService().Baseurl}"
+		},
+		"Http_Sharepoint_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sjukaku"
+		},
+		"Salesforce1_properties_typeProperties_environmentUrl": {
+			"type": "string",
+			"defaultValue": "https://login.salesforce.com"
+		},
+		"Salesforce1_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "hia@hcg.com.prod"
+		},
+		"Sharepoint_Odata_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://huroncg.sharepoint.com/sites/"
+		},
+		"Sharepoint_Odata_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sjukaku"
+		},
+		"hiakeys_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://hiakeys.vault.azure.net/"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "edis-adf1_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"HttpSharepointCSV_password": {
+						"value": "[parameters('HttpSharepointCSV_password')]"
+					},
+					"Http_Sharepoint_password": {
+						"value": "[parameters('Http_Sharepoint_password')]"
+					},
+					"Sharepoint_Odata_password": {
+						"value": "[parameters('Sharepoint_Odata_password')]"
+					},
+					"edisdatalake_connectionString": {
+						"value": "[parameters('edisdatalake_connectionString')]"
+					},
+					"PostgreSql1_connectionString": {
+						"value": "[parameters('PostgreSql1_connectionString')]"
+					},
+					"ods_corporate_finance_connectionString": {
+						"value": "[parameters('ods_corporate_finance_connectionString')]"
+					},
+					"HttpSharepointCSV_properties_typeProperties_url": {
+						"value": "[parameters('HttpSharepointCSV_properties_typeProperties_url')]"
+					},
+					"HttpSharepointCSV_properties_typeProperties_userName": {
+						"value": "[parameters('HttpSharepointCSV_properties_typeProperties_userName')]"
+					},
+					"Http_Sharepoint_properties_typeProperties_url": {
+						"value": "[parameters('Http_Sharepoint_properties_typeProperties_url')]"
+					},
+					"Http_Sharepoint_properties_typeProperties_userName": {
+						"value": "[parameters('Http_Sharepoint_properties_typeProperties_userName')]"
+					},
+					"Sharepoint_Odata_properties_typeProperties_url": {
+						"value": "[parameters('Sharepoint_Odata_properties_typeProperties_url')]"
+					},
+					"Sharepoint_Odata_properties_typeProperties_userName": {
+						"value": "[parameters('Sharepoint_Odata_properties_typeProperties_userName')]"
+					},
+					"hiakeys_properties_typeProperties_baseUrl": {
+						"value": "[parameters('hiakeys_properties_typeProperties_baseUrl')]"
+					},
+					"Salesforce1_properties_typeProperties_environmentUrl": {
+						"value": "[parameters('Salesforce1_properties_typeProperties_environmentUrl')]"
+					},
+					"Salesforce1_properties_typeProperties_username": {
+						"value": "[parameters('Salesforce1_properties_typeProperties_username')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
