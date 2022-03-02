@@ -1,5 +1,5 @@
 {
-	"name": "sink_ods_corporate_finance",
+	"name": "sink_edisdatalake",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "edisdatalake",
