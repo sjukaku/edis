@@ -4,11 +4,12 @@
 		"description": "Load all facts and dimensions from ods_corporate_finance db to edis-gold container by creating appropriate directories",
 		"activities": [
 			{
-				"name": "ForEach1",
+				"name": "load_each_table",
+				"description": "Load each table from ODS_corporate_finance db to edis-gold container. degree of parallelism is set to 10 and file name is a utc timestamp.",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Lookup1",
+						"activity": "retrieve_table_list",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -23,7 +24,7 @@
 					"batchCount": 10,
 					"activities": [
 						{
-							"name": "Copy data1",
+							"name": "Copy given table data from ods to edis-gold",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -91,7 +92,8 @@
 				}
 			},
 			{
-				"name": "Lookup1",
+				"name": "retrieve_table_list",
+				"description": "Lookup and retrieve table list from ods_corporate_finance db",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
