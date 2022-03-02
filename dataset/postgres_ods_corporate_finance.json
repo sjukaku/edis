@@ -1,9 +1,14 @@
 {
-	"name": "PostgreSqlTable1",
+	"name": "postgres_ods_corporate_finance",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ods_corporate_finance",
 			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"TableName": {
+				"type": "string"
+			}
 		},
 		"annotations": [],
 		"type": "PostgreSqlTable",

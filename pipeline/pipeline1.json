@@ -13,7 +13,12 @@
 						]
 					}
 				],
+				"userProperties": [],
 				"typeProperties": {
+					"items": {
+						"value": "@activity('Lookup1').output.value",
+						"type": "Expression"
+					},
 					"batchCount": 10,
 					"activities": [
 						{
@@ -55,14 +60,28 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "PostgreSqlTable1",
-									"type": "DatasetReference"
+									"referenceName": "postgres_ods_corporate_finance",
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName": {
+											"value": "@concat('public.',item().table_name)",
+											"type": "Expression"
+										}
+									}
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "Parquet1",
-									"type": "DatasetReference"
+									"referenceName": "sink_edisdatalake",
+									"type": "DatasetReference",
+									"parameters": {
+										"FileName": {
+											"value": "@item().table_name",
+											"type": "Expression"
+										},
+										"ContainerName": "edis-gold",
+										"Directory": "ods_corporate_finance"
+									}
 								}
 							]
 						}
@@ -91,7 +110,7 @@
 						"query": "SELECT table_name, table_type  FROM information_schema.tables\n                      WHERE table_schema='public' \n                      and (table_name like 'fact%' or table_name like 'dim%')"
 					},
 					"dataset": {
-						"referenceName": "PostgreSqlTable1",
+						"referenceName": "postgres_ods_corporate_finance",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
