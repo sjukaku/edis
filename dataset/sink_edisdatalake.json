@@ -24,11 +24,11 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": {
-					"value": "@dataset().FileName",
+					"value": "@utcnow()",
 					"type": "Expression"
 				},
 				"folderPath": {
-					"value": "@dataset().Directory",
+					"value": "@concat(dataset().Directory, '/',dataset().FileName)",
 					"type": "Expression"
 				},
 				"container": {
