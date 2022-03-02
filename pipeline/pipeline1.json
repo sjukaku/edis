@@ -64,9 +64,10 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"TableName": {
-											"value": "@concat('public.',item().table_name)",
+											"value": "@item().table_name",
 											"type": "Expression"
-										}
+										},
+										"Schema": "public"
 									}
 								}
 							],
@@ -99,19 +100,19 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [
-					{
-						"name": "TableName"
-					}
-				],
+				"userProperties": [],
 				"typeProperties": {
 					"source": {
 						"type": "PostgreSqlSource",
-						"query": "SELECT table_name, table_type  FROM information_schema.tables\n                      WHERE table_schema='public' \n                      and (table_name like 'fact%' or table_name like 'dim%')"
+						"query": "SELECT table_name, table_type  FROM information_schema.tables\n                      WHERE table_schema='public' \n                      and (table_name like 'fact%' or table_name like 'dim%') limit 2"
 					},
 					"dataset": {
 						"referenceName": "postgres_ods_corporate_finance",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "na",
+							"Schema": "Public"
+						}
 					},
 					"firstRowOnly": false
 				}

@@ -7,15 +7,26 @@
 		},
 		"parameters": {
 			"TableName": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "table"
+			},
+			"Schema": {
+				"type": "string",
+				"defaultValue": "public"
 			}
 		},
 		"annotations": [],
 		"type": "PostgreSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "public",
-			"table": "account"
+			"schema": {
+				"value": "@dataset().Schema",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().TableName",
+				"type": "Expression"
+			}
 		}
 	}
 }
