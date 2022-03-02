@@ -1,0 +1,28 @@
+{
+	"name": "Salesforce1",
+	"properties": {
+		"annotations": [],
+		"type": "Salesforce",
+		"typeProperties": {
+			"environmentUrl": "https://login.salesforce.com",
+			"username": "hia@hcg.com.prod",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "hiakeys",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "sf-hia-password"
+			},
+			"securityToken": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "hiakeys",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "sf-hia-token"
+			},
+			"apiVersion": "53.0"
+		}
+	}
+}

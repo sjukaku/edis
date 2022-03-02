@@ -1,0 +1,23 @@
+{
+	"name": "ods_corporate_finance",
+	"properties": {
+		"annotations": [],
+		"type": "PostgreSql",
+		"typeProperties": {
+			"connectionString": "Host=hia-corporate-db-postgresqlcluster-1opbg8f4vc5pe.cluster-czr4a0zhluhb.us-east-1.rds.amazonaws.com;Port=5432;Database=ods_corporate_finance;UID=corporate_finance_insight_zone_system_powerbi;EncryptionMethod=1;ValidateServerCertificate=0",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "hiakeys",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "ods-corporate-finance-powerbi-key"
+			}
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntime2",
+			"type": "IntegrationRuntimeReference"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
+}

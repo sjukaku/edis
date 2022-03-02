@@ -1,0 +1,126 @@
+{
+	"name": "ods_corporate_finance_full_load",
+	"properties": {
+		"description": "Load all facts and dimensions from ods_corporate_finance db to edis-gold container by creating appropriate directories",
+		"activities": [
+			{
+				"name": "load_each_table",
+				"description": "Load each table from ODS_corporate_finance db to edis-gold container. degree of parallelism is set to 10 and file name is a utc timestamp.",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "retrieve_table_list",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('retrieve_table_list').output.value",
+						"type": "Expression"
+					},
+					"batchCount": 10,
+					"activities": [
+						{
+							"name": "Copy given table data from ods to edis-gold",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "PostgreSqlSource"
+								},
+								"sink": {
+									"type": "ParquetSink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									},
+									"formatSettings": {
+										"type": "ParquetWriteSettings"
+									}
+								},
+								"enableStaging": false,
+								"parallelCopies": 10,
+								"validateDataConsistency": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "postgres_ods_corporate_finance",
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName": {
+											"value": "@item().table_name",
+											"type": "Expression"
+										},
+										"Schema": "public"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "sink_edisdatalake",
+									"type": "DatasetReference",
+									"parameters": {
+										"FileName": {
+											"value": "@item().table_name",
+											"type": "Expression"
+										},
+										"ContainerName": "edis-gold",
+										"Directory": "ods_corporate_finance"
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"name": "retrieve_table_list",
+				"description": "Lookup and retrieve table list from ods_corporate_finance db",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "PostgreSqlSource",
+						"query": "SELECT table_name  FROM information_schema.tables\n                      WHERE table_schema='public' \n                      and (table_name like 'fact%' or table_name like 'dim%')\n                      and table_name  not like '%_bak_%'\n                      and table_name  not like '%_daily%'\n                      and table_name  not like '%_weekly%'\n                      and table_name  not like '%_monthly%'\n                      and table_name  not like '%_history%'"
+					},
+					"dataset": {
+						"referenceName": "postgres_ods_corporate_finance",
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "na",
+							"Schema": "Public"
+						}
+					},
+					"firstRowOnly": false
+				}
+			}
+		],
+		"annotations": []
+	}
+}

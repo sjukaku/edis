@@ -1,0 +1,43 @@
+{
+	"name": "sink_edisdatalake",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "edisdatalake",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"FileName": {
+				"type": "string"
+			},
+			"ContainerName": {
+				"type": "string",
+				"defaultValue": "edis-gold"
+			},
+			"Directory": {
+				"type": "string",
+				"defaultValue": "ods_corporate_finance"
+			}
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@utcnow()",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@concat(dataset().Directory, '/',dataset().FileName)",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().ContainerName",
+					"type": "Expression"
+				}
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
