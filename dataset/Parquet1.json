@@ -1,0 +1,21 @@
+{
+	"name": "Parquet1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "edisdatalake",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "account",
+				"folderPath": "ods_corporate_finance",
+				"container": "edis-gold"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
