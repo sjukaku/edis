@@ -7,10 +7,6 @@
 		"typeProperties": {
 			"connectionString": "host=hia-corporate-db-postgresqlcluster-1opbg8f4vc5pe.cluster-czr4a0zhluhb.us-east-1.rds.amazonaws.com;port=5432;database=ods_corporate_finance;uid=corporate_finance_insight_zone_system_powerbi;encryptionmethod=0",
 			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI4NmUyN2U3ZC0yOTk4LTRlNjQtOWJlMy03MDY5MWZhYmZiYWMiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
-		},
-		"connectVia": {
-			"referenceName": "integrationRuntime1",
-			"type": "IntegrationRuntimeReference"
 		}
 	}
 }
