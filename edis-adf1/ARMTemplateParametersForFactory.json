@@ -23,6 +23,9 @@
 		"ods_corporate_finance_connectionString": {
 			"value": ""
 		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://edislakehousekeys.vault.azure.net/"
+		},
 		"HttpSharepointCSV_properties_typeProperties_url": {
 			"value": "@{linkedService().url}"
 		},

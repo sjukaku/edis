@@ -31,6 +31,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ods_corporate_finance'"
 		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://edislakehousekeys.vault.azure.net/"
+		},
 		"HttpSharepointCSV_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "@{linkedService().url}"
@@ -201,6 +205,12 @@
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
+				"parameters": {
+					"container": {
+						"type": "string",
+						"defaultValue": "edis-gold"
+					}
+				},
 				"annotations": []
 			},
 			"dependsOn": [
@@ -292,6 +302,19 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/edisdatalake')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureKeyVault1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/HttpSharepointCSV')]",
