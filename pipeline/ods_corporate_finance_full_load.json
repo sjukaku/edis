@@ -121,6 +121,12 @@
 				}
 			}
 		],
+		"parameters": {
+			"container": {
+				"type": "string",
+				"defaultValue": "edis-gold"
+			}
+		},
 		"annotations": []
 	}
 }
