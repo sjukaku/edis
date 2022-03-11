@@ -42,6 +42,15 @@
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "Label",
+				"type": "String"
+			},
+			{
+				"name": "API_Name",
+				"type": "String"
+			}
+		]
 	}
 }
