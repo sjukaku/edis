@@ -12,10 +12,11 @@
 			},
 			"Directory": {
 				"type": "string",
-				"defaultValue": "ods_corporate_finance"
+				"defaultValue": "salesforce"
 			},
 			"Filename": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "sf_objects.csv"
 			}
 		},
 		"annotations": [],
