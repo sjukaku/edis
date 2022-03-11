@@ -38,10 +38,11 @@
 							"typeProperties": {
 								"source": {
 									"type": "SalesforceSource",
-									"readBehavior": {
-										"value": "@item().API_Name",
+									"query": {
+										"value": "select * from @item().API_Name",
 										"type": "Expression"
-									}
+									},
+									"readBehavior": "query"
 								},
 								"sink": {
 									"type": "ParquetSink",
