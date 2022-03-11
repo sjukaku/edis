@@ -1,0 +1,137 @@
+{
+	"name": "Salesforce full load",
+	"properties": {
+		"description": "Load all tables from salesforce to edis-gold container by creating appropriate directories",
+		"activities": [
+			{
+				"name": "load_each_table",
+				"description": "Load each table from ODS_corporate_finance db to edis-gold container. degree of parallelism is set to 10 and file name is a utc timestamp.",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "retrieve_table_list",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('retrieve_table_list').output.value",
+						"type": "Expression"
+					},
+					"batchCount": 10,
+					"activities": [
+						{
+							"name": "Copy given table data from ods to edis-gold",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "SalesforceSource",
+									"readBehavior": {
+										"value": "@item().API_Name",
+										"type": "Expression"
+									}
+								},
+								"sink": {
+									"type": "ParquetSink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									},
+									"formatSettings": {
+										"type": "ParquetWriteSettings"
+									}
+								},
+								"enableStaging": false,
+								"parallelCopies": 10,
+								"validateDataConsistency": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "SalesforceObject",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "sink_edisdatalake",
+									"type": "DatasetReference",
+									"parameters": {
+										"FileName": {
+											"value": "@item().table_name",
+											"type": "Expression"
+										},
+										"ContainerName": "edis-gold",
+										"Directory": "salesforce"
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"name": "retrieve_table_list",
+				"description": "Lookup and retrieve table list from ods_corporate_finance db",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"dataset": {
+						"referenceName": "csv_edisdatalake",
+						"type": "DatasetReference",
+						"parameters": {
+							"Container": "edis-gold",
+							"Directory": "salesforce",
+							"Filename": "sf_object.csv"
+						}
+					},
+					"firstRowOnly": false
+				}
+			}
+		],
+		"parameters": {
+			"container": {
+				"type": "string",
+				"defaultValue": "edis-gold"
+			}
+		},
+		"annotations": []
+	}
+}
