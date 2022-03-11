@@ -38,10 +38,6 @@
 							"typeProperties": {
 								"source": {
 									"type": "SalesforceSource",
-									"query": {
-										"value": "select * from @item().API_Name",
-										"type": "Expression"
-									},
 									"readBehavior": "query"
 								},
 								"sink": {
@@ -68,7 +64,13 @@
 							"inputs": [
 								{
 									"referenceName": "SalesforceObject",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName": {
+											"value": "@item().API_Name",
+											"type": "Expression"
+										}
+									}
 								}
 							],
 							"outputs": [
