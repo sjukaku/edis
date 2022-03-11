@@ -5,8 +5,20 @@
 			"referenceName": "Salesforce1",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"TableName": {
+				"type": "string",
+				"defaultValue": "Opportunity"
+			}
+		},
 		"annotations": [],
 		"type": "SalesforceObject",
-		"schema": []
+		"schema": [],
+		"typeProperties": {
+			"objectApiName": {
+				"value": "@dataset().TableName",
+				"type": "Expression"
+			}
+		}
 	}
 }
