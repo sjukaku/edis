@@ -1,0 +1,12 @@
+{
+	"name": "SalesforceObject",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Salesforce1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SalesforceObject",
+		"schema": []
+	}
+}
