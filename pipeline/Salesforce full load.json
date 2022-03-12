@@ -34,11 +34,20 @@
 								"secureOutput": false,
 								"secureInput": false
 							},
-							"userProperties": [],
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "@{item().API_Name}"
+								},
+								{
+									"name": "Destination",
+									"value": "@{'edis-gold'}/@{concat('salesforce', '/',item().API_Name)}/@{utcnow()}"
+								}
+							],
 							"typeProperties": {
 								"source": {
 									"type": "SalesforceSource",
-									"readBehavior": "query"
+									"readBehavior": "queryAll"
 								},
 								"sink": {
 									"type": "ParquetSink",
