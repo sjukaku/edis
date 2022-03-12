@@ -1,0 +1,56 @@
+{
+	"name": "csv_edisdatalake",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "edisdatalake",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Container": {
+				"type": "string",
+				"defaultValue": "edis-gold"
+			},
+			"Directory": {
+				"type": "string",
+				"defaultValue": "salesforce"
+			},
+			"Filename": {
+				"type": "string",
+				"defaultValue": "sf_objects.csv"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().Filename",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().Directory",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().Container",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Label",
+				"type": "String"
+			},
+			{
+				"name": "API_Name",
+				"type": "String"
+			}
+		]
+	}
+}

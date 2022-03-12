@@ -1,0 +1,42 @@
+{
+	"name": "Master Pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "ods_corporate_finance_full_load",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "ods_corporate_finance_full_load",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"sink_container": "edis-gold",
+						"sink_directory": "ods_corporate_finance"
+					}
+				}
+			},
+			{
+				"name": "salesforce full load",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Salesforce full load",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"sink_container": "edis-bronze",
+						"sink_directory": "salesforce"
+					}
+				}
+			}
+		],
+		"annotations": []
+	}
+}

@@ -6,7 +6,7 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "ods_corporate_finance_full_load",
+					"referenceName": "Master Pipeline",
 					"type": "PipelineReference"
 				}
 			}

@@ -1,7 +1,7 @@
 {
-	"name": "ods_corporate_finance_full_load",
+	"name": "Salesforce full load",
 	"properties": {
-		"description": "Load all facts and dimensions from ods_corporate_finance db to edis-gold container by creating appropriate directories",
+		"description": "Load all tables from salesforce to edis-gold container by creating appropriate directories",
 		"activities": [
 			{
 				"name": "load_each_table",
@@ -34,10 +34,20 @@
 								"secureOutput": false,
 								"secureInput": false
 							},
-							"userProperties": [],
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "@{item().API_Name}"
+								},
+								{
+									"name": "Destination",
+									"value": "@{'edis-gold'}/@{concat('salesforce', '/',item().API_Name)}/@{utcnow()}"
+								}
+							],
 							"typeProperties": {
 								"source": {
-									"type": "PostgreSqlSource"
+									"type": "SalesforceSource",
+									"readBehavior": "queryAll"
 								},
 								"sink": {
 									"type": "ParquetSink",
@@ -62,14 +72,13 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "postgres_ods_corporate_finance",
+									"referenceName": "SalesforceObject",
 									"type": "DatasetReference",
 									"parameters": {
 										"TableName": {
-											"value": "@item().table_name",
+											"value": "@item().API_Name",
 											"type": "Expression"
-										},
-										"Schema": "public"
+										}
 									}
 								}
 							],
@@ -79,7 +88,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"FileName": {
-											"value": "@item().table_name",
+											"value": "@item().API_Name",
 											"type": "Expression"
 										},
 										"ContainerName": {
@@ -112,15 +121,23 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "PostgreSqlSource",
-						"query": "SELECT table_name  FROM information_schema.tables\n                      WHERE table_schema='public' \n                      and (table_name like 'fact%' or table_name like 'dim%')\n                      and table_name  not like '%_bak_%'\n                      and table_name  not like '%_daily%'\n                      and table_name  not like '%_weekly%'\n                      and table_name  not like '%_monthly%'\n                      and table_name  not like '%_history%'"
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": false,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
 					},
 					"dataset": {
-						"referenceName": "postgres_ods_corporate_finance",
+						"referenceName": "csv_edisdatalake",
 						"type": "DatasetReference",
 						"parameters": {
-							"TableName": "na",
-							"Schema": "Public"
+							"Container": "edis-gold",
+							"Directory": "salesforce",
+							"Filename": "sf_objects.csv"
 						}
 					},
 					"firstRowOnly": false
@@ -130,11 +147,11 @@
 		"parameters": {
 			"sink_container": {
 				"type": "string",
-				"defaultValue": "edis-gold"
+				"defaultValue": "edis-bronze"
 			},
 			"sink_directory": {
 				"type": "string",
-				"defaultValue": "ods_corporate_finance"
+				"defaultValue": "salesforce"
 			}
 		},
 		"annotations": []
