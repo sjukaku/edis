@@ -82,8 +82,14 @@
 											"value": "@item().table_name",
 											"type": "Expression"
 										},
-										"ContainerName": "edis-gold",
-										"Directory": "ods_corporate_finance"
+										"ContainerName": {
+											"value": "@pipeline().parameters.container",
+											"type": "Expression"
+										},
+										"Directory": {
+											"value": "@pipeline().parameters.Directory",
+											"type": "Expression"
+										}
 									}
 								}
 							]
@@ -125,6 +131,10 @@
 			"container": {
 				"type": "string",
 				"defaultValue": "edis-gold"
+			},
+			"Directory": {
+				"type": "string",
+				"defaultValue": "ods_corporate_finance"
 			}
 		},
 		"annotations": []
