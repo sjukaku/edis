@@ -1,0 +1,19 @@
+{
+	"name": "edis_delta_lake",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDatabricksDeltaLake",
+		"typeProperties": {
+			"domain": "https://adb-4551013736718354.14.azuredatabricks.net",
+			"clusterId": "0228-074045-36gnj2z4",
+			"accessToken": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "edis_databricks",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "edis-databricks-access-keys"
+			}
+		}
+	}
+}
