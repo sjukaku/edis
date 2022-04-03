@@ -1,0 +1,25 @@
+{
+	"name": "Delta_lake_datastet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "edis_delta_lake",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Schema/database": {
+				"type": "string",
+				"defaultValue": "GLD_ods_corporate_finance"
+			},
+			"TableName": {
+				"type": "string",
+				"defaultValue": "dim_corporate_finance"
+			}
+		},
+		"annotations": [],
+		"type": "AzureDatabricksDeltaLakeDataset",
+		"typeProperties": {
+			"database": "gld_ods_corporate_finances"
+		},
+		"schema": []
+	}
+}
