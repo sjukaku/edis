@@ -47,6 +47,15 @@
 							"typeProperties": {
 								"source": {
 									"type": "SalesforceSource",
+									"additionalColumns": [
+										{
+											"name": "Extraction_date",
+											"value": {
+												"value": "@utcnow()",
+												"type": "Expression"
+											}
+										}
+									],
 									"readBehavior": "queryAll"
 								},
 								"sink": {
@@ -151,7 +160,7 @@
 			},
 			"sink_directory": {
 				"type": "string",
-				"defaultValue": "salesforce"
+				"defaultValue": "SF"
 			}
 		},
 		"annotations": []
