@@ -147,7 +147,7 @@
 		"parameters": {
 			"sink_container": {
 				"type": "string",
-				"defaultValue": "edis-bronze"
+				"defaultValue": "edis-raw"
 			},
 			"sink_directory": {
 				"type": "string",
