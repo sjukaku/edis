@@ -49,7 +49,7 @@
 									"type": "SalesforceSource",
 									"additionalColumns": [
 										{
-											"name": "Extraction_date",
+											"name": "Extraction_datetime",
 											"value": {
 												"value": "@utcnow()",
 												"type": "Expression"
