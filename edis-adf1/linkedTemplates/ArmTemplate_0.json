@@ -7,6 +7,18 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "edis-adf1"
 		},
+		"HttpSharepointCSV_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'HttpSharepointCSV'"
+		},
+		"Http_Sharepoint_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Http_Sharepoint'"
+		},
+		"Sharepoint_Odata_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Sharepoint_Odata'"
+		},
 		"edisdatalake_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'edisdatalake'"
@@ -19,17 +31,41 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ods_corporate_finance'"
 		},
-		"hiakeys_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://hiakeys.vault.azure.net/"
-		},
 		"AzureKeyVault1_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://edislakehousekeys.vault.azure.net/"
 		},
+		"HttpSharepointCSV_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "@{linkedService().url}"
+		},
+		"HttpSharepointCSV_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sjukaku"
+		},
+		"Http_Sharepoint_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "@{linkedService().Baseurl}"
+		},
+		"Http_Sharepoint_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sjukaku"
+		},
+		"Sharepoint_Odata_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://huroncg.sharepoint.com/sites/"
+		},
+		"Sharepoint_Odata_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sjukaku"
+		},
 		"edis_databricks_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://edislakehousekeys.vault.azure.net/"
+		},
+		"hiakeys_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://hiakeys.vault.azure.net/"
 		},
 		"Salesforce1_properties_typeProperties_environmentUrl": {
 			"type": "string",
@@ -38,24 +74,109 @@
 		"Salesforce1_properties_typeProperties_username": {
 			"type": "string",
 			"defaultValue": "hia@hcg.com.prod"
-		},
-		"edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
-			"type": "string",
-			"defaultValue": "@triggerBody().FolderPath"
-		},
-		"edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFile": {
-			"type": "string",
-			"defaultValue": "@triggerBody().fileName"
-		},
-		"edis-raw-container_parquet_created_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureKeyVault1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HttpSharepointCSV')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"parameters": {
+					"url": {
+						"type": "string",
+						"defaultValue": "https://huroncg.sharepoint.com/:x:/s/HuronOperationalReporting/ERPcKQla1sZBkyR5tUqnNBgBOIbZb49WUKf7GNkLZC0xeg?e=2kVThy"
+					}
+				},
+				"annotations": [],
+				"type": "HttpServer",
+				"typeProperties": {
+					"url": "[parameters('HttpSharepointCSV_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Windows",
+					"userName": "[parameters('HttpSharepointCSV_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('HttpSharepointCSV_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Http_Sharepoint')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"parameters": {
+					"Baseurl": {
+						"type": "string",
+						"defaultValue": "https://huroncg.sharepoint.com/sites/HuronOperationalReporting/Shared%20Documents/"
+					}
+				},
+				"annotations": [],
+				"type": "HttpServer",
+				"typeProperties": {
+					"url": "[parameters('Http_Sharepoint_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Windows",
+					"userName": "[parameters('Http_Sharepoint_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('Http_Sharepoint_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Sharepoint_Odata')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "OData",
+				"typeProperties": {
+					"url": "[parameters('Sharepoint_Odata_properties_typeProperties_url')]",
+					"authenticationType": "Windows",
+					"userName": "[parameters('Sharepoint_Odata_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('Sharepoint_Odata_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/edis_databricks')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('edis_databricks_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/edisdatalake')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -79,42 +200,6 @@
 				"typeProperties": {
 					"baseUrl": "[parameters('hiakeys_properties_typeProperties_baseUrl')]"
 				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureKeyVault1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureKeyVault",
-				"typeProperties": {
-					"baseUrl": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/edis_databricks')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureKeyVault",
-				"typeProperties": {
-					"baseUrl": "[parameters('edis_databricks_properties_typeProperties_baseUrl')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/integrationRuntime2')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "SelfHosted",
-				"typeProperties": {}
 			},
 			"dependsOn": []
 		},
@@ -147,52 +232,14 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/sink_edisdatalake')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
+			"name": "[concat(parameters('factoryName'), '/integrationRuntime2')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"linkedServiceName": {
-					"referenceName": "edisdatalake",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"FileName": {
-						"type": "string"
-					},
-					"ContainerName": {
-						"type": "string",
-						"defaultValue": "edis-gold"
-					},
-					"Directory": {
-						"type": "string",
-						"defaultValue": "ods_corporate_finance"
-					}
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@concat(formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
-							"type": "Expression"
-						},
-						"folderPath": {
-							"value": "@concat(dataset().Directory, '/',dataset().FileName)",
-							"type": "Expression"
-						},
-						"container": {
-							"value": "@dataset().ContainerName",
-							"type": "Expression"
-						}
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
+				"type": "SelfHosted",
+				"typeProperties": {}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/edisdatalake')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/csv_edisdatalake')]",
@@ -300,6 +347,182 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/sink_edisdatalake')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "edisdatalake",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"FileName": {
+						"type": "string"
+					},
+					"ContainerName": {
+						"type": "string",
+						"defaultValue": "edis-gold"
+					},
+					"Directory": {
+						"type": "string",
+						"defaultValue": "ods_corporate_finance"
+					}
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@concat(formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@concat(dataset().Directory, '/',dataset().FileName)",
+							"type": "Expression"
+						},
+						"container": {
+							"value": "@dataset().ContainerName",
+							"type": "Expression"
+						}
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/edisdatalake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PostgreSql1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "PostgreSql",
+				"typeProperties": {
+					"connectionString": "[parameters('PostgreSql1_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime2",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Salesforce1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "Salesforce",
+				"typeProperties": {
+					"environmentUrl": "[parameters('Salesforce1_properties_typeProperties_environmentUrl')]",
+					"username": "[parameters('Salesforce1_properties_typeProperties_username')]",
+					"password": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "hiakeys",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "sf-hia-password"
+					},
+					"securityToken": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "hiakeys",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "sf-hia-token"
+					},
+					"apiVersion": "53.0"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/hiakeys')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/edis_azure_databricks')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-4551013736718354.14.azuredatabricks.net",
+					"accessToken": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "edis_databricks",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "edis-databricks-access-keys"
+					},
+					"existingClusterId": "0406-073535-psetjs7g"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/edis_databricks')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/edis_delta_lake')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricksDeltaLake",
+				"typeProperties": {
+					"domain": "https://adb-4551013736718354.14.azuredatabricks.net",
+					"clusterId": "0228-074045-36gnj2z4",
+					"accessToken": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "edis_databricks",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "edis-databricks-access-keys"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/edis_databricks')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ods_corporate_finance')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "PostgreSql",
+				"typeProperties": {
+					"connectionString": "[parameters('ods_corporate_finance_connectionString')]",
+					"password": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "hiakeys",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "ods-corporate-finance-powerbi-key"
+					}
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime2",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime2')]",
+				"[concat(variables('factoryId'), '/linkedServices/hiakeys')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/corporate_finance_insight_zone_system_powerbi')]",
 			"type": "Microsoft.DataFactory/factories/credentials",
 			"apiVersion": "2018-06-01",
@@ -343,200 +566,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/hiakeys')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PostgreSql1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "PostgreSql",
-				"typeProperties": {
-					"connectionString": "[parameters('PostgreSql1_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "integrationRuntime2",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ods_corporate_finance')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "PostgreSql",
-				"typeProperties": {
-					"connectionString": "[parameters('ods_corporate_finance_connectionString')]",
-					"password": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "hiakeys",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "ods-corporate-finance-powerbi-key"
-					}
-				},
-				"connectVia": {
-					"referenceName": "integrationRuntime2",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime2')]",
-				"[concat(variables('factoryId'), '/linkedServices/hiakeys')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Salesforce1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "Salesforce",
-				"typeProperties": {
-					"environmentUrl": "[parameters('Salesforce1_properties_typeProperties_environmentUrl')]",
-					"username": "[parameters('Salesforce1_properties_typeProperties_username')]",
-					"password": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "hiakeys",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "sf-hia-password"
-					},
-					"securityToken": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "hiakeys",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "sf-hia-token"
-					},
-					"apiVersion": "53.0"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/hiakeys')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/edis_delta_lake')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureDatabricksDeltaLake",
-				"typeProperties": {
-					"domain": "https://adb-4551013736718354.14.azuredatabricks.net",
-					"clusterId": "0228-074045-36gnj2z4",
-					"accessToken": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "edis_databricks",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "edis-databricks-access-keys"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/edis_databricks')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/edis_azure_databricks')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureDatabricks",
-				"typeProperties": {
-					"domain": "https://adb-4551013736718354.14.azuredatabricks.net",
-					"accessToken": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "edis_databricks",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "edis-databricks-access-keys"
-					},
-					"existingClusterId": "0406-073535-psetjs7g"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/edis_databricks')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/postgres_ods_corporate_finance')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ods_corporate_finance",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"TableName": {
-						"type": "string",
-						"defaultValue": "table"
-					},
-					"Schema": {
-						"type": "string",
-						"defaultValue": "public"
-					}
-				},
-				"annotations": [],
-				"type": "PostgreSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": {
-						"value": "@dataset().Schema",
-						"type": "Expression"
-					},
-					"table": {
-						"value": "@dataset().TableName",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ods_corporate_finance')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SalesforceObject')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Salesforce1",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"TableName": {
-						"type": "string",
-						"defaultValue": "Opportunity"
-					}
-				},
-				"annotations": [],
-				"type": "SalesforceObject",
-				"schema": [],
-				"typeProperties": {
-					"objectApiName": {
-						"value": "@dataset().TableName",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Salesforce1')]"
 			]
 		},
 		{
@@ -590,40 +619,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/edis_azure_databricks')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/edis-raw-container_parquet_created')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "edis raw to bronze ingestion",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"SourceFolder": "[parameters('edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFolder')]",
-							"SourceFile": "[parameters('edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFile')]"
-						}
-					}
-				],
-				"type": "BlobEventsTrigger",
-				"typeProperties": {
-					"blobPathBeginsWith": "/edis-raw/blobs/",
-					"blobPathEndsWith": ".parquet",
-					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('edis-raw-container_parquet_created_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobCreated"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/edis raw to bronze ingestion')]"
 			]
 		}
 	]
