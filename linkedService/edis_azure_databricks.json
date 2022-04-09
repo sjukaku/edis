@@ -1,0 +1,19 @@
+{
+	"name": "edis_azure_databricks",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDatabricks",
+		"typeProperties": {
+			"domain": "https://adb-4551013736718354.14.azuredatabricks.net",
+			"accessToken": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "edis_databricks",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "edis-databricks-access-keys"
+			},
+			"existingClusterId": "0406-073535-psetjs7g"
+		}
+	}
+}
