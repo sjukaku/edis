@@ -2,7 +2,7 @@
 	"name": "edis-raw-container_csv_created",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Started",
+		"runtimeState": "Stopped",
 		"pipelines": [
 			{
 				"pipelineReference": {
