@@ -19,7 +19,7 @@
 		"typeProperties": {
 			"blobPathBeginsWith": "/edis-raw/blobs/",
 			"blobPathEndsWith": ".csv",
-			"ignoreEmptyBlobs": true,
+			"ignoreEmptyBlobs": false,
 			"scope": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1",
 			"events": [
 				"Microsoft.Storage.BlobDeleted"
