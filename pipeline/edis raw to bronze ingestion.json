@@ -19,7 +19,7 @@
 					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/Ingestion",
 					"baseParameters": {
 						"File_or_directory_Path": {
-							"value": "@pipeline().parameters.FilePath",
+							"value": "@concat(pipeline().parameters.SourceFolder,'/',pipeline().parameters.SourceFile)",
 							"type": "Expression"
 						}
 					}
@@ -31,7 +31,11 @@
 			}
 		],
 		"parameters": {
-			"FilePath": {
+			"SourceFolder": {
+				"type": "string",
+				"defaultValue": "@triggerBody().filePath"
+			},
+			"SourceFile": {
 				"type": "string",
 				"defaultValue": "@triggerBody().fileName"
 			}
