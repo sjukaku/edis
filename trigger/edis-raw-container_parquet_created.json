@@ -1,5 +1,5 @@
 {
-	"name": "storage_events_edis-raw-container_parquet_deleted",
+	"name": "edis-raw-container_parquet_created",
 	"properties": {
 		"annotations": [],
 		"runtimeState": "Started",
@@ -10,7 +10,7 @@
 					"type": "PipelineReference"
 				},
 				"parameters": {
-					"SourceFolder": "@triggerBody().folderPath",
+					"SourceFolder": "@triggerBody().FolderPath",
 					"SourceFile": "@triggerBody().fileName"
 				}
 			}
@@ -18,10 +18,11 @@
 		"type": "BlobEventsTrigger",
 		"typeProperties": {
 			"blobPathBeginsWith": "/edis-raw/blobs/",
+			"blobPathEndsWith": ".parquet",
 			"ignoreEmptyBlobs": true,
 			"scope": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1",
 			"events": [
-				"Microsoft.Storage.BlobDeleted"
+				"Microsoft.Storage.BlobCreated"
 			]
 		}
 	}

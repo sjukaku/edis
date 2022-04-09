@@ -163,6 +163,8 @@
 				"defaultValue": "SF"
 			}
 		},
-		"annotations": []
-	}
+		"annotations": [],
+		"lastPublishTime": "2022-04-09T09:05:10Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
 }

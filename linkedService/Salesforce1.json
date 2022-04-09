@@ -1,5 +1,6 @@
 {
 	"name": "Salesforce1",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"annotations": [],
 		"type": "Salesforce",

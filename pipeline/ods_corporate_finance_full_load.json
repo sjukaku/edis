@@ -137,6 +137,8 @@
 				"defaultValue": "ods_corporate_finance"
 			}
 		},
-		"annotations": []
-	}
+		"annotations": [],
+		"lastPublishTime": "2022-03-12T09:13:18Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
 }
