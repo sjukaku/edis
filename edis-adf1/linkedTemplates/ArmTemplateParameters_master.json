@@ -5,38 +5,17 @@
 		"factoryName": {
 			"value": "edis-adf1"
 		},
-		"HttpSharepointCSV_password": {
-			"value": ""
-		},
-		"Http_Sharepoint_password": {
-			"value": ""
-		},
 		"PostgreSql1_connectionString": {
-			"value": ""
-		},
-		"Sharepoint_Odata_password": {
-			"value": ""
-		},
-		"edisdatalake_connectionString": {
 			"value": ""
 		},
 		"ods_corporate_finance_connectionString": {
 			"value": ""
 		},
-		"AzureKeyVault1_properties_typeProperties_baseUrl": {
-			"value": "https://edislakehousekeys.vault.azure.net/"
+		"edisdatalake_connectionString": {
+			"value": ""
 		},
-		"HttpSharepointCSV_properties_typeProperties_url": {
-			"value": "@{linkedService().url}"
-		},
-		"HttpSharepointCSV_properties_typeProperties_userName": {
-			"value": "sjukaku"
-		},
-		"Http_Sharepoint_properties_typeProperties_url": {
-			"value": "@{linkedService().Baseurl}"
-		},
-		"Http_Sharepoint_properties_typeProperties_userName": {
-			"value": "sjukaku"
+		"hiakeys_properties_typeProperties_baseUrl": {
+			"value": "https://hiakeys.vault.azure.net/"
 		},
 		"Salesforce1_properties_typeProperties_environmentUrl": {
 			"value": "https://login.salesforce.com"
@@ -44,26 +23,11 @@
 		"Salesforce1_properties_typeProperties_username": {
 			"value": "hia@hcg.com.prod"
 		},
-		"Sharepoint_Odata_properties_typeProperties_url": {
-			"value": "https://huroncg.sharepoint.com/sites/"
-		},
-		"Sharepoint_Odata_properties_typeProperties_userName": {
-			"value": "sjukaku"
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://edislakehousekeys.vault.azure.net/"
 		},
 		"edis_databricks_properties_typeProperties_baseUrl": {
 			"value": "https://edislakehousekeys.vault.azure.net/"
-		},
-		"hiakeys_properties_typeProperties_baseUrl": {
-			"value": "https://hiakeys.vault.azure.net/"
-		},
-		"edis-raw-container_csv_created_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
-			"value": "@triggerBody().folderPath"
-		},
-		"edis-raw-container_csv_created_properties_edis raw to bronze ingestion_parameters_SourceFile": {
-			"value": "@triggerBody().fileName"
-		},
-		"edis-raw-container_csv_created_properties_typeProperties_scope": {
-			"value": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
 		},
 		"edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
 			"value": "@triggerBody().FolderPath"
@@ -72,6 +36,60 @@
 			"value": "@triggerBody().fileName"
 		},
 		"edis-raw-container_parquet_created_properties_typeProperties_scope": {
+			"value": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
+		},
+		"storage_events_edis-raw-container_csv_deleted_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
+			"value": "@triggerBody().folderPath"
+		},
+		"storage_events_edis-raw-container_csv_deleted_properties_edis raw to bronze ingestion_parameters_SourceFile": {
+			"value": "@triggerBody().fileName"
+		},
+		"storage_events_edis-raw-container_csv_deleted_properties_typeProperties_scope": {
+			"value": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
+		},
+		"storage_trigger_edis-raw-container_json_created_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
+			"value": "@triggerBody().folderPath"
+		},
+		"storage_trigger_edis-raw-container_json_created_properties_edis raw to bronze ingestion_parameters_SourceFile": {
+			"value": "@triggerBody().fileName"
+		},
+		"storage_trigger_edis-raw-container_json_created_properties_typeProperties_scope": {
+			"value": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
+		},
+		"storage_events_edis-raw-container_parquet_deleted_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
+			"value": "@triggerBody().folderPath"
+		},
+		"storage_events_edis-raw-container_parquet_deleted_properties_edis raw to bronze ingestion_parameters_SourceFile": {
+			"value": "@triggerBody().fileName"
+		},
+		"storage_events_edis-raw-container_parquet_deleted_properties_typeProperties_scope": {
+			"value": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
+		},
+		"storage_events_edis-raw-container_csv_created_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
+			"value": "@triggerBody().folderPath"
+		},
+		"storage_events_edis-raw-container_csv_created_properties_edis raw to bronze ingestion_parameters_SourceFile": {
+			"value": "@triggerBody().fileName"
+		},
+		"storage_events_edis-raw-container_csv_created_properties_typeProperties_scope": {
+			"value": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
+		},
+		"storage_events_edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
+			"value": "@triggerBody().FolderPath"
+		},
+		"storage_events_edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFile": {
+			"value": "@triggerBody().fileName"
+		},
+		"storage_events_edis-raw-container_parquet_created_properties_typeProperties_scope": {
+			"value": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
+		},
+		"storage_events_edis-raw-container_json_deleted_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
+			"value": "@triggerBody().folderPath"
+		},
+		"storage_events_edis-raw-container_json_deleted_properties_edis raw to bronze ingestion_parameters_SourceFile": {
+			"value": "@triggerBody().fileName"
+		},
+		"storage_events_edis-raw-container_json_deleted_properties_typeProperties_scope": {
 			"value": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
 		},
 		"containerUri": {

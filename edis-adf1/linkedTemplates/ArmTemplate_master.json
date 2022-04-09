@@ -7,49 +7,21 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "edis-adf1"
 		},
-		"HttpSharepointCSV_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'HttpSharepointCSV'"
-		},
-		"Http_Sharepoint_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'Http_Sharepoint'"
-		},
 		"PostgreSql1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'PostgreSql1'"
-		},
-		"Sharepoint_Odata_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'Sharepoint_Odata'"
-		},
-		"edisdatalake_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'edisdatalake'"
 		},
 		"ods_corporate_finance_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ods_corporate_finance'"
 		},
-		"AzureKeyVault1_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://edislakehousekeys.vault.azure.net/"
+		"edisdatalake_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'edisdatalake'"
 		},
-		"HttpSharepointCSV_properties_typeProperties_url": {
+		"hiakeys_properties_typeProperties_baseUrl": {
 			"type": "string",
-			"defaultValue": "@{linkedService().url}"
-		},
-		"HttpSharepointCSV_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "sjukaku"
-		},
-		"Http_Sharepoint_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "@{linkedService().Baseurl}"
-		},
-		"Http_Sharepoint_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "sjukaku"
+			"defaultValue": "https://hiakeys.vault.azure.net/"
 		},
 		"Salesforce1_properties_typeProperties_environmentUrl": {
 			"type": "string",
@@ -59,33 +31,13 @@
 			"type": "string",
 			"defaultValue": "hia@hcg.com.prod"
 		},
-		"Sharepoint_Odata_properties_typeProperties_url": {
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
 			"type": "string",
-			"defaultValue": "https://huroncg.sharepoint.com/sites/"
-		},
-		"Sharepoint_Odata_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "sjukaku"
+			"defaultValue": "https://edislakehousekeys.vault.azure.net/"
 		},
 		"edis_databricks_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://edislakehousekeys.vault.azure.net/"
-		},
-		"hiakeys_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://hiakeys.vault.azure.net/"
-		},
-		"edis-raw-container_csv_created_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
-			"type": "string",
-			"defaultValue": "@triggerBody().folderPath"
-		},
-		"edis-raw-container_csv_created_properties_edis raw to bronze ingestion_parameters_SourceFile": {
-			"type": "string",
-			"defaultValue": "@triggerBody().fileName"
-		},
-		"edis-raw-container_csv_created_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
 		},
 		"edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
 			"type": "string",
@@ -96,6 +48,78 @@
 			"defaultValue": "@triggerBody().fileName"
 		},
 		"edis-raw-container_parquet_created_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
+		},
+		"storage_events_edis-raw-container_csv_deleted_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
+			"type": "string",
+			"defaultValue": "@triggerBody().folderPath"
+		},
+		"storage_events_edis-raw-container_csv_deleted_properties_edis raw to bronze ingestion_parameters_SourceFile": {
+			"type": "string",
+			"defaultValue": "@triggerBody().fileName"
+		},
+		"storage_events_edis-raw-container_csv_deleted_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
+		},
+		"storage_trigger_edis-raw-container_json_created_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
+			"type": "string",
+			"defaultValue": "@triggerBody().folderPath"
+		},
+		"storage_trigger_edis-raw-container_json_created_properties_edis raw to bronze ingestion_parameters_SourceFile": {
+			"type": "string",
+			"defaultValue": "@triggerBody().fileName"
+		},
+		"storage_trigger_edis-raw-container_json_created_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
+		},
+		"storage_events_edis-raw-container_parquet_deleted_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
+			"type": "string",
+			"defaultValue": "@triggerBody().folderPath"
+		},
+		"storage_events_edis-raw-container_parquet_deleted_properties_edis raw to bronze ingestion_parameters_SourceFile": {
+			"type": "string",
+			"defaultValue": "@triggerBody().fileName"
+		},
+		"storage_events_edis-raw-container_parquet_deleted_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
+		},
+		"storage_events_edis-raw-container_csv_created_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
+			"type": "string",
+			"defaultValue": "@triggerBody().folderPath"
+		},
+		"storage_events_edis-raw-container_csv_created_properties_edis raw to bronze ingestion_parameters_SourceFile": {
+			"type": "string",
+			"defaultValue": "@triggerBody().fileName"
+		},
+		"storage_events_edis-raw-container_csv_created_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
+		},
+		"storage_events_edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
+			"type": "string",
+			"defaultValue": "@triggerBody().FolderPath"
+		},
+		"storage_events_edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFile": {
+			"type": "string",
+			"defaultValue": "@triggerBody().fileName"
+		},
+		"storage_events_edis-raw-container_parquet_created_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
+		},
+		"storage_events_edis-raw-container_json_deleted_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
+			"type": "string",
+			"defaultValue": "@triggerBody().folderPath"
+		},
+		"storage_events_edis-raw-container_json_deleted_properties_edis raw to bronze ingestion_parameters_SourceFile": {
+			"type": "string",
+			"defaultValue": "@triggerBody().fileName"
+		},
+		"storage_events_edis-raw-container_json_deleted_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
 		},
@@ -126,15 +150,6 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"HttpSharepointCSV_password": {
-						"value": "[parameters('HttpSharepointCSV_password')]"
-					},
-					"Http_Sharepoint_password": {
-						"value": "[parameters('Http_Sharepoint_password')]"
-					},
-					"Sharepoint_Odata_password": {
-						"value": "[parameters('Sharepoint_Odata_password')]"
-					},
 					"edisdatalake_connectionString": {
 						"value": "[parameters('edisdatalake_connectionString')]"
 					},
@@ -144,38 +159,29 @@
 					"ods_corporate_finance_connectionString": {
 						"value": "[parameters('ods_corporate_finance_connectionString')]"
 					},
+					"hiakeys_properties_typeProperties_baseUrl": {
+						"value": "[parameters('hiakeys_properties_typeProperties_baseUrl')]"
+					},
 					"AzureKeyVault1_properties_typeProperties_baseUrl": {
 						"value": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
 					},
-					"HttpSharepointCSV_properties_typeProperties_url": {
-						"value": "[parameters('HttpSharepointCSV_properties_typeProperties_url')]"
-					},
-					"HttpSharepointCSV_properties_typeProperties_userName": {
-						"value": "[parameters('HttpSharepointCSV_properties_typeProperties_userName')]"
-					},
-					"Http_Sharepoint_properties_typeProperties_url": {
-						"value": "[parameters('Http_Sharepoint_properties_typeProperties_url')]"
-					},
-					"Http_Sharepoint_properties_typeProperties_userName": {
-						"value": "[parameters('Http_Sharepoint_properties_typeProperties_userName')]"
-					},
-					"Sharepoint_Odata_properties_typeProperties_url": {
-						"value": "[parameters('Sharepoint_Odata_properties_typeProperties_url')]"
-					},
-					"Sharepoint_Odata_properties_typeProperties_userName": {
-						"value": "[parameters('Sharepoint_Odata_properties_typeProperties_userName')]"
-					},
 					"edis_databricks_properties_typeProperties_baseUrl": {
 						"value": "[parameters('edis_databricks_properties_typeProperties_baseUrl')]"
-					},
-					"hiakeys_properties_typeProperties_baseUrl": {
-						"value": "[parameters('hiakeys_properties_typeProperties_baseUrl')]"
 					},
 					"Salesforce1_properties_typeProperties_environmentUrl": {
 						"value": "[parameters('Salesforce1_properties_typeProperties_environmentUrl')]"
 					},
 					"Salesforce1_properties_typeProperties_username": {
 						"value": "[parameters('Salesforce1_properties_typeProperties_username')]"
+					},
+					"edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
+						"value": "[parameters('edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFolder')]"
+					},
+					"edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFile": {
+						"value": "[parameters('edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFile')]"
+					},
+					"edis-raw-container_parquet_created_properties_typeProperties_scope": {
+						"value": "[parameters('edis-raw-container_parquet_created_properties_typeProperties_scope')]"
 					}
 				}
 			},
@@ -195,23 +201,59 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"edis-raw-container_csv_created_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
-						"value": "[parameters('edis-raw-container_csv_created_properties_edis raw to bronze ingestion_parameters_SourceFolder')]"
+					"storage_events_edis-raw-container_csv_deleted_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
+						"value": "[parameters('storage_events_edis-raw-container_csv_deleted_properties_edis raw to bronze ingestion_parameters_SourceFolder')]"
 					},
-					"edis-raw-container_csv_created_properties_edis raw to bronze ingestion_parameters_SourceFile": {
-						"value": "[parameters('edis-raw-container_csv_created_properties_edis raw to bronze ingestion_parameters_SourceFile')]"
+					"storage_events_edis-raw-container_csv_deleted_properties_edis raw to bronze ingestion_parameters_SourceFile": {
+						"value": "[parameters('storage_events_edis-raw-container_csv_deleted_properties_edis raw to bronze ingestion_parameters_SourceFile')]"
 					},
-					"edis-raw-container_csv_created_properties_typeProperties_scope": {
-						"value": "[parameters('edis-raw-container_csv_created_properties_typeProperties_scope')]"
+					"storage_events_edis-raw-container_csv_deleted_properties_typeProperties_scope": {
+						"value": "[parameters('storage_events_edis-raw-container_csv_deleted_properties_typeProperties_scope')]"
 					},
-					"edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
-						"value": "[parameters('edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFolder')]"
+					"storage_trigger_edis-raw-container_json_created_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
+						"value": "[parameters('storage_trigger_edis-raw-container_json_created_properties_edis raw to bronze ingestion_parameters_SourceFolder')]"
 					},
-					"edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFile": {
-						"value": "[parameters('edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFile')]"
+					"storage_trigger_edis-raw-container_json_created_properties_edis raw to bronze ingestion_parameters_SourceFile": {
+						"value": "[parameters('storage_trigger_edis-raw-container_json_created_properties_edis raw to bronze ingestion_parameters_SourceFile')]"
 					},
-					"edis-raw-container_parquet_created_properties_typeProperties_scope": {
-						"value": "[parameters('edis-raw-container_parquet_created_properties_typeProperties_scope')]"
+					"storage_trigger_edis-raw-container_json_created_properties_typeProperties_scope": {
+						"value": "[parameters('storage_trigger_edis-raw-container_json_created_properties_typeProperties_scope')]"
+					},
+					"storage_events_edis-raw-container_parquet_deleted_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
+						"value": "[parameters('storage_events_edis-raw-container_parquet_deleted_properties_edis raw to bronze ingestion_parameters_SourceFolder')]"
+					},
+					"storage_events_edis-raw-container_parquet_deleted_properties_edis raw to bronze ingestion_parameters_SourceFile": {
+						"value": "[parameters('storage_events_edis-raw-container_parquet_deleted_properties_edis raw to bronze ingestion_parameters_SourceFile')]"
+					},
+					"storage_events_edis-raw-container_parquet_deleted_properties_typeProperties_scope": {
+						"value": "[parameters('storage_events_edis-raw-container_parquet_deleted_properties_typeProperties_scope')]"
+					},
+					"storage_events_edis-raw-container_csv_created_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
+						"value": "[parameters('storage_events_edis-raw-container_csv_created_properties_edis raw to bronze ingestion_parameters_SourceFolder')]"
+					},
+					"storage_events_edis-raw-container_csv_created_properties_edis raw to bronze ingestion_parameters_SourceFile": {
+						"value": "[parameters('storage_events_edis-raw-container_csv_created_properties_edis raw to bronze ingestion_parameters_SourceFile')]"
+					},
+					"storage_events_edis-raw-container_csv_created_properties_typeProperties_scope": {
+						"value": "[parameters('storage_events_edis-raw-container_csv_created_properties_typeProperties_scope')]"
+					},
+					"storage_events_edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
+						"value": "[parameters('storage_events_edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFolder')]"
+					},
+					"storage_events_edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFile": {
+						"value": "[parameters('storage_events_edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFile')]"
+					},
+					"storage_events_edis-raw-container_parquet_created_properties_typeProperties_scope": {
+						"value": "[parameters('storage_events_edis-raw-container_parquet_created_properties_typeProperties_scope')]"
+					},
+					"storage_events_edis-raw-container_json_deleted_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
+						"value": "[parameters('storage_events_edis-raw-container_json_deleted_properties_edis raw to bronze ingestion_parameters_SourceFolder')]"
+					},
+					"storage_events_edis-raw-container_json_deleted_properties_edis raw to bronze ingestion_parameters_SourceFile": {
+						"value": "[parameters('storage_events_edis-raw-container_json_deleted_properties_edis raw to bronze ingestion_parameters_SourceFile')]"
+					},
+					"storage_events_edis-raw-container_json_deleted_properties_typeProperties_scope": {
+						"value": "[parameters('storage_events_edis-raw-container_json_deleted_properties_typeProperties_scope')]"
 					}
 				}
 			},
