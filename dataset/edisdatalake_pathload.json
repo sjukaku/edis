@@ -1,5 +1,5 @@
 {
-	"name": "sink_edisdatalake",
+	"name": "edisdatalake_pathload",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "edisdatalake",
@@ -23,10 +23,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": {
-					"value": "@concat(formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
-					"type": "Expression"
-				},
 				"folderPath": {
 					"value": "@concat(dataset().Directory, '/',dataset().FileName)",
 					"type": "Expression"

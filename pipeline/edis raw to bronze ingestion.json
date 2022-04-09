@@ -1,0 +1,45 @@
+{
+	"name": "edis raw to bronze ingestion",
+	"properties": {
+		"description": "Ingest files from edis-raw container to edis-bronze in delta format. Supported file formats are csv,parquet,delta and json.",
+		"activities": [
+			{
+				"name": "Notebook1",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/Ingestion",
+					"baseParameters": {
+						"File_or_directory_Path": {
+							"value": "@concat(pipeline().parameters.SourceFolder,'/',pipeline().parameters.SourceFile)",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"SourceFolder": {
+				"type": "string",
+				"defaultValue": "@triggerBody().filePath"
+			},
+			"SourceFile": {
+				"type": "string",
+				"defaultValue": "@triggerBody().fileName"
+			}
+		},
+		"annotations": []
+	}
+}
