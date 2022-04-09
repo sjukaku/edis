@@ -1,5 +1,5 @@
 {
-	"name": "edis-raw-container_parquet_created",
+	"name": "storage_events_edis-raw-container_parquet_created",
 	"properties": {
 		"annotations": [],
 		"runtimeState": "Started",
