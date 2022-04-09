@@ -32,12 +32,10 @@
 		],
 		"parameters": {
 			"SourceFolder": {
-				"type": "string",
-				"defaultValue": "@triggerBody().filePath"
+				"type": "string"
 			},
 			"SourceFile": {
-				"type": "string",
-				"defaultValue": "@triggerBody().fileName"
+				"type": "string"
 			}
 		},
 		"annotations": []
