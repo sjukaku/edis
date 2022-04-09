@@ -1,7 +1,7 @@
 {
 	"name": "edis raw to bronze ingestion",
 	"properties": {
-		"description": "Ingest files from edis-raw container to edis-bronze in delta format. Supported file formats are csv,parquet,delta and json.",
+		"description": "Ingest files from edis-raw container to edis-bronze in delta format and create table in bronze table. Supported file formats are csv,parquet,delta and json.",
 		"activities": [
 			{
 				"name": "Notebook1",
@@ -32,12 +32,10 @@
 		],
 		"parameters": {
 			"SourceFolder": {
-				"type": "string",
-				"defaultValue": "@triggerBody().filePath"
+				"type": "string"
 			},
 			"SourceFile": {
-				"type": "string",
-				"defaultValue": "@triggerBody().fileName"
+				"type": "string"
 			}
 		},
 		"annotations": []
