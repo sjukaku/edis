@@ -2,7 +2,7 @@
 	"name": "storage_events_edis-raw-container_csv_created",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
+		"runtimeState": "Started",
 		"pipelines": [
 			{
 				"pipelineReference": {
