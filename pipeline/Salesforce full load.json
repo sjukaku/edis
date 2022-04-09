@@ -97,7 +97,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"FileName": {
-											"value": "@item().API_Name",
+											"value": "@item().Label",
 											"type": "Expression"
 										},
 										"ContainerName": {
@@ -160,7 +160,7 @@
 			},
 			"sink_directory": {
 				"type": "string",
-				"defaultValue": "SF"
+				"defaultValue": "sf"
 			}
 		},
 		"annotations": [],
