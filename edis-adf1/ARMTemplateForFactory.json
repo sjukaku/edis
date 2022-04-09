@@ -282,7 +282,7 @@
 											"type": "DatasetReference",
 											"parameters": {
 												"FileName": {
-													"value": "@item().API_Name",
+													"value": "@item().Label",
 													"type": "Expression"
 												},
 												"ContainerName": {
@@ -349,7 +349,7 @@
 					},
 					"sink_directory": {
 						"type": "string",
-						"defaultValue": "SF"
+						"defaultValue": "sf"
 					}
 				},
 				"annotations": [],
@@ -1162,7 +1162,7 @@
 				"typeProperties": {
 					"blobPathBeginsWith": "/edis-raw/blobs/",
 					"blobPathEndsWith": ".parquet",
-					"ignoreEmptyBlobs": true,
+					"ignoreEmptyBlobs": false,
 					"scope": "[parameters('storage_events_edis-raw-container_parquet_deleted_properties_typeProperties_scope')]",
 					"events": [
 						"Microsoft.Storage.BlobDeleted"
