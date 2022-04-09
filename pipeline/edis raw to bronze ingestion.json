@@ -38,9 +38,6 @@
 			}
 		],
 		"parameters": {
-			"Action": {
-				"type": "string"
-			},
 			"FilePath": {
 				"type": "string"
 			}
