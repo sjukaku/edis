@@ -8,6 +8,10 @@
 				"pipelineReference": {
 					"referenceName": "edis raw to bronze ingestion",
 					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceFolder": "@triggerBody().folderPath",
+					"SourceFile": "@triggerBody().fileName"
 				}
 			}
 		],
