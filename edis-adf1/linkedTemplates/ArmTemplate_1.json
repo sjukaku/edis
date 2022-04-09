@@ -7,6 +7,30 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "edis-adf1"
 		},
+		"storage_events_edis-raw-container_csv_created_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
+			"type": "string",
+			"defaultValue": "@triggerBody().folderPath"
+		},
+		"storage_events_edis-raw-container_csv_created_properties_edis raw to bronze ingestion_parameters_SourceFile": {
+			"type": "string",
+			"defaultValue": "@triggerBody().fileName"
+		},
+		"storage_events_edis-raw-container_csv_created_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
+		},
+		"storage_events_edis-raw-container_csv_deleted_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
+			"type": "string",
+			"defaultValue": "@triggerBody().folderPath"
+		},
+		"storage_events_edis-raw-container_csv_deleted_properties_edis raw to bronze ingestion_parameters_SourceFile": {
+			"type": "string",
+			"defaultValue": "@triggerBody().fileName"
+		},
+		"storage_events_edis-raw-container_csv_deleted_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
+		},
 		"storage_events_edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
 			"type": "string",
 			"defaultValue": "@triggerBody().FolderPath"
@@ -30,18 +54,6 @@
 		"storage_events_edis-raw-container_parquet_deleted_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
-		},
-		"storage_events_edis-raw-container_csv_deleted_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
-			"type": "string",
-			"defaultValue": "@triggerBody().folderPath"
-		},
-		"storage_events_edis-raw-container_csv_deleted_properties_edis raw to bronze ingestion_parameters_SourceFile": {
-			"type": "string",
-			"defaultValue": "@triggerBody().fileName"
-		},
-		"storage_events_edis-raw-container_csv_deleted_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
 		}
 	},
 	"variables": {
@@ -49,248 +61,64 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/storage_events_edis-raw-container_parquet_created')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
+			"name": "[concat(parameters('factoryName'), '/SalesforceObject')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "edis raw to bronze ingestion",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"SourceFolder": "[parameters('storage_events_edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFolder')]",
-							"SourceFile": "[parameters('storage_events_edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFile')]"
-						}
-					}
-				],
-				"type": "BlobEventsTrigger",
-				"typeProperties": {
-					"blobPathBeginsWith": "/edis-raw/blobs/",
-					"blobPathEndsWith": ".parquet",
-					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('storage_events_edis-raw-container_parquet_created_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobCreated"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/storage_events_edis-raw-container_parquet_deleted')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "edis raw to bronze ingestion",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"SourceFolder": "[parameters('storage_events_edis-raw-container_parquet_deleted_properties_edis raw to bronze ingestion_parameters_SourceFolder')]",
-							"SourceFile": "[parameters('storage_events_edis-raw-container_parquet_deleted_properties_edis raw to bronze ingestion_parameters_SourceFile')]"
-						}
-					}
-				],
-				"type": "BlobEventsTrigger",
-				"typeProperties": {
-					"blobPathBeginsWith": "/edis-raw/blobs/",
-					"blobPathEndsWith": ".parquet",
-					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('storage_events_edis-raw-container_parquet_deleted_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobDeleted"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/storage_events_edis-raw-container_csv_deleted')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "edis raw to bronze ingestion",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"SourceFolder": "[parameters('storage_events_edis-raw-container_csv_deleted_properties_edis raw to bronze ingestion_parameters_SourceFolder')]",
-							"SourceFile": "[parameters('storage_events_edis-raw-container_csv_deleted_properties_edis raw to bronze ingestion_parameters_SourceFile')]"
-						}
-					}
-				],
-				"type": "BlobEventsTrigger",
-				"typeProperties": {
-					"blobPathBeginsWith": "/edis-raw/blobs/",
-					"blobPathEndsWith": ".csv",
-					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('storage_events_edis-raw-container_csv_deleted_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobDeleted"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ods_corporate_finance_full_load')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Load all facts and dimensions from ods_corporate_finance db to edis-gold container by creating appropriate directories",
-				"activities": [
-					{
-						"name": "load_each_table",
-						"description": "Load each table from ODS_corporate_finance db to edis-gold container. degree of parallelism is set to 10 and file name is a utc timestamp.",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "retrieve_table_list",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('retrieve_table_list').output.value",
-								"type": "Expression"
-							},
-							"batchCount": 10,
-							"activities": [
-								{
-									"name": "Copy given table data from ods to edis-gold",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "PostgreSqlSource"
-										},
-										"sink": {
-											"type": "ParquetSink",
-											"storeSettings": {
-												"type": "AzureBlobStorageWriteSettings"
-											},
-											"formatSettings": {
-												"type": "ParquetWriteSettings"
-											}
-										},
-										"enableStaging": false,
-										"parallelCopies": 10,
-										"validateDataConsistency": false,
-										"translator": {
-											"type": "TabularTranslator",
-											"typeConversion": true,
-											"typeConversionSettings": {
-												"allowDataTruncation": true,
-												"treatBooleanAsNumber": false
-											}
-										}
-									},
-									"inputs": [
-										{
-											"referenceName": "postgres_ods_corporate_finance",
-											"type": "DatasetReference",
-											"parameters": {
-												"TableName": {
-													"value": "@item().table_name",
-													"type": "Expression"
-												},
-												"Schema": "public"
-											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "sink_edisdatalake",
-											"type": "DatasetReference",
-											"parameters": {
-												"FileName": {
-													"value": "@item().table_name",
-													"type": "Expression"
-												},
-												"ContainerName": {
-													"value": "@pipeline().parameters.sink_container",
-													"type": "Expression"
-												},
-												"Directory": {
-													"value": "@pipeline().parameters.sink_directory",
-													"type": "Expression"
-												}
-											}
-										}
-									]
-								}
-							]
-						}
-					},
-					{
-						"name": "retrieve_table_list",
-						"description": "Lookup and retrieve table list from ods_corporate_finance db",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "PostgreSqlSource",
-								"query": "SELECT table_name  FROM information_schema.tables\n                      WHERE table_schema='public' \n                      and (table_name like 'fact%' or table_name like 'dim%')\n                      and table_name  not like '%_bak_%'\n                      and table_name  not like '%_daily%'\n                      and table_name  not like '%_weekly%'\n                      and table_name  not like '%_monthly%'\n                      and table_name  not like '%_history%'"
-							},
-							"dataset": {
-								"referenceName": "postgres_ods_corporate_finance",
-								"type": "DatasetReference",
-								"parameters": {
-									"TableName": "na",
-									"Schema": "Public"
-								}
-							},
-							"firstRowOnly": false
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+				"linkedServiceName": {
+					"referenceName": "Salesforce1",
+					"type": "LinkedServiceReference"
 				},
 				"parameters": {
-					"sink_container": {
+					"TableName": {
 						"type": "string",
-						"defaultValue": "edis-gold"
-					},
-					"sink_directory": {
-						"type": "string",
-						"defaultValue": "ods_corporate_finance"
+						"defaultValue": "Opportunity"
 					}
 				},
 				"annotations": [],
-				"lastPublishTime": "2022-03-12T09:13:18Z"
+				"type": "SalesforceObject",
+				"schema": [],
+				"typeProperties": {
+					"objectApiName": {
+						"value": "@dataset().TableName",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/postgres_ods_corporate_finance')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ods_corporate_finance",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"TableName": {
+						"type": "string",
+						"defaultValue": "table"
+					},
+					"Schema": {
+						"type": "string",
+						"defaultValue": "public"
+					}
+				},
+				"annotations": [],
+				"type": "PostgreSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().Schema",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().TableName",
+						"type": "Expression"
+					}
+				}
 			},
 			"dependsOn": []
 		},
@@ -467,6 +295,288 @@
 				},
 				"annotations": [],
 				"lastPublishTime": "2022-04-09T09:05:10Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SalesforceObject')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ods_corporate_finance_full_load')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Load all facts and dimensions from ods_corporate_finance db to edis-gold container by creating appropriate directories",
+				"activities": [
+					{
+						"name": "load_each_table",
+						"description": "Load each table from ODS_corporate_finance db to edis-gold container. degree of parallelism is set to 10 and file name is a utc timestamp.",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "retrieve_table_list",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('retrieve_table_list').output.value",
+								"type": "Expression"
+							},
+							"batchCount": 10,
+							"activities": [
+								{
+									"name": "Copy given table data from ods to edis-gold",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "PostgreSqlSource"
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobStorageWriteSettings"
+											},
+											"formatSettings": {
+												"type": "ParquetWriteSettings"
+											}
+										},
+										"enableStaging": false,
+										"parallelCopies": 10,
+										"validateDataConsistency": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "postgres_ods_corporate_finance",
+											"type": "DatasetReference",
+											"parameters": {
+												"TableName": {
+													"value": "@item().table_name",
+													"type": "Expression"
+												},
+												"Schema": "public"
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "sink_edisdatalake",
+											"type": "DatasetReference",
+											"parameters": {
+												"FileName": {
+													"value": "@item().table_name",
+													"type": "Expression"
+												},
+												"ContainerName": {
+													"value": "@pipeline().parameters.sink_container",
+													"type": "Expression"
+												},
+												"Directory": {
+													"value": "@pipeline().parameters.sink_directory",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					},
+					{
+						"name": "retrieve_table_list",
+						"description": "Lookup and retrieve table list from ods_corporate_finance db",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "PostgreSqlSource",
+								"query": "SELECT table_name  FROM information_schema.tables\n                      WHERE table_schema='public' \n                      and (table_name like 'fact%' or table_name like 'dim%')\n                      and table_name  not like '%_bak_%'\n                      and table_name  not like '%_daily%'\n                      and table_name  not like '%_weekly%'\n                      and table_name  not like '%_monthly%'\n                      and table_name  not like '%_history%'"
+							},
+							"dataset": {
+								"referenceName": "postgres_ods_corporate_finance",
+								"type": "DatasetReference",
+								"parameters": {
+									"TableName": "na",
+									"Schema": "Public"
+								}
+							},
+							"firstRowOnly": false
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"sink_container": {
+						"type": "string",
+						"defaultValue": "edis-gold"
+					},
+					"sink_directory": {
+						"type": "string",
+						"defaultValue": "ods_corporate_finance"
+					}
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-03-12T09:13:18Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/postgres_ods_corporate_finance')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/storage_events_edis-raw-container_csv_created')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "edis raw to bronze ingestion",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceFolder": "[parameters('storage_events_edis-raw-container_csv_created_properties_edis raw to bronze ingestion_parameters_SourceFolder')]",
+							"SourceFile": "[parameters('storage_events_edis-raw-container_csv_created_properties_edis raw to bronze ingestion_parameters_SourceFile')]"
+						}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/edis-raw/blobs/",
+					"blobPathEndsWith": ".csv",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('storage_events_edis-raw-container_csv_created_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/storage_events_edis-raw-container_csv_deleted')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "edis raw to bronze ingestion",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceFolder": "[parameters('storage_events_edis-raw-container_csv_deleted_properties_edis raw to bronze ingestion_parameters_SourceFolder')]",
+							"SourceFile": "[parameters('storage_events_edis-raw-container_csv_deleted_properties_edis raw to bronze ingestion_parameters_SourceFile')]"
+						}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/edis-raw/blobs/",
+					"blobPathEndsWith": ".csv",
+					"ignoreEmptyBlobs": false,
+					"scope": "[parameters('storage_events_edis-raw-container_csv_deleted_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobDeleted"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/storage_events_edis-raw-container_parquet_created')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "edis raw to bronze ingestion",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceFolder": "[parameters('storage_events_edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFolder')]",
+							"SourceFile": "[parameters('storage_events_edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFile')]"
+						}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/edis-raw/blobs/",
+					"blobPathEndsWith": ".parquet",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('storage_events_edis-raw-container_parquet_created_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/storage_events_edis-raw-container_parquet_deleted')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "edis raw to bronze ingestion",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceFolder": "[parameters('storage_events_edis-raw-container_parquet_deleted_properties_edis raw to bronze ingestion_parameters_SourceFolder')]",
+							"SourceFile": "[parameters('storage_events_edis-raw-container_parquet_deleted_properties_edis raw to bronze ingestion_parameters_SourceFile')]"
+						}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/edis-raw/blobs/",
+					"blobPathEndsWith": ".parquet",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('storage_events_edis-raw-container_parquet_deleted_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobDeleted"
+					]
+				}
 			},
 			"dependsOn": []
 		},
