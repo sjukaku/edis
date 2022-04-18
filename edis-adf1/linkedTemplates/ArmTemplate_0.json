@@ -463,7 +463,7 @@
 						},
 						"secretName": "edis-databricks-access-keys"
 					},
-					"existingClusterId": "0406-073535-psetjs7g"
+					"existingClusterId": "0228-074045-36gnj2z4"
 				}
 			},
 			"dependsOn": [
@@ -588,7 +588,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/Ingestion",
+							"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/Pipelines/generic/Ingestion",
 							"baseParameters": {
 								"File_or_directory_Path": {
 									"value": "@concat(pipeline().parameters.SourceFolder,'/',pipeline().parameters.SourceFile)",
