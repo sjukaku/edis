@@ -20,7 +20,7 @@
 						"value": "@activity('retrieve_table_list').output.value",
 						"type": "Expression"
 					},
-					"batchCount": 4,
+					"batchCount": 8,
 					"activities": [
 						{
 							"name": "Notebook1",
