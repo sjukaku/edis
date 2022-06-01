@@ -54,6 +54,14 @@
 		"storage_events_edis-raw-container_parquet_deleted_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
+		},
+		"daily refresh 12 pm IST_properties_Salesforce full load_parameters_sink_container": {
+			"type": "string",
+			"defaultValue": "edis-raw"
+		},
+		"daily refresh 12 pm IST_properties_Salesforce full load_parameters_sink_directory": {
+			"type": "string",
+			"defaultValue": "sf"
 		}
 	},
 	"variables": {
@@ -626,6 +634,47 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/ods_corporate_finance_full_load')]",
+				"[concat(variables('factoryId'), '/pipelines/Salesforce full load')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/daily refresh 12 pm IST')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Salesforce full load",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"sink_container": "[parameters('daily refresh 12 pm IST_properties_Salesforce full load_parameters_sink_container')]",
+							"sink_directory": "[parameters('daily refresh 12 pm IST_properties_Salesforce full load_parameters_sink_directory')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2022-06-01T11:18:00",
+						"timeZone": "India Standard Time",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								12
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/Salesforce full load')]"
 			]
 		}
