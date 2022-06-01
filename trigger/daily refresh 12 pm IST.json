@@ -1,0 +1,36 @@
+{
+	"name": "daily refresh 12 pm IST",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Salesforce full load",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"sink_container": "edis-raw",
+					"sink_directory": "sf"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2022-06-01T11:18:00",
+				"timeZone": "India Standard Time",
+				"schedule": {
+					"minutes": [
+						0
+					],
+					"hours": [
+						12
+					]
+				}
+			}
+		}
+	}
+}
