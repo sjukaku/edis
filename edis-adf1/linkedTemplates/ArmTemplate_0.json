@@ -588,7 +588,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/Pipelines/generic/Ingestion",
+							"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/Generic/Ingestion",
 							"baseParameters": {
 								"File_or_directory_Path": {
 									"value": "@concat(pipeline().parameters.SourceFolder,'/',pipeline().parameters.SourceFile)",

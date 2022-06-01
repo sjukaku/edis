@@ -223,10 +223,6 @@
 										{
 											"name": "Source",
 											"value": "@{item().API_Name}"
-										},
-										{
-											"name": "Destination",
-											"value": "@{'edis-gold'}/@{concat('salesforce', '/',item().API_Name)}/@{utcnow()}"
 										}
 									],
 									"typeProperties": {
@@ -381,7 +377,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/Pipelines/generic/Ingestion",
+							"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/Generic/Ingestion",
 							"baseParameters": {
 								"File_or_directory_Path": {
 									"value": "@concat(pipeline().parameters.SourceFolder,'/',pipeline().parameters.SourceFile)",
@@ -565,116 +561,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/postgres_ods_corporate_finance')]",
 				"[concat(variables('factoryId'), '/datasets/sink_edisdatalake')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/salesforce edis-raw to bronze full load with truncate')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "load_each_table",
-						"description": "Load each table from ODS_corporate_finance db to edis-gold container. degree of parallelism is set to 10 and file name is a utc timestamp.",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "retrieve_table_list",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('retrieve_table_list').output.value",
-								"type": "Expression"
-							},
-							"batchCount": 4,
-							"activities": [
-								{
-									"name": "Notebook1",
-									"type": "DatabricksNotebook",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/Pipelines/full_loads/raw_to_bronze_full_load",
-										"baseParameters": {
-											"Object": {
-												"value": "@item().Label",
-												"type": "Expression"
-											},
-											"Directory": "sf/",
-											"Object-Put 'NA' to load all objects": {
-												"value": "@item().Label",
-												"type": "Expression"
-											}
-										}
-									},
-									"linkedServiceName": {
-										"referenceName": "edis_azure_databricks",
-										"type": "LinkedServiceReference"
-									}
-								}
-							]
-						}
-					},
-					{
-						"name": "retrieve_table_list",
-						"description": "Lookup and retrieve table list from ods_corporate_finance db",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": false,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"dataset": {
-								"referenceName": "csv_edisdatalake",
-								"type": "DatasetReference",
-								"parameters": {
-									"Container": "edis-gold",
-									"Directory": "salesforce",
-									"Filename": "sf_objects.csv"
-								}
-							},
-							"firstRowOnly": false
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"annotations": [],
-				"lastPublishTime": "2022-04-09T09:05:10Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/csv_edisdatalake')]",
-				"[concat(variables('factoryId'), '/linkedServices/edis_azure_databricks')]"
 			]
 		},
 		{
