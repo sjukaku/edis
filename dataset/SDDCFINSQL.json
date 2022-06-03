@@ -3,7 +3,19 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AmazonRdsForSqlServer1",
-			"type": "LinkedServiceReference"
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"database": {
+					"value": "@dataset().database",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"database": {
+				"type": "string",
+				"defaultValue": "master"
+			}
 		},
 		"annotations": [],
 		"type": "AmazonRdsForSqlServerTable",
