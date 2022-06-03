@@ -2,12 +2,18 @@
 	"name": "AmazonRdsForSqlServer1",
 	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
+		"parameters": {
+			"database": {
+				"type": "string",
+				"defaultValue": "master"
+			}
+		},
 		"annotations": [],
 		"type": "AmazonRdsForSqlServer",
 		"typeProperties": {
-			"connectionString": "integrated security=True;data source=SDDCFINSQL;initial catalog=Clarity",
+			"connectionString": "integrated security=True;data source=SDDCFINSQL;initial catalog=@{linkedService().database}",
 			"userName": "HURONCONSULTING\\sjukaku",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI5YTMzNTFiNS0yNzA4LTQzMmEtYWExNC1jZjhkNTNmZmY1NzIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI5ZjgyNGFkNy0zNmVhLTQwYzQtODZlZS0zZjZhYTY2MzRjYzMiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "integrationRuntime2",
