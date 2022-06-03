@@ -3,35 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
-				"type": "Copy",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "AmazonRdsForSqlServerSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "SDDCFINSQL",
-						"type": "DatasetReference"
-					}
-				]
-			},
-			{
 				"name": "load_each_table",
-				"description": "Load each table from ODS_corporate_finance db to edis-gold container. degree of parallelism is set to 10 and file name is a utc timestamp.",
+				"description": "Load each table from elite archive db to elite-archive container. degree of parallelism is set to 10 and file name is a utc timestamp.",
 				"type": "ForEach",
 				"dependsOn": [
 					{
@@ -63,22 +36,18 @@
 							"userProperties": [
 								{
 									"name": "Source",
-									"value": "@{item().API_Name}"
+									"value": "@{item.TABLE_NAME}"
 								}
 							],
 							"typeProperties": {
 								"source": {
-									"type": "SalesforceSource",
-									"additionalColumns": [
-										{
-											"name": "Extraction_datetime",
-											"value": {
-												"value": "@utcnow()",
-												"type": "Expression"
-											}
-										}
-									],
-									"readBehavior": "queryAll"
+									"type": "AmazonRdsForSqlServerSource",
+									"sqlReaderQuery": {
+										"value": "@concat('select * from ',item().TABLE_CATALOG,'.',item().TABLE_SCHEMA,'.',item().TABLE_NAME)",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
 								},
 								"sink": {
 									"type": "ParquetSink",
@@ -103,14 +72,8 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "SalesforceObject",
-									"type": "DatasetReference",
-									"parameters": {
-										"TableName": {
-											"value": "@item().API_Name",
-											"type": "Expression"
-										}
-									}
+									"referenceName": "SDDCFINSQL",
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
@@ -119,7 +82,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"FileName": {
-											"value": "@item().Label",
+											"value": "@item().TABLE_NAME",
 											"type": "Expression"
 										},
 										"ContainerName": {
@@ -127,7 +90,7 @@
 											"type": "Expression"
 										},
 										"Directory": {
-											"value": "@pipeline().parameters.sink_directory",
+											"value": "@concat(item().TABLE_CATALOG,'/',item().TABLE_SCHEMA,'/',item().TABLE_NAME)",
 											"type": "Expression"
 										}
 									}
@@ -165,6 +128,12 @@
 				}
 			}
 		],
+		"parameters": {
+			"sink_container": {
+				"type": "string",
+				"defaultValue": "elite-archive"
+			}
+		},
 		"annotations": []
 	}
 }
