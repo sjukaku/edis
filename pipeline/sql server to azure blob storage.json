@@ -128,7 +128,13 @@
 					},
 					"dataset": {
 						"referenceName": "SDDCFINSQL",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"database": {
+								"value": "@pipeline().parameters.sql_server_db",
+								"type": "Expression"
+							}
+						}
 					},
 					"firstRowOnly": false
 				}
