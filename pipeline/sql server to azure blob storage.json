@@ -35,8 +35,8 @@
 							},
 							"userProperties": [
 								{
-									"name": "Source",
-									"value": "@{item.TABLE_NAME}"
+									"name": "Destination",
+									"value": "@{pipeline().parameters.sink_container}/@{concat(concat(item().TABLE_CATALOG,'/',item().TABLE_SCHEMA,'/',item().TABLE_NAME), '/',item().TABLE_NAME)}/@{concat(formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')}"
 								}
 							],
 							"typeProperties": {
@@ -73,7 +73,13 @@
 							"inputs": [
 								{
 									"referenceName": "SDDCFINSQL",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"database": {
+											"value": "@pipeline().parameters.sql_server_db",
+											"type": "Expression"
+										}
+									}
 								}
 							],
 							"outputs": [
@@ -132,6 +138,10 @@
 			"sink_container": {
 				"type": "string",
 				"defaultValue": "elite-archive"
+			},
+			"sql_server_db": {
+				"type": "string",
+				"defaultValue": "son_db"
 			}
 		},
 		"annotations": []
