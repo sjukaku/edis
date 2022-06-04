@@ -683,7 +683,7 @@
 													"type": "Expression"
 												},
 												"Directory": {
-													"value": "@concat(item().TABLE_CATALOG,'/',item().TABLE_SCHEMA,'/',item().TABLE_NAME)",
+													"value": "@concat(item().TABLE_CATALOG,'/',item().TABLE_SCHEMA)",
 													"type": "Expression"
 												}
 											}
