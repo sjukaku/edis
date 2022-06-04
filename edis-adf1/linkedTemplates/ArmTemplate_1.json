@@ -589,7 +589,7 @@
 										"source": {
 											"type": "AmazonRdsForSqlServerSource",
 											"sqlReaderQuery": {
-												"value": "@activity('RemoveBlankSpacesFromColumnNames').output",
+												"value": "@activity('RemoveBlankSpacesFromColumnNames').output.firstRow.Query",
 												"type": "Expression"
 											},
 											"queryTimeout": "02:00:00",
@@ -665,7 +665,7 @@
 										"source": {
 											"type": "AmazonRdsForSqlServerSource",
 											"sqlReaderQuery": {
-												"value": "@concat(' \n\nDECLARE @s VARCHAR(500) \n\nDECLARE @tablename VARCHAR(500) = ''', item().Table_Name ,''' \n\n \n\nSELECT @s = ISNULL(@s + '', '','''') + ''['' + c.name + '']'' + '' as [''+replace(c.name,'' '',''_'')+''] '' \n\nFROM sys.all_columns c join sys.tables t \n\nON c.object_id = t.object_id \n\nWHERE t.name =  @tablename \n\n \n\nSELECT ''select '' + @s + '' from '' +  @tablename  as Query') ",
+												"value": "@concat(' \n\nDECLARE @s VARCHAR(MAX) \n\nDECLARE @tablename VARCHAR(500) = ''', item().Table_Name ,''' \n\n \n\nSELECT @s = ISNULL(@s + '', '','''') + ''['' + c.name + '']'' + '' as [''+replace(c.name,'' '','''')+''] '' \n\nFROM sys.all_columns c join sys.tables t \n\nON c.object_id = t.object_id \n\nWHERE t.name =  @tablename \n\n \n\nSELECT ''select '' + @s + '' from '' +  @tablename  as Query') ",
 												"type": "Expression"
 											},
 											"queryTimeout": "02:00:00",
@@ -680,7 +680,8 @@
 													"type": "Expression"
 												}
 											}
-										}
+										},
+										"firstRowOnly": true
 									}
 								}
 							]
@@ -731,7 +732,7 @@
 					},
 					"sql_server_db": {
 						"type": "string",
-						"defaultValue": "son_db"
+						"defaultValue": "FINOPS"
 					}
 				},
 				"annotations": []
