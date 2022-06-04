@@ -7,6 +7,14 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "edis-adf1"
 		},
+		"AmazonRdsForSqlServer1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AmazonRdsForSqlServer1'"
+		},
+		"AmazonRdsForSqlServer1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AmazonRdsForSqlServer1'"
+		},
 		"HttpSharepointCSV_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'HttpSharepointCSV'"
@@ -30,6 +38,10 @@
 		"ods_corporate_finance_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ods_corporate_finance'"
+		},
+		"AmazonRdsForSqlServer1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "HURONCONSULTING\\sjukaku"
 		},
 		"AzureKeyVault1_properties_typeProperties_baseUrl": {
 			"type": "string",
@@ -74,6 +86,14 @@
 		"hiakeys_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://hiakeys.vault.azure.net/"
+		},
+		"daily refresh 12 pm IST_properties_Salesforce full load_parameters_sink_container": {
+			"type": "string",
+			"defaultValue": "edis-raw"
+		},
+		"daily refresh 12 pm IST_properties_Salesforce full load_parameters_sink_directory": {
+			"type": "string",
+			"defaultValue": "sf"
 		},
 		"storage_events_edis-raw-container_csv_created_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
 			"type": "string",
@@ -122,14 +142,6 @@
 		"storage_events_edis-raw-container_parquet_deleted_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
-		},
-		"daily refresh 12 pm IST_properties_Salesforce full load_parameters_sink_container": {
-			"type": "string",
-			"defaultValue": "edis-raw"
-		},
-		"daily refresh 12 pm IST_properties_Salesforce full load_parameters_sink_directory": {
-			"type": "string",
-			"defaultValue": "sf"
 		}
 	},
 	"variables": {
@@ -572,6 +584,201 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/sql server to azure blob storage')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "load_each_table",
+						"description": "Load each table from elite archive db to elite-archive container. degree of parallelism is set to 10 and file name is a utc timestamp.",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "retrieve_table_list",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('retrieve_table_list').output.value",
+								"type": "Expression"
+							},
+							"batchCount": 10,
+							"activities": [
+								{
+									"name": "Copy given table data from sql server to Elite Archive",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.00:45:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [
+										{
+											"name": "Destination",
+											"value": "@{pipeline().parameters.sink_container}/@{concat(concat(item().TABLE_CATALOG,'/',item().TABLE_SCHEMA,'/',item().TABLE_NAME), '/',item().TABLE_NAME)}/@{concat(formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')}"
+										}
+									],
+									"typeProperties": {
+										"source": {
+											"type": "AmazonRdsForSqlServerSource",
+											"sqlReaderQuery": {
+												"value": "@concat('select * from ',item().TABLE_CATALOG,'.',item().TABLE_SCHEMA,'.',item().TABLE_NAME)",
+												"type": "Expression"
+											},
+											"queryTimeout": "02:00:00",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobStorageWriteSettings"
+											},
+											"formatSettings": {
+												"type": "ParquetWriteSettings"
+											}
+										},
+										"enableStaging": false,
+										"parallelCopies": 10,
+										"validateDataConsistency": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "SDDCFINSQL",
+											"type": "DatasetReference",
+											"parameters": {
+												"database": {
+													"value": "@pipeline().parameters.sql_server_db",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "sink_edisdatalake",
+											"type": "DatasetReference",
+											"parameters": {
+												"FileName": {
+													"value": "@item().TABLE_NAME",
+													"type": "Expression"
+												},
+												"ContainerName": {
+													"value": "@pipeline().parameters.sink_container",
+													"type": "Expression"
+												},
+												"Directory": {
+													"value": "@concat(item().TABLE_CATALOG,'/',item().TABLE_SCHEMA,'/',item().TABLE_NAME)",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					},
+					{
+						"name": "retrieve_table_list",
+						"description": "Lookup and retrieve table list from ods_corporate_finance db",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AmazonRdsForSqlServerSource",
+								"sqlReaderQuery": "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' and TABLE_SCHEMA = 'dbo'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SDDCFINSQL",
+								"type": "DatasetReference",
+								"parameters": {
+									"database": {
+										"value": "@pipeline().parameters.sql_server_db",
+										"type": "Expression"
+									}
+								}
+							},
+							"firstRowOnly": false
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"sink_container": {
+						"type": "string",
+						"defaultValue": "elite-archive"
+					},
+					"sql_server_db": {
+						"type": "string",
+						"defaultValue": "son_db"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SDDCFINSQL')]",
+				"[concat(variables('factoryId'), '/datasets/sink_edisdatalake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SDDCFINSQL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AmazonRdsForSqlServer1",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"database": {
+							"value": "@dataset().database",
+							"type": "Expression"
+						}
+					}
+				},
+				"parameters": {
+					"database": {
+						"type": "string",
+						"defaultValue": "master"
+					}
+				},
+				"annotations": [],
+				"type": "AmazonRdsForSqlServerTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AmazonRdsForSqlServer1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SalesforceObject')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -788,6 +995,36 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/edisdatalake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AmazonRdsForSqlServer1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"parameters": {
+					"database": {
+						"type": "string",
+						"defaultValue": "master"
+					}
+				},
+				"annotations": [],
+				"type": "AmazonRdsForSqlServer",
+				"typeProperties": {
+					"connectionString": "[parameters('AmazonRdsForSqlServer1_connectionString')]",
+					"userName": "[parameters('AmazonRdsForSqlServer1_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('AmazonRdsForSqlServer1_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime2",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime2')]"
 			]
 		},
 		{
@@ -1042,6 +1279,47 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/daily refresh 12 pm IST')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Salesforce full load",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"sink_container": "[parameters('daily refresh 12 pm IST_properties_Salesforce full load_parameters_sink_container')]",
+							"sink_directory": "[parameters('daily refresh 12 pm IST_properties_Salesforce full load_parameters_sink_directory')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2022-06-01T11:18:00",
+						"timeZone": "India Standard Time",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								12
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Salesforce full load')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/storage_events_edis-raw-container_csv_created')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
@@ -1259,47 +1537,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/hiakeys')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/daily refresh 12 pm IST')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "Salesforce full load",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"sink_container": "[parameters('daily refresh 12 pm IST_properties_Salesforce full load_parameters_sink_container')]",
-							"sink_directory": "[parameters('daily refresh 12 pm IST_properties_Salesforce full load_parameters_sink_directory')]"
-						}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2022-06-01T11:18:00",
-						"timeZone": "India Standard Time",
-						"schedule": {
-							"minutes": [
-								0
-							],
-							"hours": [
-								12
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Salesforce full load')]"
 			]
 		}
 	]

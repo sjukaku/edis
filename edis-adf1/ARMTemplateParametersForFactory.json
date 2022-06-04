@@ -5,6 +5,12 @@
 		"factoryName": {
 			"value": "edis-adf1"
 		},
+		"AmazonRdsForSqlServer1_connectionString": {
+			"value": ""
+		},
+		"AmazonRdsForSqlServer1_password": {
+			"value": ""
+		},
 		"HttpSharepointCSV_password": {
 			"value": ""
 		},
@@ -22,6 +28,9 @@
 		},
 		"ods_corporate_finance_connectionString": {
 			"value": ""
+		},
+		"AmazonRdsForSqlServer1_properties_typeProperties_userName": {
+			"value": "HURONCONSULTING\\sjukaku"
 		},
 		"AzureKeyVault1_properties_typeProperties_baseUrl": {
 			"value": "https://edislakehousekeys.vault.azure.net/"
@@ -55,6 +64,12 @@
 		},
 		"hiakeys_properties_typeProperties_baseUrl": {
 			"value": "https://hiakeys.vault.azure.net/"
+		},
+		"daily refresh 12 pm IST_properties_Salesforce full load_parameters_sink_container": {
+			"value": "edis-raw"
+		},
+		"daily refresh 12 pm IST_properties_Salesforce full load_parameters_sink_directory": {
+			"value": "sf"
 		},
 		"storage_events_edis-raw-container_csv_created_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
 			"value": "@triggerBody().folderPath"
@@ -91,12 +106,6 @@
 		},
 		"storage_events_edis-raw-container_parquet_deleted_properties_typeProperties_scope": {
 			"value": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
-		},
-		"daily refresh 12 pm IST_properties_Salesforce full load_parameters_sink_container": {
-			"value": "edis-raw"
-		},
-		"daily refresh 12 pm IST_properties_Salesforce full load_parameters_sink_directory": {
-			"value": "sf"
 		}
 	}
 }

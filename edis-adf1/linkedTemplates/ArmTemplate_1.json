@@ -69,6 +69,85 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/edis raw to bronze ingestion')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Ingest files from edis-raw container to edis-bronze in delta format and create table in bronze table. Supported file formats are csv,parquet,delta and json.",
+				"activities": [
+					{
+						"name": "Notebook1",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/Generic/Ingestion",
+							"baseParameters": {
+								"File_or_directory_Path": {
+									"value": "@concat(pipeline().parameters.SourceFolder,'/',pipeline().parameters.SourceFile)",
+									"type": "Expression"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "edis_azure_databricks",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"SourceFolder": {
+						"type": "string"
+					},
+					"SourceFile": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-04-09T15:35:27Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SDDCFINSQL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AmazonRdsForSqlServer1",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"database": {
+							"value": "@dataset().database",
+							"type": "Expression"
+						}
+					}
+				},
+				"parameters": {
+					"database": {
+						"type": "string",
+						"defaultValue": "master"
+					}
+				},
+				"annotations": [],
+				"type": "AmazonRdsForSqlServerTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SalesforceObject')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -457,6 +536,170 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/sql server to azure blob storage')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "load_each_table",
+						"description": "Load each table from elite archive db to elite-archive container. degree of parallelism is set to 10 and file name is a utc timestamp.",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "retrieve_table_list",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('retrieve_table_list').output.value",
+								"type": "Expression"
+							},
+							"batchCount": 10,
+							"activities": [
+								{
+									"name": "Copy given table data from sql server to Elite Archive",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.00:45:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [
+										{
+											"name": "Destination",
+											"value": "@{pipeline().parameters.sink_container}/@{concat(concat(item().TABLE_CATALOG,'/',item().TABLE_SCHEMA,'/',item().TABLE_NAME), '/',item().TABLE_NAME)}/@{concat(formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')}"
+										}
+									],
+									"typeProperties": {
+										"source": {
+											"type": "AmazonRdsForSqlServerSource",
+											"sqlReaderQuery": {
+												"value": "@concat('select * from ',item().TABLE_CATALOG,'.',item().TABLE_SCHEMA,'.',item().TABLE_NAME)",
+												"type": "Expression"
+											},
+											"queryTimeout": "02:00:00",
+											"partitionOption": "None"
+										},
+										"sink": {
+											"type": "ParquetSink",
+											"storeSettings": {
+												"type": "AzureBlobStorageWriteSettings"
+											},
+											"formatSettings": {
+												"type": "ParquetWriteSettings"
+											}
+										},
+										"enableStaging": false,
+										"parallelCopies": 10,
+										"validateDataConsistency": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "SDDCFINSQL",
+											"type": "DatasetReference",
+											"parameters": {
+												"database": {
+													"value": "@pipeline().parameters.sql_server_db",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "sink_edisdatalake",
+											"type": "DatasetReference",
+											"parameters": {
+												"FileName": {
+													"value": "@item().TABLE_NAME",
+													"type": "Expression"
+												},
+												"ContainerName": {
+													"value": "@pipeline().parameters.sink_container",
+													"type": "Expression"
+												},
+												"Directory": {
+													"value": "@concat(item().TABLE_CATALOG,'/',item().TABLE_SCHEMA,'/',item().TABLE_NAME)",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					},
+					{
+						"name": "retrieve_table_list",
+						"description": "Lookup and retrieve table list from ods_corporate_finance db",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AmazonRdsForSqlServerSource",
+								"sqlReaderQuery": "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' and TABLE_SCHEMA = 'dbo'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SDDCFINSQL",
+								"type": "DatasetReference",
+								"parameters": {
+									"database": {
+										"value": "@pipeline().parameters.sql_server_db",
+										"type": "Expression"
+									}
+								}
+							},
+							"firstRowOnly": false
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"sink_container": {
+						"type": "string",
+						"defaultValue": "elite-archive"
+					},
+					"sql_server_db": {
+						"type": "string",
+						"defaultValue": "son_db"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SDDCFINSQL')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/storage_events_edis-raw-container_csv_created')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
@@ -486,7 +729,9 @@
 					]
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/edis raw to bronze ingestion')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/storage_events_edis-raw-container_csv_deleted')]",
@@ -518,7 +763,9 @@
 					]
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/edis raw to bronze ingestion')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/storage_events_edis-raw-container_parquet_created')]",
@@ -550,7 +797,9 @@
 					]
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/edis raw to bronze ingestion')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/storage_events_edis-raw-container_parquet_deleted')]",
@@ -582,7 +831,9 @@
 					]
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/edis raw to bronze ingestion')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Master Pipeline')]",

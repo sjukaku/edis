@@ -7,6 +7,14 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "edis-adf1"
 		},
+		"AmazonRdsForSqlServer1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AmazonRdsForSqlServer1'"
+		},
+		"AmazonRdsForSqlServer1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AmazonRdsForSqlServer1'"
+		},
 		"HttpSharepointCSV_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'HttpSharepointCSV'"
@@ -30,6 +38,10 @@
 		"ods_corporate_finance_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ods_corporate_finance'"
+		},
+		"AmazonRdsForSqlServer1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "HURONCONSULTING\\sjukaku"
 		},
 		"AzureKeyVault1_properties_typeProperties_baseUrl": {
 			"type": "string",
@@ -74,6 +86,14 @@
 		"hiakeys_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://hiakeys.vault.azure.net/"
+		},
+		"daily refresh 12 pm IST_properties_Salesforce full load_parameters_sink_container": {
+			"type": "string",
+			"defaultValue": "edis-raw"
+		},
+		"daily refresh 12 pm IST_properties_Salesforce full load_parameters_sink_directory": {
+			"type": "string",
+			"defaultValue": "sf"
 		},
 		"storage_events_edis-raw-container_csv_created_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
 			"type": "string",
@@ -123,14 +143,6 @@
 			"type": "string",
 			"defaultValue": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
 		},
-		"daily refresh 12 pm IST_properties_Salesforce full load_parameters_sink_container": {
-			"type": "string",
-			"defaultValue": "edis-raw"
-		},
-		"daily refresh 12 pm IST_properties_Salesforce full load_parameters_sink_directory": {
-			"type": "string",
-			"defaultValue": "sf"
-		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -170,6 +182,12 @@
 					"edisdatalake_connectionString": {
 						"value": "[parameters('edisdatalake_connectionString')]"
 					},
+					"AmazonRdsForSqlServer1_connectionString": {
+						"value": "[parameters('AmazonRdsForSqlServer1_connectionString')]"
+					},
+					"AmazonRdsForSqlServer1_password": {
+						"value": "[parameters('AmazonRdsForSqlServer1_password')]"
+					},
 					"PostgreSql1_connectionString": {
 						"value": "[parameters('PostgreSql1_connectionString')]"
 					},
@@ -202,6 +220,9 @@
 					},
 					"hiakeys_properties_typeProperties_baseUrl": {
 						"value": "[parameters('hiakeys_properties_typeProperties_baseUrl')]"
+					},
+					"AmazonRdsForSqlServer1_properties_typeProperties_userName": {
+						"value": "[parameters('AmazonRdsForSqlServer1_properties_typeProperties_userName')]"
 					},
 					"Salesforce1_properties_typeProperties_environmentUrl": {
 						"value": "[parameters('Salesforce1_properties_typeProperties_environmentUrl')]"
