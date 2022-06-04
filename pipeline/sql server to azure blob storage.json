@@ -50,7 +50,7 @@
 								"source": {
 									"type": "AmazonRdsForSqlServerSource",
 									"sqlReaderQuery": {
-										"value": "@activity('RemoveBlankSpacesFromColumnNames').output",
+										"value": "@activity('RemoveBlankSpacesFromColumnNames').output.firstRow.Query",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00",
