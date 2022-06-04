@@ -87,12 +87,16 @@
 									"referenceName": "sink_edisdatalake",
 									"type": "DatasetReference",
 									"parameters": {
+										"FileName": {
+											"value": "@item().TABLE_NAME",
+											"type": "Expression"
+										},
 										"ContainerName": {
 											"value": "@pipeline().parameters.sink_container",
 											"type": "Expression"
 										},
 										"Directory": {
-											"value": "@concat(item().TABLE_CATALOG,'/',item().TABLE_SCHEMA,'/',item().TABLE_NAME)",
+											"value": "@concat(item().TABLE_CATALOG,'/',item().TABLE_SCHEMA)",
 											"type": "Expression"
 										}
 									}
