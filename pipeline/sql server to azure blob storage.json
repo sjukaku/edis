@@ -44,6 +44,10 @@
 								{
 									"name": "Destination",
 									"value": "@{pipeline().parameters.sink_container}/@{concat(concat(item().TABLE_CATALOG,'/',item().TABLE_SCHEMA,'/',item().TABLE_NAME), '/',item().TABLE_NAME)}/@{concat(formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')}"
+								},
+								{
+									"name": "input",
+									"value": "@{activity('RemoveBlankSpacesFromColumnNames').output.firstRow.Query}"
 								}
 							],
 							"typeProperties": {
@@ -188,7 +192,7 @@
 			},
 			"sql_server_db": {
 				"type": "string",
-				"defaultValue": "son_db"
+				"defaultValue": "FINOPS"
 			}
 		},
 		"annotations": []
