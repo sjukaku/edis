@@ -564,7 +564,14 @@
 								{
 									"name": "Copy given table data from sql server to Elite Archive",
 									"type": "Copy",
-									"dependsOn": [],
+									"dependsOn": [
+										{
+											"activity": "RemoveBlankSpacesFromColumnNames",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
 									"policy": {
 										"timeout": "0.00:45:00",
 										"retry": 0,
@@ -582,7 +589,7 @@
 										"source": {
 											"type": "AmazonRdsForSqlServerSource",
 											"sqlReaderQuery": {
-												"value": "@concat('select * from ',item().TABLE_CATALOG,'.',item().TABLE_SCHEMA,'.',item().TABLE_NAME)",
+												"value": "@activity('RemoveBlankSpacesFromColumnNames').output",
 												"type": "Expression"
 											},
 											"queryTimeout": "02:00:00",
@@ -641,6 +648,40 @@
 											}
 										}
 									]
+								},
+								{
+									"name": "RemoveBlankSpacesFromColumnNames",
+									"type": "Lookup",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "AmazonRdsForSqlServerSource",
+											"sqlReaderQuery": {
+												"value": "@concat(' \n\nDECLARE @s VARCHAR(500) \n\nDECLARE @tablename VARCHAR(500) = ''', item().Table_Name ,''' \n\n \n\nSELECT @s = ISNULL(@s + '', '','''') + ''['' + c.name + '']'' + '' as [''+replace(c.name,'' '',''_'')+''] '' \n\nFROM sys.all_columns c join sys.tables t \n\nON c.object_id = t.object_id \n\nWHERE t.name =  @tablename \n\n \n\nSELECT ''select '' + @s + '' from '' +  @tablename  as Query') ",
+												"type": "Expression"
+											},
+											"queryTimeout": "02:00:00",
+											"partitionOption": "None"
+										},
+										"dataset": {
+											"referenceName": "SDDCFINSQL",
+											"type": "DatasetReference",
+											"parameters": {
+												"database": {
+													"value": "@pipeline().parameters.sql_server_db",
+													"type": "Expression"
+												}
+											}
+										}
+									}
 								}
 							]
 						}
