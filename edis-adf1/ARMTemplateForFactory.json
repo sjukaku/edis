@@ -713,7 +713,7 @@
 										"source": {
 											"type": "AmazonRdsForSqlServerSource",
 											"sqlReaderQuery": {
-												"value": "@concat(' \n\nDECLARE @s VARCHAR(MAX) \n\nDECLARE @tablename VARCHAR(500) = ''', item().Table_Name ,''' \n\n \n\nSELECT @s = ISNULL(@s + '', '','''') + ''['' + c.name + '']'' + '' as [''+replace(c.name,'' '','''')+''] '' \n\nFROM sys.all_columns c join sys.tables t \n\nON c.object_id = t.object_id \n\nWHERE t.name =  @tablename \n\n \n\nSELECT ''select '' + @s + '' from '' +  @tablename  as Query') ",
+												"value": "@concat(' \n\nDECLARE @s VARCHAR(MAX) \n\nDECLARE @tablename VARCHAR(500) = ''', item().Table_Name ,''' \n\n \n\nSELECT @s = ISNULL(@s + '', '','''') + ''['' + c.name + '']'' + '' as [''+replace(c.name,'' '','''')+''] '' \n\nFROM sys.all_columns c join sys.tables t \n\nON c.object_id = t.object_id \n\nWHERE t.name =  @tablename \n\n \n\nSELECT ''select '' + @s + '' from ['' +  @tablename +'']''  as Query') ",
 												"type": "Expression"
 											},
 											"queryTimeout": "02:00:00",
@@ -751,7 +751,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "AmazonRdsForSqlServerSource",
-								"sqlReaderQuery": "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' and TABLE_SCHEMA = 'dbo'",
+								"sqlReaderQuery": "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' and TABLE_SCHEMA = 'dbo'\nand TABLE_NAME in ('SSIS Configurations')",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
