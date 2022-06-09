@@ -45,11 +45,22 @@
 									"type": "SalesforceSource",
 									"additionalColumns": [
 										{
-											"name": "Extraction_datetime",
+											"name": "EDISStartDateTime_UTC",
 											"value": {
 												"value": "@utcnow()",
 												"type": "Expression"
 											}
+										},
+										{
+											"name": "EDISEndDateTime_UTC",
+											"value": {
+												"value": "@formatdatetime('99991231','yyyy/MM/dd')",
+												"type": "Expression"
+											}
+										},
+										{
+											"name": "EDISIsCurrent",
+											"value": "Y"
 										}
 									],
 									"readBehavior": "queryAll"
