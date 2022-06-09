@@ -1,7 +1,7 @@
 {
-	"name": "Salesforce full load",
+	"name": "Salesforce SCD 6 load",
 	"properties": {
-		"description": "Load all tables from salesforce to edis-gold container by creating appropriate directories",
+		"description": "Load all tables from salesforce to edis-salesforce-raw container by creating appropriate directories",
 		"activities": [
 			{
 				"name": "load_each_table",
@@ -126,23 +126,14 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": false,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
+						"type": "AzureDatabricksDeltaLakeSource"
 					},
 					"dataset": {
-						"referenceName": "csv_edisdatalake",
+						"referenceName": "AzureDatabricksDeltaLakeDataset",
 						"type": "DatasetReference",
 						"parameters": {
-							"Container": "edis-gold",
-							"Directory": "salesforce",
-							"Filename": "sf_objects.csv"
+							"databasename": "salesforce_bronze",
+							"tablename": "salesforce_objects"
 						}
 					},
 					"firstRowOnly": false
@@ -152,11 +143,11 @@
 		"parameters": {
 			"sink_container": {
 				"type": "string",
-				"defaultValue": "edis-salesforce-raw"
+				"defaultValue": "edis-raw"
 			},
 			"sink_directory": {
 				"type": "string",
-				"defaultValue": "salesforce"
+				"defaultValue": "sf"
 			}
 		},
 		"annotations": [],
