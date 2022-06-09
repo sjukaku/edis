@@ -1,0 +1,39 @@
+{
+	"name": "AzureDatabricksDeltaLakeDataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "edis_delta_lake",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"databasename": {
+				"type": "string"
+			},
+			"tablename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureDatabricksDeltaLakeDataset",
+		"typeProperties": {
+			"database": {
+				"value": "@dataset().databasename",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().tablename",
+				"type": "Expression"
+			}
+		},
+		"schema": [
+			{
+				"name": "Label",
+				"type": "string"
+			},
+			{
+				"name": "API_Name",
+				"type": "string"
+			}
+		]
+	}
+}
