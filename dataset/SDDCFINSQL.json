@@ -19,6 +19,10 @@
 		},
 		"annotations": [],
 		"type": "AmazonRdsForSqlServerTable",
-		"schema": []
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "spt_fallback_db"
+		}
 	}
 }
