@@ -234,7 +234,7 @@
 									"dependsOn": [],
 									"policy": {
 										"timeout": "0.00:45:00",
-										"retry": 0,
+										"retry": 3,
 										"retryIntervalInSeconds": 30,
 										"secureOutput": false,
 										"secureInput": false
@@ -270,7 +270,7 @@
 										},
 										"enableStaging": false,
 										"parallelCopies": 10,
-										"validateDataConsistency": false,
+										"validateDataConsistency": true,
 										"translator": {
 											"type": "TabularTranslator",
 											"typeConversion": true,
