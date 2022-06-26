@@ -15,6 +15,10 @@
 				"secretName": "sf-cor-in-pasword"
 			},
 			"apiVersion": "52.0"
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntime2",
+			"type": "IntegrationRuntimeReference"
 		}
 	},
 	"type": "Microsoft.DataFactory/factories/linkedservices"
