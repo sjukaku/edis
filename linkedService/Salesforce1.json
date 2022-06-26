@@ -5,20 +5,24 @@
 		"type": "Salesforce",
 		"typeProperties": {
 			"environmentUrl": "https://login.salesforce.com",
-			"username": "cor-in_datainsight@huronconsultinggroup.com.prod",
+			"username": "hia@hcg.com.prod",
 			"password": {
 				"type": "AzureKeyVaultSecret",
 				"store": {
 					"referenceName": "hiakeys",
 					"type": "LinkedServiceReference"
 				},
-				"secretName": "sf-cor-in-pasword"
+				"secretName": "sf-hia-password"
+			},
+			"securityToken": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "hiakeys",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "sf-hia-token"
 			},
 			"apiVersion": "52.0"
-		},
-		"connectVia": {
-			"referenceName": "integrationRuntime2",
-			"type": "IntegrationRuntimeReference"
 		}
 	},
 	"type": "Microsoft.DataFactory/factories/linkedservices"
