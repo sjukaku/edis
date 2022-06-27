@@ -6,12 +6,12 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "Salesforce full load",
+					"referenceName": "Salesforce Data Pipeline",
 					"type": "PipelineReference"
 				},
 				"parameters": {
-					"sink_container": "edis-raw",
-					"sink_directory": "sf"
+					"sink_container": "edis-salesforce-raw",
+					"sink_directory": "salesforce"
 				}
 			}
 		],
