@@ -3,7 +3,18 @@
 	"properties": {
 		"annotations": [],
 		"runtimeState": "Started",
-		"pipelines": [],
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Salesforce Data Pipeline",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"sink_container": "edis-salesforce-raw",
+					"sink_directory": "salesforce"
+				}
+			}
+		],
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
