@@ -1,0 +1,116 @@
+{
+	"name": "_Master Salesforce Data Pipeline",
+	"properties": {
+		"description": "Data pipeline for objects -> Opportunity,  contact, case, lead",
+		"activities": [
+			{
+				"name": "Salesforce Data Pipeline 1",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Salesforce Data Pipeline1",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"sink_container": {
+							"value": "@pipeline().parameters.sink_container",
+							"type": "Expression"
+						},
+						"sink_directory": {
+							"value": "@pipeline().parameters.sink_directory",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Salesforce Data Pipeline 2",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Salesforce Data Pipeline2",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"sink_container": {
+							"value": "@pipeline().parameters.sink_container",
+							"type": "Expression"
+						},
+						"sink_directory": {
+							"value": "@pipeline().parameters.sink_directory",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Salesforce Data Pipeline 3",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Salesforce Data Pipeline4",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"sink_container": {
+							"value": "@pipeline().parameters.sink_container",
+							"type": "Expression"
+						},
+						"sink_directory": {
+							"value": "@pipeline().parameters.sink_directory",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Salesforce Data Pipeline 4",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Salesforce Data Pipeline4",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"sink_container": {
+							"value": "@pipeline().parameters.sink_container",
+							"type": "Expression"
+						},
+						"sink_directory": {
+							"value": "@pipeline().parameters.sink_directory",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"sink_container": {
+				"type": "string",
+				"defaultValue": "edis-salesforce-raw"
+			},
+			"sink_directory": {
+				"type": "string",
+				"defaultValue": "salesforce"
+			}
+		},
+		"folder": {
+			"name": "Salesforce Pipelines"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-04-09T09:05:10Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

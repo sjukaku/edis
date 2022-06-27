@@ -1,6 +1,7 @@
 {
 	"name": "Salesforce Data Pipeline4",
 	"properties": {
+		"description": "data pipeline for objects -> opportunity_line_item, sales_credit, sales_credit_employee, task_who_relation, campaign_member, opportunity_line_item_schedule",
 		"activities": [
 			{
 				"name": "Account",
