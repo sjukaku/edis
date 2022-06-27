@@ -6,7 +6,7 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "Salesforce Data Pipeline",
+					"referenceName": "Salesforce Data Pipeline1",
 					"type": "PipelineReference"
 				},
 				"parameters": {
