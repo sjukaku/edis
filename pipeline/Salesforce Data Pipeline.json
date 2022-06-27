@@ -39737,6 +39737,996 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "Raw to Bronze - Team",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "team",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_team",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/team/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - Product2",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "product2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_product2",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/product2/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - survey_question",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "survey_question",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_survey_question",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/survey_question/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - contract",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "contract",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_contract",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/contract/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - survey_invitation",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "survey_invitation",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_survey_invitation",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/survey_invitation/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - user",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "user",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_user",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/user/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - opportunity_contact_role",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "opportunity_contact_role",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_opportunity_contact_role",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/opportunity_contact_role/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - task",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "task",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_task",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/task/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - survey_question_response",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "survey_question_response",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_survey_question_response",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/survey_question_response/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - survey",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "survey",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_survey",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/survey/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - record_type",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "record_type",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_record_type",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/record_type/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - survey_response",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "survey_response",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_survey_response",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/survey_response/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - asset",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "asset",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_asset",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/asset/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - account_team_member",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "account_team_member",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_account_team_member",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/account_team_member/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - event_who_relation",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "event_who_relation",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_event_who_relation",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/event_who_relation/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - team_solution",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "team_solution",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_team_solution",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/team_solution/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - task_who_relation",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "task_who_relation",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_task_who_relation",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/task_who_relation/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - campaign_member",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "campaign_member",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_campaign_member",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/campaign_member/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - account",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Account",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_account",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/account/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - opportunity",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Opportunity",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_opportunity",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/opportunity/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - event",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Event",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_event",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/event/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - contact",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "contact",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_contact",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/contact/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - case",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "case",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_case",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/case/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - lead",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "lead",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_lead",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/lead/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - opportunity_line_item",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "opportunity_line_item",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_opportunity_line_item",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/opportunity_line_item/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - sales_credit",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "sales_credit",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_sales_credit",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/sales_credit/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - sales_credit_employee",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "sales_credit_employee",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_sales_credit_employee",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/sales_credit_employee/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - opportunity_line_item_schedule",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "opportunity_line_item_schedule",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_opportunity_line_item_schedule",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/opportunity_line_item_schedule/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - campaign",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "campaign",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_campaign",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/campaign/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Raw to Bronze - account_affiliation",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "account_affiliation",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_account_affiliation",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/account_affiliation/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"parameters": {
