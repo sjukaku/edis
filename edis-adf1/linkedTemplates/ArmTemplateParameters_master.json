@@ -5,29 +5,47 @@
 		"factoryName": {
 			"value": "edis-adf1"
 		},
-		"PostgreSql1_connectionString": {
-			"value": ""
-		},
-		"ods_corporate_finance_connectionString": {
-			"value": ""
-		},
-		"edisdatalake_connectionString": {
-			"value": ""
-		},
 		"AmazonRdsForSqlServer1_connectionString": {
 			"value": ""
 		},
 		"AmazonRdsForSqlServer1_password": {
 			"value": ""
 		},
-		"edisdatalake1_connectionString": {
+		"HttpSharepointCSV_password": {
 			"value": ""
 		},
-		"NK_Post1_connectionString": {
+		"Http_Sharepoint_password": {
 			"value": ""
 		},
-		"hiakeys_properties_typeProperties_baseUrl": {
-			"value": "https://hiakeys.vault.azure.net/"
+		"PostgreSql1_connectionString": {
+			"value": ""
+		},
+		"Sharepoint_Odata_password": {
+			"value": ""
+		},
+		"edisdatalake_connectionString": {
+			"value": ""
+		},
+		"ods_corporate_finance_connectionString": {
+			"value": ""
+		},
+		"AmazonRdsForSqlServer1_properties_typeProperties_userName": {
+			"value": "HURONCONSULTING\\sjukaku"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://edislakehousekeys.vault.azure.net/"
+		},
+		"HttpSharepointCSV_properties_typeProperties_url": {
+			"value": "@{linkedService().url}"
+		},
+		"HttpSharepointCSV_properties_typeProperties_userName": {
+			"value": "sjukaku"
+		},
+		"Http_Sharepoint_properties_typeProperties_url": {
+			"value": "@{linkedService().Baseurl}"
+		},
+		"Http_Sharepoint_properties_typeProperties_userName": {
+			"value": "sjukaku"
 		},
 		"Salesforce1_properties_typeProperties_environmentUrl": {
 			"value": "https://login.salesforce.com"
@@ -35,14 +53,23 @@
 		"Salesforce1_properties_typeProperties_username": {
 			"value": "hia@hcg.com.prod"
 		},
-		"AzureKeyVault1_properties_typeProperties_baseUrl": {
-			"value": "https://edislakehousekeys.vault.azure.net/"
+		"Sharepoint_Odata_properties_typeProperties_url": {
+			"value": "https://huroncg.sharepoint.com/sites/"
+		},
+		"Sharepoint_Odata_properties_typeProperties_userName": {
+			"value": "sjukaku"
 		},
 		"edis_databricks_properties_typeProperties_baseUrl": {
 			"value": "https://edislakehousekeys.vault.azure.net/"
 		},
-		"AmazonRdsForSqlServer1_properties_typeProperties_userName": {
-			"value": "HURONCONSULTING\\sjukaku"
+		"hiakeys_properties_typeProperties_baseUrl": {
+			"value": "https://hiakeys.vault.azure.net/"
+		},
+		"daily refresh 12 pm IST_properties_Salesforce Data Pipeline_parameters_sink_container": {
+			"value": "edis-salesforce-raw"
+		},
+		"daily refresh 12 pm IST_properties_Salesforce Data Pipeline_parameters_sink_directory": {
+			"value": "salesforce"
 		},
 		"storage_events_edis-raw-container_csv_created_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
 			"value": "@triggerBody().folderPath"
@@ -51,6 +78,15 @@
 			"value": "@triggerBody().fileName"
 		},
 		"storage_events_edis-raw-container_csv_created_properties_typeProperties_scope": {
+			"value": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
+		},
+		"storage_events_edis-raw-container_csv_deleted_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
+			"value": "@triggerBody().folderPath"
+		},
+		"storage_events_edis-raw-container_csv_deleted_properties_edis raw to bronze ingestion_parameters_SourceFile": {
+			"value": "@triggerBody().fileName"
+		},
+		"storage_events_edis-raw-container_csv_deleted_properties_typeProperties_scope": {
 			"value": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
 		},
 		"storage_events_edis-raw-container_parquet_created_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
@@ -70,21 +106,6 @@
 		},
 		"storage_events_edis-raw-container_parquet_deleted_properties_typeProperties_scope": {
 			"value": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
-		},
-		"storage_events_edis-raw-container_csv_deleted_properties_edis raw to bronze ingestion_parameters_SourceFolder": {
-			"value": "@triggerBody().folderPath"
-		},
-		"storage_events_edis-raw-container_csv_deleted_properties_edis raw to bronze ingestion_parameters_SourceFile": {
-			"value": "@triggerBody().fileName"
-		},
-		"storage_events_edis-raw-container_csv_deleted_properties_typeProperties_scope": {
-			"value": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
-		},
-		"daily refresh 12 pm IST_properties_Salesforce full load_parameters_sink_container": {
-			"value": "edis-raw"
-		},
-		"daily refresh 12 pm IST_properties_Salesforce full load_parameters_sink_directory": {
-			"value": "sf"
 		},
 		"containerUri": {
 			"value": ""
