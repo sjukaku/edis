@@ -65,10 +65,10 @@
 		"hiakeys_properties_typeProperties_baseUrl": {
 			"value": "https://hiakeys.vault.azure.net/"
 		},
-		"daily refresh 12 pm IST_properties_Salesforce Data Pipeline_parameters_sink_container": {
+		"daily refresh 12 pm IST_properties__Master Salesforce Data Pipeline_parameters_sink_container": {
 			"value": "edis-salesforce-raw"
 		},
-		"daily refresh 12 pm IST_properties_Salesforce Data Pipeline_parameters_sink_directory": {
+		"daily refresh 12 pm IST_properties__Master Salesforce Data Pipeline_parameters_sink_directory": {
 			"value": "salesforce"
 		},
 		"storage_events_edis-raw-container_csv_created_properties_edis raw to bronze ingestion_parameters_SourceFolder": {

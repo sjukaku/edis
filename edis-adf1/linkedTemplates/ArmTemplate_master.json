@@ -87,11 +87,11 @@
 			"type": "string",
 			"defaultValue": "https://hiakeys.vault.azure.net/"
 		},
-		"daily refresh 12 pm IST_properties_Salesforce Data Pipeline_parameters_sink_container": {
+		"daily refresh 12 pm IST_properties__Master Salesforce Data Pipeline_parameters_sink_container": {
 			"type": "string",
 			"defaultValue": "edis-salesforce-raw"
 		},
-		"daily refresh 12 pm IST_properties_Salesforce Data Pipeline_parameters_sink_directory": {
+		"daily refresh 12 pm IST_properties__Master Salesforce Data Pipeline_parameters_sink_directory": {
 			"type": "string",
 			"defaultValue": "salesforce"
 		},
@@ -284,11 +284,11 @@
 					"storage_events_edis-raw-container_parquet_deleted_properties_typeProperties_scope": {
 						"value": "[parameters('storage_events_edis-raw-container_parquet_deleted_properties_typeProperties_scope')]"
 					},
-					"daily refresh 12 pm IST_properties_Salesforce Data Pipeline_parameters_sink_container": {
-						"value": "[parameters('daily refresh 12 pm IST_properties_Salesforce Data Pipeline_parameters_sink_container')]"
+					"daily refresh 12 pm IST_properties__Master Salesforce Data Pipeline_parameters_sink_container": {
+						"value": "[parameters('daily refresh 12 pm IST_properties__Master Salesforce Data Pipeline_parameters_sink_container')]"
 					},
-					"daily refresh 12 pm IST_properties_Salesforce Data Pipeline_parameters_sink_directory": {
-						"value": "[parameters('daily refresh 12 pm IST_properties_Salesforce Data Pipeline_parameters_sink_directory')]"
+					"daily refresh 12 pm IST_properties__Master Salesforce Data Pipeline_parameters_sink_directory": {
+						"value": "[parameters('daily refresh 12 pm IST_properties__Master Salesforce Data Pipeline_parameters_sink_directory')]"
 					}
 				}
 			},
