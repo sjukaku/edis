@@ -13,6 +13,16 @@
 					"sink_container": "edis-salesforce-raw",
 					"sink_directory": "salesforce"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "_Master Salesforce Data Pipeline",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"sink_container": "edis-salesforce-raw",
+					"sink_directory": "salesforce"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
