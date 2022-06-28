@@ -4,7 +4,7 @@
 		"description": "Data Pipeline for object ->Events,\naccount_affiliation, contract, opportunity_contract_role, campaign, survey_invitation, task, user",
 		"activities": [
 			{
-				"name": "Event",
+				"name": "event",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -1201,7 +1201,7 @@
 						"referenceName": "SalesforceObject",
 						"type": "DatasetReference",
 						"parameters": {
-							"TableName": "Event"
+							"TableName": "event"
 						}
 					}
 				],
@@ -1210,7 +1210,7 @@
 						"referenceName": "sink_edisdatalake",
 						"type": "DatasetReference",
 						"parameters": {
-							"FileName": "Event",
+							"FileName": "event",
 							"ContainerName": {
 								"value": "@pipeline().parameters.sink_container",
 								"type": "Expression"
@@ -1228,7 +1228,7 @@
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
-						"activity": "Event",
+						"activity": "event",
 						"dependencyConditions": [
 							"Succeeded"
 						]
