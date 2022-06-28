@@ -4861,13 +4861,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_team",
-					"baseParameters": {
-						"File_Path": {
-							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/team/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
-							"type": "Expression"
-						}
-					}
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_team"
 				},
 				"linkedServiceName": {
 					"referenceName": "edis_azure_databricks",
@@ -4894,13 +4888,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_product2",
-					"baseParameters": {
-						"File_Path": {
-							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/product2/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
-							"type": "Expression"
-						}
-					}
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_product2"
 				},
 				"linkedServiceName": {
 					"referenceName": "edis_azure_databricks",
@@ -4927,13 +4915,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_record_type",
-					"baseParameters": {
-						"File_Path": {
-							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/record_type/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
-							"type": "Expression"
-						}
-					}
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_record_type"
 				},
 				"linkedServiceName": {
 					"referenceName": "edis_azure_databricks",
@@ -4960,13 +4942,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_survey_response",
-					"baseParameters": {
-						"File_Path": {
-							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/survey_response/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
-							"type": "Expression"
-						}
-					}
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_survey_response"
 				},
 				"linkedServiceName": {
 					"referenceName": "edis_azure_databricks",
@@ -4993,13 +4969,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_survey",
-					"baseParameters": {
-						"File_Path": {
-							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/survey/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
-							"type": "Expression"
-						}
-					}
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_survey"
 				},
 				"linkedServiceName": {
 					"referenceName": "edis_azure_databricks",
@@ -5026,13 +4996,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_survey_question_response",
-					"baseParameters": {
-						"File_Path": {
-							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/survey_question_response/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
-							"type": "Expression"
-						}
-					}
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_survey_question_response"
 				},
 				"linkedServiceName": {
 					"referenceName": "edis_azure_databricks",
@@ -5059,13 +5023,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_asset",
-					"baseParameters": {
-						"File_Path": {
-							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/asset/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
-							"type": "Expression"
-						}
-					}
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_asset"
 				},
 				"linkedServiceName": {
 					"referenceName": "edis_azure_databricks",
@@ -5092,13 +5050,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_account_team_member",
-					"baseParameters": {
-						"File_Path": {
-							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/account_team_member/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
-							"type": "Expression"
-						}
-					}
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_account_team_member"
 				},
 				"linkedServiceName": {
 					"referenceName": "edis_azure_databricks",
@@ -5125,13 +5077,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_survey_question",
-					"baseParameters": {
-						"File_Path": {
-							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/survey_question/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
-							"type": "Expression"
-						}
-					}
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_survey_question"
 				},
 				"linkedServiceName": {
 					"referenceName": "edis_azure_databricks",
@@ -5158,13 +5104,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_event_who_relation",
-					"baseParameters": {
-						"File_Path": {
-							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/event_who_relation/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
-							"type": "Expression"
-						}
-					}
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_event_who_relation"
 				},
 				"linkedServiceName": {
 					"referenceName": "edis_azure_databricks",
@@ -5191,13 +5131,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_team_solution",
-					"baseParameters": {
-						"File_Path": {
-							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/team_solution/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
-							"type": "Expression"
-						}
-					}
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_team_solution"
 				},
 				"linkedServiceName": {
 					"referenceName": "edis_azure_databricks",

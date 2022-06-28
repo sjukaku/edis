@@ -18835,6 +18835,114 @@
 					"referenceName": "edis_azure_databricks",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "BronzeToSilver - opportunity",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Raw to Bronze - opportunity",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_opportunity"
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "BronzeToSilver - contact",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Raw to Bronze - contact",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_contact"
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "BronzeToSilver - case",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Raw to Bronze - case",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_case"
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "BronzeToSilver - lead",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Raw to Bronze - lead",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_lead"
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"parameters": {
