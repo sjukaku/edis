@@ -56,7 +56,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "Salesforce Data Pipeline4",
+						"referenceName": "Salesforce Data Pipeline3",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
