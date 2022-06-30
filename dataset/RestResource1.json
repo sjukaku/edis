@@ -1,0 +1,34 @@
+{
+	"name": "RestResource1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Workday",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"base_url": {
+					"value": "@dataset().base_url",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"base_url": {
+				"type": "string",
+				"defaultValue": "https://services1.myworkday.com/ccx/service"
+			},
+			"relative_url": {
+				"type": "string",
+				"defaultValue": "/customreport2/huron/ISU_INT-SFDC-02_FDM+Extract/HIA_Extract_Cost_Centers?format=csv"
+			}
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": {
+				"value": "@dataset().relative_url",
+				"type": "Expression"
+			}
+		},
+		"schema": []
+	}
+}
