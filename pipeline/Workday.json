@@ -1,0 +1,43 @@
+{
+	"name": "Workday",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"paginationRules": {
+							"supportRFC5988": "true"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "RestResource1",
+						"type": "DatasetReference",
+						"parameters": {
+							"base_url": "https://services1.myworkday.com/ccx/service",
+							"relative_url": "/customreport2/huron/ISU_INT-SFDC-02_FDM+Extract/HIA_Extract_Cost_Centers?format=csv"
+						}
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
