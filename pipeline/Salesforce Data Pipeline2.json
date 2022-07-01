@@ -19171,7 +19171,7 @@
 					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_case_contact_role",
 					"baseParameters": {
 						"File_Path": {
-							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/case/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/case_Contact_role/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
 							"type": "Expression"
 						}
 					}
@@ -19600,7 +19600,7 @@
 					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_opportunity_hd",
 					"baseParameters": {
 						"File_Path": {
-							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/opportunity/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/opportunity_hd/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
 							"type": "Expression"
 						}
 					}
