@@ -4,7 +4,7 @@
 		"parameters": {
 			"url": {
 				"type": "string",
-				"defaultValue": "https://services1.myworkday.com/ccx/service/customreport2/huron/ISU_INT-SFDC-02_FDM+Extract/HIA_Extract_Cost_Centers?format=json"
+				"defaultValue": "https://services1.myworkday.com/ccx/service/customreport2/huron/ISU_INT-SFDC-02_FDM+Extract/"
 			}
 		},
 		"annotations": [],
