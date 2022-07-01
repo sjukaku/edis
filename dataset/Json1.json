@@ -1,0 +1,75 @@
+{
+	"name": "Json1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "HttpServer1",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"url": "https://services1.myworkday.com/ccx/service/customreport2/huron/ISU_INT-SFDC-02_FDM+Extract/"
+			}
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": "HIA_Extract_Cost_Centers?format=json"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"Report_Entry": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"Cost_Center": {
+								"type": "string"
+							},
+							"CCH_L2_RefID": {
+								"type": "string"
+							},
+							"CCH_L1_RefID": {
+								"type": "string"
+							},
+							"Cost_Center_Manager": {
+								"type": "string"
+							},
+							"Cost_Center_Hierarchy_L2": {
+								"type": "string"
+							},
+							"Created_Moment": {
+								"type": "string"
+							},
+							"CCH_L2_WD_ID": {
+								"type": "string"
+							},
+							"Reference_ID": {
+								"type": "string"
+							},
+							"Inactive": {
+								"type": "string"
+							},
+							"Workday_ID": {
+								"type": "string"
+							},
+							"Cost_Center_Hierarchy_L1": {
+								"type": "string"
+							},
+							"Cost_Center_Name": {
+								"type": "string"
+							},
+							"CCH_L1_WD_ID": {
+								"type": "string"
+							},
+							"Cost_Center_Code": {
+								"type": "string"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
