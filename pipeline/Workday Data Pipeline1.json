@@ -37,8 +37,7 @@
 					"sink": {
 						"type": "ParquetSink",
 						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings",
-							"copyBehavior": "FlattenHierarchy"
+							"type": "AzureBlobStorageWriteSettings"
 						},
 						"formatSettings": {
 							"type": "ParquetWriteSettings"
@@ -388,7 +387,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_cost_centers",
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/wd_cost_centers",
 					"baseParameters": {
 						"File_Path": {
 							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/cost_centers/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
@@ -421,7 +420,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_cost_centers"
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/wd_cost_centers"
 				},
 				"linkedServiceName": {
 					"referenceName": "edis_azure_databricks",
