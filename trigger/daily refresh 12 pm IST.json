@@ -6,12 +6,8 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "_Master Salesforce Data Pipeline",
+					"referenceName": "Master Pipeline",
 					"type": "PipelineReference"
-				},
-				"parameters": {
-					"sink_container": "edis-salesforce-raw",
-					"sink_directory": "salesforce"
 				}
 			}
 		],
