@@ -11,16 +11,13 @@
 		"AmazonRdsForSqlServer1_password": {
 			"value": ""
 		},
-		"HttpSharepointCSV_password": {
-			"value": ""
-		},
-		"Http_Sharepoint_password": {
-			"value": ""
-		},
 		"PostgreSql1_connectionString": {
 			"value": ""
 		},
 		"Sharepoint_Odata_password": {
+			"value": ""
+		},
+		"Workday_password": {
 			"value": ""
 		},
 		"edisdatalake_connectionString": {
@@ -35,17 +32,11 @@
 		"AzureKeyVault1_properties_typeProperties_baseUrl": {
 			"value": "https://edislakehousekeys.vault.azure.net/"
 		},
-		"HttpSharepointCSV_properties_typeProperties_url": {
+		"HttpServer1_properties_typeProperties_url": {
 			"value": "@{linkedService().url}"
 		},
-		"HttpSharepointCSV_properties_typeProperties_userName": {
-			"value": "sjukaku"
-		},
-		"Http_Sharepoint_properties_typeProperties_url": {
-			"value": "@{linkedService().Baseurl}"
-		},
-		"Http_Sharepoint_properties_typeProperties_userName": {
-			"value": "sjukaku"
+		"HttpServer1_properties_typeProperties_userName": {
+			"value": "ISU_INT-SFDC-02_FDM Extract"
 		},
 		"Salesforce1_properties_typeProperties_environmentUrl": {
 			"value": "https://login.salesforce.com"
@@ -58,6 +49,12 @@
 		},
 		"Sharepoint_Odata_properties_typeProperties_userName": {
 			"value": "sjukaku"
+		},
+		"Workday_properties_typeProperties_url": {
+			"value": "@{linkedService().base_url}"
+		},
+		"Workday_properties_typeProperties_userName": {
+			"value": "ISU_INT-SFDC-02_FDM Extract"
 		},
 		"edis_databricks_properties_typeProperties_baseUrl": {
 			"value": "https://edislakehousekeys.vault.azure.net/"

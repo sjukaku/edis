@@ -54,14 +54,6 @@
 		"storage_events_edis-raw-container_parquet_deleted_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/531bfae8-fc87-4a43-b0a7-fbc7e9736fcc/resourceGroups/EDIS_Lakehouse/providers/Microsoft.Storage/storageAccounts/edisdatalake1"
-		},
-		"daily refresh 12 pm IST_properties__Master Salesforce Data Pipeline_parameters_sink_container": {
-			"type": "string",
-			"defaultValue": "edis-salesforce-raw"
-		},
-		"daily refresh 12 pm IST_properties__Master Salesforce Data Pipeline_parameters_sink_directory": {
-			"type": "string",
-			"defaultValue": "salesforce"
 		}
 	},
 	"variables": {
@@ -175,6 +167,43 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Workdaycsv')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "HttpServer1",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"url": "https://services1.myworkday.com/ccx/service/customreport2/huron/ISU_INT-SFDC-02_FDM+Extract/"
+					}
+				},
+				"parameters": {
+					"relative_url": {
+						"type": "string",
+						"defaultValue": "HIA_Extract_Cost_Centers?format=csv"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "HttpServerLocation",
+						"relativeUrl": {
+							"value": "@dataset().relative_url",
+							"type": "Expression"
+						}
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/postgres_ods_corporate_finance')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -206,6 +235,39 @@
 						"type": "Expression"
 					}
 				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/workdayjson')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "HttpServer1",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"url": "https://services1.myworkday.com/ccx/service/customreport2/huron/ISU_INT-SFDC-02_FDM+Extract/"
+					}
+				},
+				"parameters": {
+					"relative_url": {
+						"type": "string",
+						"defaultValue": "HIA_Extract_Cost_Centers?format=json"
+					}
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "HttpServerLocation",
+						"relativeUrl": {
+							"value": "@dataset().relative_url",
+							"type": "Expression"
+						}
+					}
+				},
+				"schema": {}
 			},
 			"dependsOn": []
 		},
@@ -4704,7 +4766,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -4737,7 +4799,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -4770,7 +4832,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -4803,7 +4865,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -4836,7 +4898,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -4869,7 +4931,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -4902,7 +4964,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -4935,7 +4997,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -4968,7 +5030,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -5001,7 +5063,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -5034,7 +5096,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -5067,7 +5129,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -5094,7 +5156,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -5121,7 +5183,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -5148,7 +5210,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -5175,7 +5237,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -5202,7 +5264,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -5229,7 +5291,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -5256,7 +5318,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -5283,7 +5345,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -5310,7 +5372,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -5337,7 +5399,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -24097,7 +24159,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -24130,7 +24192,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -24163,7 +24225,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -24196,7 +24258,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -24229,7 +24291,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -24256,7 +24318,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -24283,7 +24345,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -24310,7 +24372,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -24318,6 +24380,699 @@
 						"userProperties": [],
 						"typeProperties": {
 							"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_lead"
+						},
+						"linkedServiceName": {
+							"referenceName": "edis_azure_databricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "case_contact_role",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "case",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.00:45:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"additionalColumns": [
+									{
+										"name": "Extraction_datetime",
+										"value": {
+											"value": "@utcnow()",
+											"type": "Expression"
+										}
+									}
+								],
+								"readBehavior": "query"
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"parallelCopies": 8,
+							"validateDataConsistency": true,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Id",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Id",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "CasesId",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CasesId",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "ContactId",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ContactId",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "Role",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Role",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "CreatedDate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "CreatedDate",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "CreatedById",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CreatedById",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "LastModifiedDate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "LastModifiedDate",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "LastModifiedById",
+											"type": "String"
+										},
+										"sink": {
+											"name": "LastModifiedById",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "SystemModstamp",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "SystemModstamp",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "IsDeleted",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsDeleted",
+											"type": "Boolean",
+											"physicalType": "BOOLEAN"
+										}
+									},
+									{
+										"source": {
+											"name": "Extraction_datetime",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Extraction_datetime",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SalesforceObject",
+								"type": "DatasetReference",
+								"parameters": {
+									"TableName": "casecontactrole"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "sink_edisdatalake",
+								"type": "DatasetReference",
+								"parameters": {
+									"FileName": "case_contact_role",
+									"ContainerName": {
+										"value": "@pipeline().parameters.sink_container",
+										"type": "Expression"
+									},
+									"Directory": {
+										"value": "@pipeline().parameters.sink_directory",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					},
+					{
+						"name": "Raw to Bronze - case_contact_role",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "case_contact_role",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_case_contact_role",
+							"baseParameters": {
+								"File_Path": {
+									"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/case_Contact_role/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+									"type": "Expression"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "edis_azure_databricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "BronzeToSilver - case_contact_role",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Raw to Bronze - case_contact_role",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_case_contact_role"
+						},
+						"linkedServiceName": {
+							"referenceName": "edis_azure_databricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Opportunity_hd",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Opportunity",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.00:45:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"additionalColumns": [
+									{
+										"name": "Extraction_datetime",
+										"value": {
+											"value": "@utcnow()",
+											"type": "Expression"
+										}
+									}
+								],
+								"readBehavior": "query"
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"parallelCopies": 8,
+							"validateDataConsistency": true,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Id",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Id",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "ParentId",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ParentId",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "IsDeleted",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsDeleted",
+											"type": "Boolean",
+											"physicalType": "BOOLEAN"
+										}
+									},
+									{
+										"source": {
+											"name": "CurrencyIsoCode",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CurrencyIsoCode",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "ValidFromDate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "ValidFromDate",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "ValidToDate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "ValidToDate",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "CreatedDate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "CreatedDate",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "CreatedById",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CreatedById",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "SystemModstamp",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "SystemModstamp",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "Amount__hpr",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Amount__hpr",
+											"type": "Decimal",
+											"physicalType": "DECIMAL"
+										}
+									},
+									{
+										"source": {
+											"name": "Amount__hst",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Amount__hst",
+											"type": "Decimal",
+											"physicalType": "DECIMAL"
+										}
+									},
+									{
+										"source": {
+											"name": "CloseDate__hpr",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "CloseDate__hpr",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "CloseDate__hst",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "CloseDate__hst",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "StageName__hpr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "StageName__hpr",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "StageName__hst",
+											"type": "String"
+										},
+										"sink": {
+											"name": "StageName__hst",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "Probability__hpr",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Probability__hpr",
+											"type": "Decimal",
+											"physicalType": "DECIMAL"
+										}
+									},
+									{
+										"source": {
+											"name": "Probability__hst",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Probability__hst",
+											"type": "Decimal",
+											"physicalType": "DECIMAL"
+										}
+									},
+									{
+										"source": {
+											"name": "ForecastCategoryName__hpr",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ForecastCategoryName__hpr",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "ForecastCategoryName__hst",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ForecastCategoryName__hst",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "Estimated_Duration__c_hpr",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Estimated_Duration__c_hpr",
+											"type": "Decimal",
+											"physicalType": "DECIMAL"
+										}
+									},
+									{
+										"source": {
+											"name": "Estimated_Duration__c_hst",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Estimated_Duration__c_hst",
+											"type": "Decimal",
+											"physicalType": "DECIMAL"
+										}
+									},
+									{
+										"source": {
+											"name": "Estimated_Start_Date__c_hpr",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Estimated_Start_Date__c_hpr",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "Estimated_Start_Date__c_hst",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Estimated_Start_Date__c_hst",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "Total_Opportunity_Amount__c_hpr",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Total_Opportunity_Amount__c_hpr",
+											"type": "Decimal",
+											"physicalType": "DECIMAL"
+										}
+									},
+									{
+										"source": {
+											"name": "Total_Opportunity_Amount__c_hst",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Total_Opportunity_Amount__c_hst",
+											"type": "Decimal",
+											"physicalType": "DECIMAL"
+										}
+									},
+									{
+										"source": {
+											"name": "Extraction_datetime",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Extraction_datetime",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SalesforceObject",
+								"type": "DatasetReference",
+								"parameters": {
+									"TableName": "Opportunity__hd"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "sink_edisdatalake",
+								"type": "DatasetReference",
+								"parameters": {
+									"FileName": "opportunity_hd",
+									"ContainerName": {
+										"value": "@pipeline().parameters.sink_container",
+										"type": "Expression"
+									},
+									"Directory": {
+										"value": "@pipeline().parameters.sink_directory",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					},
+					{
+						"name": "Raw to Bronze - opportunity_hd",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Opportunity_hd",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_opportunity_hd",
+							"baseParameters": {
+								"File_Path": {
+									"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/opportunity_hd/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+									"type": "Expression"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "edis_azure_databricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "BronzeToSilver - opportunity_hd",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Raw to Bronze - opportunity_hd",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_opportunity_hd"
 						},
 						"linkedServiceName": {
 							"referenceName": "edis_azure_databricks",
@@ -24380,6 +25135,7 @@
 										}
 									}
 								],
+								"query": "SELECT AccountId,ActivityDate,ActivityDateTime,Activity_Month__c,Activity_Type_Custom_Reports__c,Blue_Sheet__c,ClientGuid,Completed_Date__c,Contact_Id__c,CreatedById,CreatedDate,CurrencyIsoCode,Description,Disposition__c,DurationInMinutes,EndDate,EndDateTime,EventSubtype,GroupEventType,HuronLegacySFID__c,Id,IsAllDayEvent,IsArchived,IsChild,IsClientManaged,IsDeleted,IsException,IsGroupEvent,IsPrivate,IsRecurrence,IsRecurrence2,IsRecurrence2Exception,IsRecurrence2Exclusion,IsReminderSet,LastModifiedById,LastModifiedDate,LegacyID__c,Legacy_Source_System__c,Legacy_Studer_ID__c,LID__Date_Sent__c,LID__URL__c,Location,MH_Action__c,mh_Additional_Notes_Exist__c,mh_Associated_Green_Sheet__c,mh_Attitude_Questions__c,mh_Basic_Issues__c,mh_Best_Action_Commitment__c,mh_Commitment_Questions__c,mh_Completion_Date__c,mh_Confirmation_Questions__c,mh_Credibility__c,mh_Green_Sheet_Created_Date__c,mh_Last_Updated_Green_Sheet__c,mh_Managers_Notes_Exist__c,mh_Managers_Notes__c,mh_Managers_Review_Date__c,mh_Minimum_Acceptable_Action__c,mh_New_Information_Questions__c,mh_Possible_Basic_Issues__c,mh_Post_Call_Assessment_Exists__c,mh_Sheet_Section__c,mh_Unique_Strengths__c,mh_Valid_Business_Reason__c,OriginalInstanceDateTime,OwnerId,Owner_Region__c,Practice__c,Priority__c,Prospecting__c,RecordTypeId,Recurrence2PatternStartDate,Recurrence2PatternText,Recurrence2PatternTimeZone,Recurrence2PatternVersion,RecurrenceActivityId,RecurrenceDayOfMonth,RecurrenceDayOfWeekMask,RecurrenceEndDateOnly,RecurrenceInstance,RecurrenceInterval,RecurrenceMonthOfYear,RecurrenceStartDateTime,RecurrenceTimeZoneSidKey,RecurrenceType,ReminderDateTime,ShowAs,StartDateTime,Subject,SystemModstamp,Type,User_Department__c,User_Legal_GSO__c,User_Region__c,User_Title__c,WhatCount,WhatId,WhoCount,WhoId FROM Event",
 								"readBehavior": "query"
 							},
 							"sink": {
@@ -24399,112 +25155,13 @@
 								"mappings": [
 									{
 										"source": {
-											"name": "Id",
+											"name": "AccountId",
 											"type": "String"
 										},
 										"sink": {
-											"name": "Id",
+											"name": "AccountId",
 											"type": "String",
 											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "RecordTypeId",
-											"type": "String"
-										},
-										"sink": {
-											"name": "RecordTypeId",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "WhoId",
-											"type": "String"
-										},
-										"sink": {
-											"name": "WhoId",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "WhatId",
-											"type": "String"
-										},
-										"sink": {
-											"name": "WhatId",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "WhoCount",
-											"type": "Int32"
-										},
-										"sink": {
-											"name": "WhoCount",
-											"type": "Int32",
-											"physicalType": "INT_32"
-										}
-									},
-									{
-										"source": {
-											"name": "WhatCount",
-											"type": "Int32"
-										},
-										"sink": {
-											"name": "WhatCount",
-											"type": "Int32",
-											"physicalType": "INT_32"
-										}
-									},
-									{
-										"source": {
-											"name": "Subject",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Subject",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "Location",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Location",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "IsAllDayEvent",
-											"type": "Boolean"
-										},
-										"sink": {
-											"name": "IsAllDayEvent",
-											"type": "Boolean",
-											"physicalType": "BOOLEAN"
-										}
-									},
-									{
-										"source": {
-											"name": "ActivityDateTime",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "ActivityDateTime",
-											"type": "DateTime",
-											"physicalType": "INT_96"
 										}
 									},
 									{
@@ -24520,508 +25177,13 @@
 									},
 									{
 										"source": {
-											"name": "DurationInMinutes",
-											"type": "Int32"
-										},
-										"sink": {
-											"name": "DurationInMinutes",
-											"type": "Int32",
-											"physicalType": "INT_32"
-										}
-									},
-									{
-										"source": {
-											"name": "StartDateTime",
+											"name": "ActivityDateTime",
 											"type": "DateTime"
 										},
 										"sink": {
-											"name": "StartDateTime",
+											"name": "ActivityDateTime",
 											"type": "DateTime",
 											"physicalType": "INT_96"
-										}
-									},
-									{
-										"source": {
-											"name": "EndDateTime",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "EndDateTime",
-											"type": "DateTime",
-											"physicalType": "INT_96"
-										}
-									},
-									{
-										"source": {
-											"name": "EndDate",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "EndDate",
-											"type": "DateTime",
-											"physicalType": "INT_96"
-										}
-									},
-									{
-										"source": {
-											"name": "AccountId",
-											"type": "String"
-										},
-										"sink": {
-											"name": "AccountId",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "OwnerId",
-											"type": "String"
-										},
-										"sink": {
-											"name": "OwnerId",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "CurrencyIsoCode",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CurrencyIsoCode",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "Type",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Type",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "IsPrivate",
-											"type": "Boolean"
-										},
-										"sink": {
-											"name": "IsPrivate",
-											"type": "Boolean",
-											"physicalType": "BOOLEAN"
-										}
-									},
-									{
-										"source": {
-											"name": "ShowAs",
-											"type": "String"
-										},
-										"sink": {
-											"name": "ShowAs",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "IsDeleted",
-											"type": "Boolean"
-										},
-										"sink": {
-											"name": "IsDeleted",
-											"type": "Boolean",
-											"physicalType": "BOOLEAN"
-										}
-									},
-									{
-										"source": {
-											"name": "IsChild",
-											"type": "Boolean"
-										},
-										"sink": {
-											"name": "IsChild",
-											"type": "Boolean",
-											"physicalType": "BOOLEAN"
-										}
-									},
-									{
-										"source": {
-											"name": "IsGroupEvent",
-											"type": "Boolean"
-										},
-										"sink": {
-											"name": "IsGroupEvent",
-											"type": "Boolean",
-											"physicalType": "BOOLEAN"
-										}
-									},
-									{
-										"source": {
-											"name": "GroupEventType",
-											"type": "String"
-										},
-										"sink": {
-											"name": "GroupEventType",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "CreatedDate",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "CreatedDate",
-											"type": "DateTime",
-											"physicalType": "INT_96"
-										}
-									},
-									{
-										"source": {
-											"name": "CreatedById",
-											"type": "String"
-										},
-										"sink": {
-											"name": "CreatedById",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "LastModifiedDate",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "LastModifiedDate",
-											"type": "DateTime",
-											"physicalType": "INT_96"
-										}
-									},
-									{
-										"source": {
-											"name": "LastModifiedById",
-											"type": "String"
-										},
-										"sink": {
-											"name": "LastModifiedById",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "SystemModstamp",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "SystemModstamp",
-											"type": "DateTime",
-											"physicalType": "INT_96"
-										}
-									},
-									{
-										"source": {
-											"name": "IsArchived",
-											"type": "Boolean"
-										},
-										"sink": {
-											"name": "IsArchived",
-											"type": "Boolean",
-											"physicalType": "BOOLEAN"
-										}
-									},
-									{
-										"source": {
-											"name": "RecurrenceActivityId",
-											"type": "String"
-										},
-										"sink": {
-											"name": "RecurrenceActivityId",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "IsRecurrence",
-											"type": "Boolean"
-										},
-										"sink": {
-											"name": "IsRecurrence",
-											"type": "Boolean",
-											"physicalType": "BOOLEAN"
-										}
-									},
-									{
-										"source": {
-											"name": "RecurrenceStartDateTime",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "RecurrenceStartDateTime",
-											"type": "DateTime",
-											"physicalType": "INT_96"
-										}
-									},
-									{
-										"source": {
-											"name": "RecurrenceEndDateOnly",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "RecurrenceEndDateOnly",
-											"type": "DateTime",
-											"physicalType": "INT_96"
-										}
-									},
-									{
-										"source": {
-											"name": "RecurrenceTimeZoneSidKey",
-											"type": "String"
-										},
-										"sink": {
-											"name": "RecurrenceTimeZoneSidKey",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "RecurrenceType",
-											"type": "String"
-										},
-										"sink": {
-											"name": "RecurrenceType",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "RecurrenceInterval",
-											"type": "Int32"
-										},
-										"sink": {
-											"name": "RecurrenceInterval",
-											"type": "Int32",
-											"physicalType": "INT_32"
-										}
-									},
-									{
-										"source": {
-											"name": "RecurrenceDayOfWeekMask",
-											"type": "Int32"
-										},
-										"sink": {
-											"name": "RecurrenceDayOfWeekMask",
-											"type": "Int32",
-											"physicalType": "INT_32"
-										}
-									},
-									{
-										"source": {
-											"name": "RecurrenceDayOfMonth",
-											"type": "Int32"
-										},
-										"sink": {
-											"name": "RecurrenceDayOfMonth",
-											"type": "Int32",
-											"physicalType": "INT_32"
-										}
-									},
-									{
-										"source": {
-											"name": "RecurrenceInstance",
-											"type": "String"
-										},
-										"sink": {
-											"name": "RecurrenceInstance",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "RecurrenceMonthOfYear",
-											"type": "String"
-										},
-										"sink": {
-											"name": "RecurrenceMonthOfYear",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "OriginalInstanceDateTime",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "OriginalInstanceDateTime",
-											"type": "DateTime",
-											"physicalType": "INT_96"
-										}
-									},
-									{
-										"source": {
-											"name": "IsException",
-											"type": "Boolean"
-										},
-										"sink": {
-											"name": "IsException",
-											"type": "Boolean",
-											"physicalType": "BOOLEAN"
-										}
-									},
-									{
-										"source": {
-											"name": "IsClientManaged",
-											"type": "Boolean"
-										},
-										"sink": {
-											"name": "IsClientManaged",
-											"type": "Boolean",
-											"physicalType": "BOOLEAN"
-										}
-									},
-									{
-										"source": {
-											"name": "ClientGuid",
-											"type": "String"
-										},
-										"sink": {
-											"name": "ClientGuid",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "ReminderDateTime",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "ReminderDateTime",
-											"type": "DateTime",
-											"physicalType": "INT_96"
-										}
-									},
-									{
-										"source": {
-											"name": "IsReminderSet",
-											"type": "Boolean"
-										},
-										"sink": {
-											"name": "IsReminderSet",
-											"type": "Boolean",
-											"physicalType": "BOOLEAN"
-										}
-									},
-									{
-										"source": {
-											"name": "EventSubtype",
-											"type": "String"
-										},
-										"sink": {
-											"name": "EventSubtype",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "IsRecurrence2Exclusion",
-											"type": "Boolean"
-										},
-										"sink": {
-											"name": "IsRecurrence2Exclusion",
-											"type": "Boolean",
-											"physicalType": "BOOLEAN"
-										}
-									},
-									{
-										"source": {
-											"name": "Recurrence2PatternText",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Recurrence2PatternText",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "Recurrence2PatternVersion",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Recurrence2PatternVersion",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "IsRecurrence2",
-											"type": "Boolean"
-										},
-										"sink": {
-											"name": "IsRecurrence2",
-											"type": "Boolean",
-											"physicalType": "BOOLEAN"
-										}
-									},
-									{
-										"source": {
-											"name": "IsRecurrence2Exception",
-											"type": "Boolean"
-										},
-										"sink": {
-											"name": "IsRecurrence2Exception",
-											"type": "Boolean",
-											"physicalType": "BOOLEAN"
-										}
-									},
-									{
-										"source": {
-											"name": "Recurrence2PatternStartDate",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "Recurrence2PatternStartDate",
-											"type": "DateTime",
-											"physicalType": "INT_96"
-										}
-									},
-									{
-										"source": {
-											"name": "Recurrence2PatternTimeZone",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Recurrence2PatternTimeZone",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "User_Legal_GSO__c",
-											"type": "Boolean"
-										},
-										"sink": {
-											"name": "User_Legal_GSO__c",
-											"type": "Boolean",
-											"physicalType": "BOOLEAN"
 										}
 									},
 									{
@@ -25037,11 +25199,11 @@
 									},
 									{
 										"source": {
-											"name": "User_Title__c",
+											"name": "Activity_Type_Custom_Reports__c",
 											"type": "String"
 										},
 										"sink": {
-											"name": "User_Title__c",
+											"name": "Activity_Type_Custom_Reports__c",
 											"type": "String",
 											"physicalType": "UTF8"
 										}
@@ -25055,6 +25217,17 @@
 											"name": "Blue_Sheet__c",
 											"type": "Boolean",
 											"physicalType": "BOOLEAN"
+										}
+									},
+									{
+										"source": {
+											"name": "ClientGuid",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ClientGuid",
+											"type": "String",
+											"physicalType": "UTF8"
 										}
 									},
 									{
@@ -25070,6 +25243,380 @@
 									},
 									{
 										"source": {
+											"name": "Contact_Id__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Contact_Id__c",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "CreatedById",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CreatedById",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "CreatedDate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "CreatedDate",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "CurrencyIsoCode",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CurrencyIsoCode",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "Description",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Description",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "Disposition__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Disposition__c",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "DurationInMinutes",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "DurationInMinutes",
+											"type": "Int32",
+											"physicalType": "INT_32"
+										}
+									},
+									{
+										"source": {
+											"name": "EndDate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "EndDate",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "EndDateTime",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "EndDateTime",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "EventSubtype",
+											"type": "String"
+										},
+										"sink": {
+											"name": "EventSubtype",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "GroupEventType",
+											"type": "String"
+										},
+										"sink": {
+											"name": "GroupEventType",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "HuronLegacySFID__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "HuronLegacySFID__c",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "Id",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Id",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "IsAllDayEvent",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsAllDayEvent",
+											"type": "Boolean",
+											"physicalType": "BOOLEAN"
+										}
+									},
+									{
+										"source": {
+											"name": "IsArchived",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsArchived",
+											"type": "Boolean",
+											"physicalType": "BOOLEAN"
+										}
+									},
+									{
+										"source": {
+											"name": "IsChild",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsChild",
+											"type": "Boolean",
+											"physicalType": "BOOLEAN"
+										}
+									},
+									{
+										"source": {
+											"name": "IsClientManaged",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsClientManaged",
+											"type": "Boolean",
+											"physicalType": "BOOLEAN"
+										}
+									},
+									{
+										"source": {
+											"name": "IsDeleted",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsDeleted",
+											"type": "Boolean",
+											"physicalType": "BOOLEAN"
+										}
+									},
+									{
+										"source": {
+											"name": "IsException",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsException",
+											"type": "Boolean",
+											"physicalType": "BOOLEAN"
+										}
+									},
+									{
+										"source": {
+											"name": "IsGroupEvent",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsGroupEvent",
+											"type": "Boolean",
+											"physicalType": "BOOLEAN"
+										}
+									},
+									{
+										"source": {
+											"name": "IsPrivate",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsPrivate",
+											"type": "Boolean",
+											"physicalType": "BOOLEAN"
+										}
+									},
+									{
+										"source": {
+											"name": "IsRecurrence",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsRecurrence",
+											"type": "Boolean",
+											"physicalType": "BOOLEAN"
+										}
+									},
+									{
+										"source": {
+											"name": "IsRecurrence2",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsRecurrence2",
+											"type": "Boolean",
+											"physicalType": "BOOLEAN"
+										}
+									},
+									{
+										"source": {
+											"name": "IsRecurrence2Exception",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsRecurrence2Exception",
+											"type": "Boolean",
+											"physicalType": "BOOLEAN"
+										}
+									},
+									{
+										"source": {
+											"name": "IsRecurrence2Exclusion",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsRecurrence2Exclusion",
+											"type": "Boolean",
+											"physicalType": "BOOLEAN"
+										}
+									},
+									{
+										"source": {
+											"name": "IsReminderSet",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsReminderSet",
+											"type": "Boolean",
+											"physicalType": "BOOLEAN"
+										}
+									},
+									{
+										"source": {
+											"name": "LastModifiedById",
+											"type": "String"
+										},
+										"sink": {
+											"name": "LastModifiedById",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "LastModifiedDate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "LastModifiedDate",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "LegacyID__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "LegacyID__c",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "Legacy_Source_System__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Legacy_Source_System__c",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "Legacy_Studer_ID__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Legacy_Studer_ID__c",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "LID__Date_Sent__c",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "LID__Date_Sent__c",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "LID__URL__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "LID__URL__c",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "Location",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Location",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
 											"name": "MH_Action__c",
 											"type": "Boolean"
 										},
@@ -25077,28 +25624,6 @@
 											"name": "MH_Action__c",
 											"type": "Boolean",
 											"physicalType": "BOOLEAN"
-										}
-									},
-									{
-										"source": {
-											"name": "Practice__c",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Practice__c",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "User_Department__c",
-											"type": "String"
-										},
-										"sink": {
-											"name": "User_Department__c",
-											"type": "String",
-											"physicalType": "UTF8"
 										}
 									},
 									{
@@ -25165,6 +25690,17 @@
 											"name": "mh_Commitment_Questions__c",
 											"type": "String",
 											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "mh_Completion_Date__c",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "mh_Completion_Date__c",
+											"type": "DateTime",
+											"physicalType": "INT_96"
 										}
 									},
 									{
@@ -25323,22 +25859,55 @@
 									},
 									{
 										"source": {
-											"name": "Disposition__c",
+											"name": "OriginalInstanceDateTime",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "OriginalInstanceDateTime",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "OwnerId",
 											"type": "String"
 										},
 										"sink": {
-											"name": "Disposition__c",
+											"name": "OwnerId",
 											"type": "String",
 											"physicalType": "UTF8"
 										}
 									},
 									{
 										"source": {
-											"name": "Legacy_Source_System__c",
+											"name": "Owner_Region__c",
 											"type": "String"
 										},
 										"sink": {
-											"name": "Legacy_Source_System__c",
+											"name": "Owner_Region__c",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "Practice__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Practice__c",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "Priority__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Priority__c",
 											"type": "String",
 											"physicalType": "UTF8"
 										}
@@ -25356,6 +25925,259 @@
 									},
 									{
 										"source": {
+											"name": "RecordTypeId",
+											"type": "String"
+										},
+										"sink": {
+											"name": "RecordTypeId",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "Recurrence2PatternStartDate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Recurrence2PatternStartDate",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "Recurrence2PatternText",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Recurrence2PatternText",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "Recurrence2PatternTimeZone",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Recurrence2PatternTimeZone",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "Recurrence2PatternVersion",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Recurrence2PatternVersion",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "RecurrenceActivityId",
+											"type": "String"
+										},
+										"sink": {
+											"name": "RecurrenceActivityId",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "RecurrenceDayOfMonth",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "RecurrenceDayOfMonth",
+											"type": "Int32",
+											"physicalType": "INT_32"
+										}
+									},
+									{
+										"source": {
+											"name": "RecurrenceDayOfWeekMask",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "RecurrenceDayOfWeekMask",
+											"type": "Int32",
+											"physicalType": "INT_32"
+										}
+									},
+									{
+										"source": {
+											"name": "RecurrenceEndDateOnly",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "RecurrenceEndDateOnly",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "RecurrenceInstance",
+											"type": "String"
+										},
+										"sink": {
+											"name": "RecurrenceInstance",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "RecurrenceInterval",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "RecurrenceInterval",
+											"type": "Int32",
+											"physicalType": "INT_32"
+										}
+									},
+									{
+										"source": {
+											"name": "RecurrenceMonthOfYear",
+											"type": "String"
+										},
+										"sink": {
+											"name": "RecurrenceMonthOfYear",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "RecurrenceStartDateTime",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "RecurrenceStartDateTime",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "RecurrenceTimeZoneSidKey",
+											"type": "String"
+										},
+										"sink": {
+											"name": "RecurrenceTimeZoneSidKey",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "RecurrenceType",
+											"type": "String"
+										},
+										"sink": {
+											"name": "RecurrenceType",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "ReminderDateTime",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "ReminderDateTime",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "ShowAs",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ShowAs",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "StartDateTime",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "StartDateTime",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "Subject",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Subject",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "SystemModstamp",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "SystemModstamp",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "Type",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Type",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "User_Department__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "User_Department__c",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "User_Legal_GSO__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "User_Legal_GSO__c",
+											"type": "Boolean",
+											"physicalType": "BOOLEAN"
+										}
+									},
+									{
+										"source": {
 											"name": "User_Region__c",
 											"type": "String"
 										},
@@ -25367,154 +26189,55 @@
 									},
 									{
 										"source": {
-											"name": "Owner_Region__c",
+											"name": "User_Title__c",
 											"type": "String"
 										},
 										"sink": {
-											"name": "Owner_Region__c",
+											"name": "User_Title__c",
 											"type": "String",
 											"physicalType": "UTF8"
 										}
 									},
 									{
 										"source": {
-											"name": "mh_Completion_Date__c",
-											"type": "DateTime"
+											"name": "WhatCount",
+											"type": "Int32"
 										},
 										"sink": {
-											"name": "mh_Completion_Date__c",
-											"type": "DateTime",
-											"physicalType": "INT_96"
+											"name": "WhatCount",
+											"type": "Int32",
+											"physicalType": "INT_32"
 										}
 									},
 									{
 										"source": {
-											"name": "LegacyID__c",
+											"name": "WhatId",
 											"type": "String"
 										},
 										"sink": {
-											"name": "LegacyID__c",
+											"name": "WhatId",
 											"type": "String",
 											"physicalType": "UTF8"
 										}
 									},
 									{
 										"source": {
-											"name": "HuronLegacySFID__c",
-											"type": "String"
+											"name": "WhoCount",
+											"type": "Int32"
 										},
 										"sink": {
-											"name": "HuronLegacySFID__c",
-											"type": "String",
-											"physicalType": "UTF8"
+											"name": "WhoCount",
+											"type": "Int32",
+											"physicalType": "INT_32"
 										}
 									},
 									{
 										"source": {
-											"name": "Activity_Type_Custom_Reports__c",
+											"name": "WhoId",
 											"type": "String"
 										},
 										"sink": {
-											"name": "Activity_Type_Custom_Reports__c",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "Legacy_Studer_ID__c",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Legacy_Studer_ID__c",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "LID__Date_Sent__c",
-											"type": "DateTime"
-										},
-										"sink": {
-											"name": "LID__Date_Sent__c",
-											"type": "DateTime",
-											"physicalType": "INT_96"
-										}
-									},
-									{
-										"source": {
-											"name": "LID__URL__c",
-											"type": "String"
-										},
-										"sink": {
-											"name": "LID__URL__c",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "Contact_Id__c",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Contact_Id__c",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "Priority__c",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Priority__c",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "AcceptedEventInviteeIds",
-											"type": "String"
-										},
-										"sink": {
-											"name": "AcceptedEventInviteeIds",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "DeclinedEventInviteeIds",
-											"type": "String"
-										},
-										"sink": {
-											"name": "DeclinedEventInviteeIds",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "EventWhoIds",
-											"type": "String"
-										},
-										"sink": {
-											"name": "EventWhoIds",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "UndecidedEventInviteeIds",
-											"type": "String"
-										},
-										"sink": {
-											"name": "UndecidedEventInviteeIds",
+											"name": "WhoId",
 											"type": "String",
 											"physicalType": "UTF8"
 										}
@@ -25578,7 +26301,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -28430,7 +29153,7 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "campaign",
+								"activity": "event",
 								"dependencyConditions": [
 									"Completed"
 								]
@@ -32317,7 +33040,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -32350,7 +33073,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -32383,7 +33106,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -32416,7 +33139,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -32449,7 +33172,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -32482,7 +33205,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -32515,7 +33238,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -32548,7 +33271,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -32575,7 +33298,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -32608,7 +33331,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -32635,7 +33358,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -32662,7 +33385,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -32689,7 +33412,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -32716,7 +33439,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -32743,7 +33466,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -41436,7 +42159,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -41469,7 +42192,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -41502,7 +42225,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -41535,7 +42258,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -41568,7 +42291,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -41601,7 +42324,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -41634,7 +42357,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -41667,7 +42390,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -41694,7 +42417,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -41721,7 +42444,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -41748,7 +42471,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -41775,7 +42498,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -41802,7 +42525,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -41829,7 +42552,7 @@
 						],
 						"policy": {
 							"timeout": "7.00:00:00",
-							"retry": 0,
+							"retry": 3,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
 							"secureInput": false
@@ -42040,6 +42763,461 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/SalesforceObject')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Workday Data Pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Cost_Centers",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"additionalColumns": [
+									{
+										"name": "Extraction_datetime",
+										"value": {
+											"value": "@utcnow()",
+											"type": "Expression"
+										}
+									}
+								],
+								"storeSettings": {
+									"type": "HttpReadSettings",
+									"requestMethod": "GET"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Cost_Center",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Cost_Center",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Cost_Center_Name",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Cost_Center_Name",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Inactive",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Inactive",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Inactive_Date",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Inactive_Date",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Reference_ID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Reference_ID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Cost_Center_Code",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Cost_Center_Code",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Cost_Center_Hierarchy_L1",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Cost_Center_Hierarchy_L1",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CCH_L1_RefID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CCH_L1_RefID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CCH_L1_WD_ID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CCH_L1_WD_ID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Cost_Center_Hierarchy_L2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Cost_Center_Hierarchy_L2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CCH_L2_RefID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CCH_L2_RefID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CCH_L2_WD_ID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CCH_L2_WD_ID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Cost_Center_Hierarchy_L3",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Cost_Center_Hierarchy_L3",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CCH_L3_RefID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CCH_L3_RefID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CCH_L3_WD_ID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CCH_L3_WD_ID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Cost_Center_Hierarchy_L4",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Cost_Center_Hierarchy_L4",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CCH_L4_RefID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CCH_L4_RefID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CCH_L4_WD_ID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CCH_L4_WD_ID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Cost_Center_Hierarchy_L5",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Cost_Center_Hierarchy_L5",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CCH_L5_RefID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CCH_L5_RefID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CCH_L5_WD_ID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CCH_L5_WD_ID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Cost_Center_Hierarchy_L6",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Cost_Center_Hierarchy_L6",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CCH_L6_RefID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CCH_L6_RefID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "CCH_L6_WD_ID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CCH_L6_WD_ID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Cost_Center_Manager",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Cost_Center_Manager",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Cost_Center_Owner",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Cost_Center_Owner",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Created_Moment",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Created_Moment",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Workday_ID",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Workday_ID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Extraction_datetime",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Extraction_datetime",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Workdaycsv",
+								"type": "DatasetReference",
+								"parameters": {
+									"relative_url": "HIA_Extract_Cost_Centers?format=csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "sink_edisdatalake",
+								"type": "DatasetReference",
+								"parameters": {
+									"FileName": "cost_centers",
+									"ContainerName": {
+										"value": "@pipeline().parameters.sink_container",
+										"type": "Expression"
+									},
+									"Directory": {
+										"value": "@pipeline().parameters.sink_directory",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					},
+					{
+						"name": "Raw to Bronze - cost_Centers",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Cost_Centers",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/wd_cost_centers",
+							"baseParameters": {
+								"File_Path": {
+									"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/cost_centers/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+									"type": "Expression"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "edis_azure_databricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "BronzeToSilver - cost_centers",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Raw to Bronze - cost_Centers",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/wd_cost_centers"
+						},
+						"linkedServiceName": {
+							"referenceName": "edis_azure_databricks",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"sink_container": {
+						"type": "string",
+						"defaultValue": "edis-workday-raw"
+					},
+					"sink_directory": {
+						"type": "string",
+						"defaultValue": "workday"
+					}
+				},
+				"folder": {
+					"name": "Workday pipeline"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Workdaycsv')]"
 			]
 		},
 		{
@@ -42714,47 +43892,6 @@
 				"[concat(variables('factoryId'), '/pipelines/Salesforce Data Pipeline2')]",
 				"[concat(variables('factoryId'), '/pipelines/Salesforce Data Pipeline3')]",
 				"[concat(variables('factoryId'), '/pipelines/Salesforce Data Pipeline4')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/daily refresh 12 pm IST')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "_Master Salesforce Data Pipeline",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"sink_container": "[parameters('daily refresh 12 pm IST_properties__Master Salesforce Data Pipeline_parameters_sink_container')]",
-							"sink_directory": "[parameters('daily refresh 12 pm IST_properties__Master Salesforce Data Pipeline_parameters_sink_directory')]"
-						}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2022-06-01T11:18:00",
-						"timeZone": "India Standard Time",
-						"schedule": {
-							"minutes": [
-								0
-							],
-							"hours": [
-								12
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/_Master Salesforce Data Pipeline')]"
 			]
 		}
 	]
