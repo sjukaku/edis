@@ -5412,6 +5412,281 @@
 							"referenceName": "edis_azure_databricks",
 							"type": "LinkedServiceReference"
 						}
+					},
+					{
+						"name": "currency_type",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "team_solution",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.00:45:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"additionalColumns": [
+									{
+										"name": "Extraction_datetime",
+										"value": {
+											"value": "@utcnow()",
+											"type": "Expression"
+										}
+									}
+								],
+								"readBehavior": "query"
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"parallelCopies": 8,
+							"validateDataConsistency": true,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Id",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Id",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "IsoCode",
+											"type": "String"
+										},
+										"sink": {
+											"name": "IsoCode",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "ConversionRate",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "ConversionRate",
+											"type": "Decimal",
+											"physicalType": "DECIMAL"
+										}
+									},
+									{
+										"source": {
+											"name": "DecimalPlaces",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "DecimalPlaces",
+											"type": "Int32",
+											"physicalType": "INT_32"
+										}
+									},
+									{
+										"source": {
+											"name": "IsActive",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsActive",
+											"type": "Boolean",
+											"physicalType": "BOOLEAN"
+										}
+									},
+									{
+										"source": {
+											"name": "IsCorporate",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsCorporate",
+											"type": "Boolean",
+											"physicalType": "BOOLEAN"
+										}
+									},
+									{
+										"source": {
+											"name": "CreatedDate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "CreatedDate",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "CreatedById",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CreatedById",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "LastModifiedDate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "LastModifiedDate",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "LastModifiedById",
+											"type": "String"
+										},
+										"sink": {
+											"name": "LastModifiedById",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "SystemModstamp",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "SystemModstamp",
+											"type": "DateTime",
+											"physicalType": "INT_96"
+										}
+									},
+									{
+										"source": {
+											"name": "Extraction_datetime",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Extraction_datetime",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SalesforceObject",
+								"type": "DatasetReference",
+								"parameters": {
+									"TableName": "CurrencyType"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "sink_edisdatalake",
+								"type": "DatasetReference",
+								"parameters": {
+									"FileName": "currency_type",
+									"ContainerName": {
+										"value": "@pipeline().parameters.sink_container",
+										"type": "Expression"
+									},
+									"Directory": {
+										"value": "@pipeline().parameters.sink_directory",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					},
+					{
+						"name": "Raw to Bronze - currency_type",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "currency_type",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/sf_currency_type",
+							"baseParameters": {
+								"File_Path": {
+									"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/currency_type/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+									"type": "Expression"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "edis_azure_databricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "BronzeToSilver - currency_type",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "Raw to Bronze - currency_type",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 3,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/sf_currency_type"
+						},
+						"linkedServiceName": {
+							"referenceName": "edis_azure_databricks",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"policy": {
@@ -43715,59 +43990,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Master Pipeline')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "ods_corporate_finance_full_load",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "ods_corporate_finance_full_load",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"sink_container": "edis-gold",
-								"sink_directory": "ods_corporate_finance"
-							}
-						}
-					},
-					{
-						"name": "salesforce full load",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "Salesforce full load",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"sink_container": "edis-bronze",
-								"sink_directory": "salesforce"
-							}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"annotations": [],
-				"lastPublishTime": "2022-03-12T09:13:19Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/ods_corporate_finance_full_load')]",
-				"[concat(variables('factoryId'), '/pipelines/Salesforce full load')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/_Master Salesforce Data Pipeline')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -43892,6 +44114,59 @@
 				"[concat(variables('factoryId'), '/pipelines/Salesforce Data Pipeline2')]",
 				"[concat(variables('factoryId'), '/pipelines/Salesforce Data Pipeline3')]",
 				"[concat(variables('factoryId'), '/pipelines/Salesforce Data Pipeline4')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/_Master Workday Data pipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Workday Data Pipeline1",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Workday Data Pipeline1",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"sink_container": {
+									"value": "@pipeline().parameters.sink_container",
+									"type": "Expression"
+								},
+								"sink_directory": {
+									"value": "@pipeline().parameters.sink_directory",
+									"type": "Expression"
+								}
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"sink_container": {
+						"type": "string",
+						"defaultValue": "edis-workday-raw"
+					},
+					"sink_directory": {
+						"type": "string",
+						"defaultValue": "workday"
+					}
+				},
+				"folder": {
+					"name": "Workday pipeline"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Workday Data Pipeline1')]"
 			]
 		}
 	]

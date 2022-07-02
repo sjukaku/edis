@@ -6,14 +6,6 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "edis-adf1"
-		},
-		"daily refresh 12 pm IST_properties__Master Salesforce Data Pipeline_parameters_sink_container": {
-			"type": "string",
-			"defaultValue": "edis-salesforce-raw"
-		},
-		"daily refresh 12 pm IST_properties__Master Salesforce Data Pipeline_parameters_sink_directory": {
-			"type": "string",
-			"defaultValue": "salesforce"
 		}
 	},
 	"variables": {
@@ -21,23 +13,43 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/_Master Workday Data pipeline')]",
+			"name": "[concat(parameters('factoryName'), '/Master Pipeline')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Workday Data Pipeline1",
+						"name": "Master Workday Data pipeline",
 						"type": "ExecutePipeline",
 						"dependsOn": [],
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "Workday Data Pipeline1",
+								"referenceName": "_Master Workday Data pipeline",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"sink_container": "edis-workday-raw",
+								"sink_directory": "workday"
+							}
+						}
+					},
+					{
+						"name": "Master Salesforce Data Pipeline",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "_Master Salesforce Data Pipeline",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"sink_container": "edis-salesforce-raw",
+								"sink_directory": "salesforce"
+							}
 						}
 					}
 				],
@@ -45,10 +57,8 @@
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
-				"folder": {
-					"name": "Workday pipeline"
-				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2022-03-12T09:13:19Z"
 			},
 			"dependsOn": []
 		},
@@ -62,13 +72,10 @@
 				"pipelines": [
 					{
 						"pipelineReference": {
-							"referenceName": "_Master Salesforce Data Pipeline",
+							"referenceName": "Master Pipeline",
 							"type": "PipelineReference"
 						},
-						"parameters": {
-							"sink_container": "[parameters('daily refresh 12 pm IST_properties__Master Salesforce Data Pipeline_parameters_sink_container')]",
-							"sink_directory": "[parameters('daily refresh 12 pm IST_properties__Master Salesforce Data Pipeline_parameters_sink_directory')]"
-						}
+						"parameters": {}
 					}
 				],
 				"type": "ScheduleTrigger",
@@ -89,7 +96,9 @@
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Master Pipeline')]"
+			]
 		}
 	]
 }
