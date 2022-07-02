@@ -13,6 +13,12 @@
 					"sink_container": "edis-salesforce-raw",
 					"sink_directory": "salesforce"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "_Master Workday Data pipeline",
+					"type": "PipelineReference"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
