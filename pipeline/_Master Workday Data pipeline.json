@@ -1,0 +1,24 @@
+{
+	"name": "_Master Workday Data pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Workday Data Pipeline1",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Workday Data Pipeline1",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "Workday pipeline"
+		},
+		"annotations": []
+	}
+}

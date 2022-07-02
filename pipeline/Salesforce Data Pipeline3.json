@@ -27,6 +27,7 @@
 								}
 							}
 						],
+						"query": "SELECT AccountId,ActivityDate,ActivityDateTime,Activity_Month__c,Activity_Type_Custom_Reports__c,Blue_Sheet__c,ClientGuid,Completed_Date__c,Contact_Id__c,CreatedById,CreatedDate,CurrencyIsoCode,Description,Disposition__c,DurationInMinutes,EndDate,EndDateTime,EventSubtype,GroupEventType,HuronLegacySFID__c,Id,IsAllDayEvent,IsArchived,IsChild,IsClientManaged,IsDeleted,IsException,IsGroupEvent,IsPrivate,IsRecurrence,IsRecurrence2,IsRecurrence2Exception,IsRecurrence2Exclusion,IsReminderSet,LastModifiedById,LastModifiedDate,LegacyID__c,Legacy_Source_System__c,Legacy_Studer_ID__c,LID__Date_Sent__c,LID__URL__c,Location,MH_Action__c,mh_Additional_Notes_Exist__c,mh_Associated_Green_Sheet__c,mh_Attitude_Questions__c,mh_Basic_Issues__c,mh_Best_Action_Commitment__c,mh_Commitment_Questions__c,mh_Completion_Date__c,mh_Confirmation_Questions__c,mh_Credibility__c,mh_Green_Sheet_Created_Date__c,mh_Last_Updated_Green_Sheet__c,mh_Managers_Notes_Exist__c,mh_Managers_Notes__c,mh_Managers_Review_Date__c,mh_Minimum_Acceptable_Action__c,mh_New_Information_Questions__c,mh_Possible_Basic_Issues__c,mh_Post_Call_Assessment_Exists__c,mh_Sheet_Section__c,mh_Unique_Strengths__c,mh_Valid_Business_Reason__c,OriginalInstanceDateTime,OwnerId,Owner_Region__c,Practice__c,Priority__c,Prospecting__c,RecordTypeId,Recurrence2PatternStartDate,Recurrence2PatternText,Recurrence2PatternTimeZone,Recurrence2PatternVersion,RecurrenceActivityId,RecurrenceDayOfMonth,RecurrenceDayOfWeekMask,RecurrenceEndDateOnly,RecurrenceInstance,RecurrenceInterval,RecurrenceMonthOfYear,RecurrenceStartDateTime,RecurrenceTimeZoneSidKey,RecurrenceType,ReminderDateTime,ShowAs,StartDateTime,Subject,SystemModstamp,Type,User_Department__c,User_Legal_GSO__c,User_Region__c,User_Title__c,WhatCount,WhatId,WhoCount,WhoId FROM Event",
 						"readBehavior": "query"
 					},
 					"sink": {
@@ -46,112 +47,13 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "Id",
+									"name": "AccountId",
 									"type": "String"
 								},
 								"sink": {
-									"name": "Id",
+									"name": "AccountId",
 									"type": "String",
 									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "RecordTypeId",
-									"type": "String"
-								},
-								"sink": {
-									"name": "RecordTypeId",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "WhoId",
-									"type": "String"
-								},
-								"sink": {
-									"name": "WhoId",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "WhatId",
-									"type": "String"
-								},
-								"sink": {
-									"name": "WhatId",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "WhoCount",
-									"type": "Int32"
-								},
-								"sink": {
-									"name": "WhoCount",
-									"type": "Int32",
-									"physicalType": "INT_32"
-								}
-							},
-							{
-								"source": {
-									"name": "WhatCount",
-									"type": "Int32"
-								},
-								"sink": {
-									"name": "WhatCount",
-									"type": "Int32",
-									"physicalType": "INT_32"
-								}
-							},
-							{
-								"source": {
-									"name": "Subject",
-									"type": "String"
-								},
-								"sink": {
-									"name": "Subject",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "Location",
-									"type": "String"
-								},
-								"sink": {
-									"name": "Location",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "IsAllDayEvent",
-									"type": "Boolean"
-								},
-								"sink": {
-									"name": "IsAllDayEvent",
-									"type": "Boolean",
-									"physicalType": "BOOLEAN"
-								}
-							},
-							{
-								"source": {
-									"name": "ActivityDateTime",
-									"type": "DateTime"
-								},
-								"sink": {
-									"name": "ActivityDateTime",
-									"type": "DateTime",
-									"physicalType": "INT_96"
 								}
 							},
 							{
@@ -167,508 +69,13 @@
 							},
 							{
 								"source": {
-									"name": "DurationInMinutes",
-									"type": "Int32"
-								},
-								"sink": {
-									"name": "DurationInMinutes",
-									"type": "Int32",
-									"physicalType": "INT_32"
-								}
-							},
-							{
-								"source": {
-									"name": "StartDateTime",
+									"name": "ActivityDateTime",
 									"type": "DateTime"
 								},
 								"sink": {
-									"name": "StartDateTime",
+									"name": "ActivityDateTime",
 									"type": "DateTime",
 									"physicalType": "INT_96"
-								}
-							},
-							{
-								"source": {
-									"name": "EndDateTime",
-									"type": "DateTime"
-								},
-								"sink": {
-									"name": "EndDateTime",
-									"type": "DateTime",
-									"physicalType": "INT_96"
-								}
-							},
-							{
-								"source": {
-									"name": "EndDate",
-									"type": "DateTime"
-								},
-								"sink": {
-									"name": "EndDate",
-									"type": "DateTime",
-									"physicalType": "INT_96"
-								}
-							},
-							{
-								"source": {
-									"name": "AccountId",
-									"type": "String"
-								},
-								"sink": {
-									"name": "AccountId",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "OwnerId",
-									"type": "String"
-								},
-								"sink": {
-									"name": "OwnerId",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "CurrencyIsoCode",
-									"type": "String"
-								},
-								"sink": {
-									"name": "CurrencyIsoCode",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "Type",
-									"type": "String"
-								},
-								"sink": {
-									"name": "Type",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "IsPrivate",
-									"type": "Boolean"
-								},
-								"sink": {
-									"name": "IsPrivate",
-									"type": "Boolean",
-									"physicalType": "BOOLEAN"
-								}
-							},
-							{
-								"source": {
-									"name": "ShowAs",
-									"type": "String"
-								},
-								"sink": {
-									"name": "ShowAs",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "IsDeleted",
-									"type": "Boolean"
-								},
-								"sink": {
-									"name": "IsDeleted",
-									"type": "Boolean",
-									"physicalType": "BOOLEAN"
-								}
-							},
-							{
-								"source": {
-									"name": "IsChild",
-									"type": "Boolean"
-								},
-								"sink": {
-									"name": "IsChild",
-									"type": "Boolean",
-									"physicalType": "BOOLEAN"
-								}
-							},
-							{
-								"source": {
-									"name": "IsGroupEvent",
-									"type": "Boolean"
-								},
-								"sink": {
-									"name": "IsGroupEvent",
-									"type": "Boolean",
-									"physicalType": "BOOLEAN"
-								}
-							},
-							{
-								"source": {
-									"name": "GroupEventType",
-									"type": "String"
-								},
-								"sink": {
-									"name": "GroupEventType",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "CreatedDate",
-									"type": "DateTime"
-								},
-								"sink": {
-									"name": "CreatedDate",
-									"type": "DateTime",
-									"physicalType": "INT_96"
-								}
-							},
-							{
-								"source": {
-									"name": "CreatedById",
-									"type": "String"
-								},
-								"sink": {
-									"name": "CreatedById",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "LastModifiedDate",
-									"type": "DateTime"
-								},
-								"sink": {
-									"name": "LastModifiedDate",
-									"type": "DateTime",
-									"physicalType": "INT_96"
-								}
-							},
-							{
-								"source": {
-									"name": "LastModifiedById",
-									"type": "String"
-								},
-								"sink": {
-									"name": "LastModifiedById",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "SystemModstamp",
-									"type": "DateTime"
-								},
-								"sink": {
-									"name": "SystemModstamp",
-									"type": "DateTime",
-									"physicalType": "INT_96"
-								}
-							},
-							{
-								"source": {
-									"name": "IsArchived",
-									"type": "Boolean"
-								},
-								"sink": {
-									"name": "IsArchived",
-									"type": "Boolean",
-									"physicalType": "BOOLEAN"
-								}
-							},
-							{
-								"source": {
-									"name": "RecurrenceActivityId",
-									"type": "String"
-								},
-								"sink": {
-									"name": "RecurrenceActivityId",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "IsRecurrence",
-									"type": "Boolean"
-								},
-								"sink": {
-									"name": "IsRecurrence",
-									"type": "Boolean",
-									"physicalType": "BOOLEAN"
-								}
-							},
-							{
-								"source": {
-									"name": "RecurrenceStartDateTime",
-									"type": "DateTime"
-								},
-								"sink": {
-									"name": "RecurrenceStartDateTime",
-									"type": "DateTime",
-									"physicalType": "INT_96"
-								}
-							},
-							{
-								"source": {
-									"name": "RecurrenceEndDateOnly",
-									"type": "DateTime"
-								},
-								"sink": {
-									"name": "RecurrenceEndDateOnly",
-									"type": "DateTime",
-									"physicalType": "INT_96"
-								}
-							},
-							{
-								"source": {
-									"name": "RecurrenceTimeZoneSidKey",
-									"type": "String"
-								},
-								"sink": {
-									"name": "RecurrenceTimeZoneSidKey",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "RecurrenceType",
-									"type": "String"
-								},
-								"sink": {
-									"name": "RecurrenceType",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "RecurrenceInterval",
-									"type": "Int32"
-								},
-								"sink": {
-									"name": "RecurrenceInterval",
-									"type": "Int32",
-									"physicalType": "INT_32"
-								}
-							},
-							{
-								"source": {
-									"name": "RecurrenceDayOfWeekMask",
-									"type": "Int32"
-								},
-								"sink": {
-									"name": "RecurrenceDayOfWeekMask",
-									"type": "Int32",
-									"physicalType": "INT_32"
-								}
-							},
-							{
-								"source": {
-									"name": "RecurrenceDayOfMonth",
-									"type": "Int32"
-								},
-								"sink": {
-									"name": "RecurrenceDayOfMonth",
-									"type": "Int32",
-									"physicalType": "INT_32"
-								}
-							},
-							{
-								"source": {
-									"name": "RecurrenceInstance",
-									"type": "String"
-								},
-								"sink": {
-									"name": "RecurrenceInstance",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "RecurrenceMonthOfYear",
-									"type": "String"
-								},
-								"sink": {
-									"name": "RecurrenceMonthOfYear",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "OriginalInstanceDateTime",
-									"type": "DateTime"
-								},
-								"sink": {
-									"name": "OriginalInstanceDateTime",
-									"type": "DateTime",
-									"physicalType": "INT_96"
-								}
-							},
-							{
-								"source": {
-									"name": "IsException",
-									"type": "Boolean"
-								},
-								"sink": {
-									"name": "IsException",
-									"type": "Boolean",
-									"physicalType": "BOOLEAN"
-								}
-							},
-							{
-								"source": {
-									"name": "IsClientManaged",
-									"type": "Boolean"
-								},
-								"sink": {
-									"name": "IsClientManaged",
-									"type": "Boolean",
-									"physicalType": "BOOLEAN"
-								}
-							},
-							{
-								"source": {
-									"name": "ClientGuid",
-									"type": "String"
-								},
-								"sink": {
-									"name": "ClientGuid",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "ReminderDateTime",
-									"type": "DateTime"
-								},
-								"sink": {
-									"name": "ReminderDateTime",
-									"type": "DateTime",
-									"physicalType": "INT_96"
-								}
-							},
-							{
-								"source": {
-									"name": "IsReminderSet",
-									"type": "Boolean"
-								},
-								"sink": {
-									"name": "IsReminderSet",
-									"type": "Boolean",
-									"physicalType": "BOOLEAN"
-								}
-							},
-							{
-								"source": {
-									"name": "EventSubtype",
-									"type": "String"
-								},
-								"sink": {
-									"name": "EventSubtype",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "IsRecurrence2Exclusion",
-									"type": "Boolean"
-								},
-								"sink": {
-									"name": "IsRecurrence2Exclusion",
-									"type": "Boolean",
-									"physicalType": "BOOLEAN"
-								}
-							},
-							{
-								"source": {
-									"name": "Recurrence2PatternText",
-									"type": "String"
-								},
-								"sink": {
-									"name": "Recurrence2PatternText",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "Recurrence2PatternVersion",
-									"type": "String"
-								},
-								"sink": {
-									"name": "Recurrence2PatternVersion",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "IsRecurrence2",
-									"type": "Boolean"
-								},
-								"sink": {
-									"name": "IsRecurrence2",
-									"type": "Boolean",
-									"physicalType": "BOOLEAN"
-								}
-							},
-							{
-								"source": {
-									"name": "IsRecurrence2Exception",
-									"type": "Boolean"
-								},
-								"sink": {
-									"name": "IsRecurrence2Exception",
-									"type": "Boolean",
-									"physicalType": "BOOLEAN"
-								}
-							},
-							{
-								"source": {
-									"name": "Recurrence2PatternStartDate",
-									"type": "DateTime"
-								},
-								"sink": {
-									"name": "Recurrence2PatternStartDate",
-									"type": "DateTime",
-									"physicalType": "INT_96"
-								}
-							},
-							{
-								"source": {
-									"name": "Recurrence2PatternTimeZone",
-									"type": "String"
-								},
-								"sink": {
-									"name": "Recurrence2PatternTimeZone",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "User_Legal_GSO__c",
-									"type": "Boolean"
-								},
-								"sink": {
-									"name": "User_Legal_GSO__c",
-									"type": "Boolean",
-									"physicalType": "BOOLEAN"
 								}
 							},
 							{
@@ -684,11 +91,11 @@
 							},
 							{
 								"source": {
-									"name": "User_Title__c",
+									"name": "Activity_Type_Custom_Reports__c",
 									"type": "String"
 								},
 								"sink": {
-									"name": "User_Title__c",
+									"name": "Activity_Type_Custom_Reports__c",
 									"type": "String",
 									"physicalType": "UTF8"
 								}
@@ -702,6 +109,17 @@
 									"name": "Blue_Sheet__c",
 									"type": "Boolean",
 									"physicalType": "BOOLEAN"
+								}
+							},
+							{
+								"source": {
+									"name": "ClientGuid",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ClientGuid",
+									"type": "String",
+									"physicalType": "UTF8"
 								}
 							},
 							{
@@ -717,6 +135,380 @@
 							},
 							{
 								"source": {
+									"name": "Contact_Id__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Contact_Id__c",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "CreatedById",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CreatedById",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "CreatedDate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "CreatedDate",
+									"type": "DateTime",
+									"physicalType": "INT_96"
+								}
+							},
+							{
+								"source": {
+									"name": "CurrencyIsoCode",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CurrencyIsoCode",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Description",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Description",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Disposition__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Disposition__c",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "DurationInMinutes",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "DurationInMinutes",
+									"type": "Int32",
+									"physicalType": "INT_32"
+								}
+							},
+							{
+								"source": {
+									"name": "EndDate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "EndDate",
+									"type": "DateTime",
+									"physicalType": "INT_96"
+								}
+							},
+							{
+								"source": {
+									"name": "EndDateTime",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "EndDateTime",
+									"type": "DateTime",
+									"physicalType": "INT_96"
+								}
+							},
+							{
+								"source": {
+									"name": "EventSubtype",
+									"type": "String"
+								},
+								"sink": {
+									"name": "EventSubtype",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "GroupEventType",
+									"type": "String"
+								},
+								"sink": {
+									"name": "GroupEventType",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "HuronLegacySFID__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "HuronLegacySFID__c",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Id",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Id",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "IsAllDayEvent",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "IsAllDayEvent",
+									"type": "Boolean",
+									"physicalType": "BOOLEAN"
+								}
+							},
+							{
+								"source": {
+									"name": "IsArchived",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "IsArchived",
+									"type": "Boolean",
+									"physicalType": "BOOLEAN"
+								}
+							},
+							{
+								"source": {
+									"name": "IsChild",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "IsChild",
+									"type": "Boolean",
+									"physicalType": "BOOLEAN"
+								}
+							},
+							{
+								"source": {
+									"name": "IsClientManaged",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "IsClientManaged",
+									"type": "Boolean",
+									"physicalType": "BOOLEAN"
+								}
+							},
+							{
+								"source": {
+									"name": "IsDeleted",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "IsDeleted",
+									"type": "Boolean",
+									"physicalType": "BOOLEAN"
+								}
+							},
+							{
+								"source": {
+									"name": "IsException",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "IsException",
+									"type": "Boolean",
+									"physicalType": "BOOLEAN"
+								}
+							},
+							{
+								"source": {
+									"name": "IsGroupEvent",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "IsGroupEvent",
+									"type": "Boolean",
+									"physicalType": "BOOLEAN"
+								}
+							},
+							{
+								"source": {
+									"name": "IsPrivate",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "IsPrivate",
+									"type": "Boolean",
+									"physicalType": "BOOLEAN"
+								}
+							},
+							{
+								"source": {
+									"name": "IsRecurrence",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "IsRecurrence",
+									"type": "Boolean",
+									"physicalType": "BOOLEAN"
+								}
+							},
+							{
+								"source": {
+									"name": "IsRecurrence2",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "IsRecurrence2",
+									"type": "Boolean",
+									"physicalType": "BOOLEAN"
+								}
+							},
+							{
+								"source": {
+									"name": "IsRecurrence2Exception",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "IsRecurrence2Exception",
+									"type": "Boolean",
+									"physicalType": "BOOLEAN"
+								}
+							},
+							{
+								"source": {
+									"name": "IsRecurrence2Exclusion",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "IsRecurrence2Exclusion",
+									"type": "Boolean",
+									"physicalType": "BOOLEAN"
+								}
+							},
+							{
+								"source": {
+									"name": "IsReminderSet",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "IsReminderSet",
+									"type": "Boolean",
+									"physicalType": "BOOLEAN"
+								}
+							},
+							{
+								"source": {
+									"name": "LastModifiedById",
+									"type": "String"
+								},
+								"sink": {
+									"name": "LastModifiedById",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "LastModifiedDate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "LastModifiedDate",
+									"type": "DateTime",
+									"physicalType": "INT_96"
+								}
+							},
+							{
+								"source": {
+									"name": "LegacyID__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "LegacyID__c",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Legacy_Source_System__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Legacy_Source_System__c",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Legacy_Studer_ID__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Legacy_Studer_ID__c",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "LID__Date_Sent__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "LID__Date_Sent__c",
+									"type": "DateTime",
+									"physicalType": "INT_96"
+								}
+							},
+							{
+								"source": {
+									"name": "LID__URL__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "LID__URL__c",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Location",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Location",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
 									"name": "MH_Action__c",
 									"type": "Boolean"
 								},
@@ -724,28 +516,6 @@
 									"name": "MH_Action__c",
 									"type": "Boolean",
 									"physicalType": "BOOLEAN"
-								}
-							},
-							{
-								"source": {
-									"name": "Practice__c",
-									"type": "String"
-								},
-								"sink": {
-									"name": "Practice__c",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "User_Department__c",
-									"type": "String"
-								},
-								"sink": {
-									"name": "User_Department__c",
-									"type": "String",
-									"physicalType": "UTF8"
 								}
 							},
 							{
@@ -812,6 +582,17 @@
 									"name": "mh_Commitment_Questions__c",
 									"type": "String",
 									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "mh_Completion_Date__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "mh_Completion_Date__c",
+									"type": "DateTime",
+									"physicalType": "INT_96"
 								}
 							},
 							{
@@ -970,22 +751,55 @@
 							},
 							{
 								"source": {
-									"name": "Disposition__c",
+									"name": "OriginalInstanceDateTime",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "OriginalInstanceDateTime",
+									"type": "DateTime",
+									"physicalType": "INT_96"
+								}
+							},
+							{
+								"source": {
+									"name": "OwnerId",
 									"type": "String"
 								},
 								"sink": {
-									"name": "Disposition__c",
+									"name": "OwnerId",
 									"type": "String",
 									"physicalType": "UTF8"
 								}
 							},
 							{
 								"source": {
-									"name": "Legacy_Source_System__c",
+									"name": "Owner_Region__c",
 									"type": "String"
 								},
 								"sink": {
-									"name": "Legacy_Source_System__c",
+									"name": "Owner_Region__c",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Practice__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Practice__c",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Priority__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Priority__c",
 									"type": "String",
 									"physicalType": "UTF8"
 								}
@@ -1003,6 +817,259 @@
 							},
 							{
 								"source": {
+									"name": "RecordTypeId",
+									"type": "String"
+								},
+								"sink": {
+									"name": "RecordTypeId",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Recurrence2PatternStartDate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "Recurrence2PatternStartDate",
+									"type": "DateTime",
+									"physicalType": "INT_96"
+								}
+							},
+							{
+								"source": {
+									"name": "Recurrence2PatternText",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Recurrence2PatternText",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Recurrence2PatternTimeZone",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Recurrence2PatternTimeZone",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Recurrence2PatternVersion",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Recurrence2PatternVersion",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "RecurrenceActivityId",
+									"type": "String"
+								},
+								"sink": {
+									"name": "RecurrenceActivityId",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "RecurrenceDayOfMonth",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "RecurrenceDayOfMonth",
+									"type": "Int32",
+									"physicalType": "INT_32"
+								}
+							},
+							{
+								"source": {
+									"name": "RecurrenceDayOfWeekMask",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "RecurrenceDayOfWeekMask",
+									"type": "Int32",
+									"physicalType": "INT_32"
+								}
+							},
+							{
+								"source": {
+									"name": "RecurrenceEndDateOnly",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "RecurrenceEndDateOnly",
+									"type": "DateTime",
+									"physicalType": "INT_96"
+								}
+							},
+							{
+								"source": {
+									"name": "RecurrenceInstance",
+									"type": "String"
+								},
+								"sink": {
+									"name": "RecurrenceInstance",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "RecurrenceInterval",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "RecurrenceInterval",
+									"type": "Int32",
+									"physicalType": "INT_32"
+								}
+							},
+							{
+								"source": {
+									"name": "RecurrenceMonthOfYear",
+									"type": "String"
+								},
+								"sink": {
+									"name": "RecurrenceMonthOfYear",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "RecurrenceStartDateTime",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "RecurrenceStartDateTime",
+									"type": "DateTime",
+									"physicalType": "INT_96"
+								}
+							},
+							{
+								"source": {
+									"name": "RecurrenceTimeZoneSidKey",
+									"type": "String"
+								},
+								"sink": {
+									"name": "RecurrenceTimeZoneSidKey",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "RecurrenceType",
+									"type": "String"
+								},
+								"sink": {
+									"name": "RecurrenceType",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "ReminderDateTime",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "ReminderDateTime",
+									"type": "DateTime",
+									"physicalType": "INT_96"
+								}
+							},
+							{
+								"source": {
+									"name": "ShowAs",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ShowAs",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "StartDateTime",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "StartDateTime",
+									"type": "DateTime",
+									"physicalType": "INT_96"
+								}
+							},
+							{
+								"source": {
+									"name": "Subject",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Subject",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "SystemModstamp",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "SystemModstamp",
+									"type": "DateTime",
+									"physicalType": "INT_96"
+								}
+							},
+							{
+								"source": {
+									"name": "Type",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Type",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "User_Department__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "User_Department__c",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "User_Legal_GSO__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "User_Legal_GSO__c",
+									"type": "Boolean",
+									"physicalType": "BOOLEAN"
+								}
+							},
+							{
+								"source": {
 									"name": "User_Region__c",
 									"type": "String"
 								},
@@ -1014,154 +1081,55 @@
 							},
 							{
 								"source": {
-									"name": "Owner_Region__c",
+									"name": "User_Title__c",
 									"type": "String"
 								},
 								"sink": {
-									"name": "Owner_Region__c",
+									"name": "User_Title__c",
 									"type": "String",
 									"physicalType": "UTF8"
 								}
 							},
 							{
 								"source": {
-									"name": "mh_Completion_Date__c",
-									"type": "DateTime"
+									"name": "WhatCount",
+									"type": "Int32"
 								},
 								"sink": {
-									"name": "mh_Completion_Date__c",
-									"type": "DateTime",
-									"physicalType": "INT_96"
+									"name": "WhatCount",
+									"type": "Int32",
+									"physicalType": "INT_32"
 								}
 							},
 							{
 								"source": {
-									"name": "LegacyID__c",
+									"name": "WhatId",
 									"type": "String"
 								},
 								"sink": {
-									"name": "LegacyID__c",
+									"name": "WhatId",
 									"type": "String",
 									"physicalType": "UTF8"
 								}
 							},
 							{
 								"source": {
-									"name": "HuronLegacySFID__c",
-									"type": "String"
+									"name": "WhoCount",
+									"type": "Int32"
 								},
 								"sink": {
-									"name": "HuronLegacySFID__c",
-									"type": "String",
-									"physicalType": "UTF8"
+									"name": "WhoCount",
+									"type": "Int32",
+									"physicalType": "INT_32"
 								}
 							},
 							{
 								"source": {
-									"name": "Activity_Type_Custom_Reports__c",
+									"name": "WhoId",
 									"type": "String"
 								},
 								"sink": {
-									"name": "Activity_Type_Custom_Reports__c",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "Legacy_Studer_ID__c",
-									"type": "String"
-								},
-								"sink": {
-									"name": "Legacy_Studer_ID__c",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "LID__Date_Sent__c",
-									"type": "DateTime"
-								},
-								"sink": {
-									"name": "LID__Date_Sent__c",
-									"type": "DateTime",
-									"physicalType": "INT_96"
-								}
-							},
-							{
-								"source": {
-									"name": "LID__URL__c",
-									"type": "String"
-								},
-								"sink": {
-									"name": "LID__URL__c",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "Contact_Id__c",
-									"type": "String"
-								},
-								"sink": {
-									"name": "Contact_Id__c",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "Priority__c",
-									"type": "String"
-								},
-								"sink": {
-									"name": "Priority__c",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "AcceptedEventInviteeIds",
-									"type": "String"
-								},
-								"sink": {
-									"name": "AcceptedEventInviteeIds",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "DeclinedEventInviteeIds",
-									"type": "String"
-								},
-								"sink": {
-									"name": "DeclinedEventInviteeIds",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "EventWhoIds",
-									"type": "String"
-								},
-								"sink": {
-									"name": "EventWhoIds",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "UndecidedEventInviteeIds",
-									"type": "String"
-								},
-								"sink": {
-									"name": "UndecidedEventInviteeIds",
+									"name": "WhoId",
 									"type": "String",
 									"physicalType": "UTF8"
 								}
@@ -1225,7 +1193,7 @@
 				],
 				"policy": {
 					"timeout": "7.00:00:00",
-					"retry": 0,
+					"retry": 3,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false
@@ -4077,7 +4045,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "campaign",
+						"activity": "event",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -7964,7 +7932,7 @@
 				],
 				"policy": {
 					"timeout": "7.00:00:00",
-					"retry": 0,
+					"retry": 3,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false
@@ -7997,7 +7965,7 @@
 				],
 				"policy": {
 					"timeout": "7.00:00:00",
-					"retry": 0,
+					"retry": 3,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false
@@ -8030,7 +7998,7 @@
 				],
 				"policy": {
 					"timeout": "7.00:00:00",
-					"retry": 0,
+					"retry": 3,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false
@@ -8063,7 +8031,7 @@
 				],
 				"policy": {
 					"timeout": "7.00:00:00",
-					"retry": 0,
+					"retry": 3,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false
@@ -8096,7 +8064,7 @@
 				],
 				"policy": {
 					"timeout": "7.00:00:00",
-					"retry": 0,
+					"retry": 3,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false
@@ -8129,7 +8097,7 @@
 				],
 				"policy": {
 					"timeout": "7.00:00:00",
-					"retry": 0,
+					"retry": 3,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false
@@ -8162,7 +8130,7 @@
 				],
 				"policy": {
 					"timeout": "7.00:00:00",
-					"retry": 0,
+					"retry": 3,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false
@@ -8195,7 +8163,7 @@
 				],
 				"policy": {
 					"timeout": "7.00:00:00",
-					"retry": 0,
+					"retry": 3,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false
@@ -8222,7 +8190,7 @@
 				],
 				"policy": {
 					"timeout": "7.00:00:00",
-					"retry": 0,
+					"retry": 3,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false
@@ -8255,7 +8223,7 @@
 				],
 				"policy": {
 					"timeout": "7.00:00:00",
-					"retry": 0,
+					"retry": 3,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false
@@ -8282,7 +8250,7 @@
 				],
 				"policy": {
 					"timeout": "7.00:00:00",
-					"retry": 0,
+					"retry": 3,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false
@@ -8309,7 +8277,7 @@
 				],
 				"policy": {
 					"timeout": "7.00:00:00",
-					"retry": 0,
+					"retry": 3,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false
@@ -8336,7 +8304,7 @@
 				],
 				"policy": {
 					"timeout": "7.00:00:00",
-					"retry": 0,
+					"retry": 3,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false
@@ -8363,7 +8331,7 @@
 				],
 				"policy": {
 					"timeout": "7.00:00:00",
-					"retry": 0,
+					"retry": 3,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false
@@ -8390,7 +8358,7 @@
 				],
 				"policy": {
 					"timeout": "7.00:00:00",
-					"retry": 0,
+					"retry": 3,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false

@@ -1,0 +1,27 @@
+{
+	"name": "HttpServer1",
+	"properties": {
+		"parameters": {
+			"url": {
+				"type": "string",
+				"defaultValue": "https://services1.myworkday.com/ccx/service/customreport2/huron/ISU_INT-SFDC-02_FDM+Extract/"
+			}
+		},
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "@{linkedService().url}",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Basic",
+			"userName": "ISU_INT-SFDC-02_FDM Extract",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "hiakeys",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "workdayReport"
+			}
+		}
+	}
+}

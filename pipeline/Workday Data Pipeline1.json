@@ -1,0 +1,446 @@
+{
+	"name": "Workday Data Pipeline1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Cost_Centers",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"additionalColumns": [
+							{
+								"name": "Extraction_datetime",
+								"value": {
+									"value": "@utcnow()",
+									"type": "Expression"
+								}
+							}
+						],
+						"storeSettings": {
+							"type": "HttpReadSettings",
+							"requestMethod": "GET"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Cost_Center",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Cost_Center",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Cost_Center_Name",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Cost_Center_Name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Inactive",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Inactive",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Inactive_Date",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Inactive_Date",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Reference_ID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Reference_ID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Cost_Center_Code",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Cost_Center_Code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Cost_Center_Hierarchy_L1",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Cost_Center_Hierarchy_L1",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CCH_L1_RefID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CCH_L1_RefID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CCH_L1_WD_ID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CCH_L1_WD_ID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Cost_Center_Hierarchy_L2",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Cost_Center_Hierarchy_L2",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CCH_L2_RefID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CCH_L2_RefID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CCH_L2_WD_ID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CCH_L2_WD_ID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Cost_Center_Hierarchy_L3",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Cost_Center_Hierarchy_L3",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CCH_L3_RefID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CCH_L3_RefID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CCH_L3_WD_ID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CCH_L3_WD_ID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Cost_Center_Hierarchy_L4",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Cost_Center_Hierarchy_L4",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CCH_L4_RefID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CCH_L4_RefID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CCH_L4_WD_ID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CCH_L4_WD_ID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Cost_Center_Hierarchy_L5",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Cost_Center_Hierarchy_L5",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CCH_L5_RefID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CCH_L5_RefID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CCH_L5_WD_ID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CCH_L5_WD_ID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Cost_Center_Hierarchy_L6",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Cost_Center_Hierarchy_L6",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CCH_L6_RefID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CCH_L6_RefID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CCH_L6_WD_ID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CCH_L6_WD_ID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Cost_Center_Manager",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Cost_Center_Manager",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Cost_Center_Owner",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Cost_Center_Owner",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Created_Moment",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Created_Moment",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Workday_ID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Workday_ID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Extraction_datetime",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Extraction_datetime",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Workdaycsv",
+						"type": "DatasetReference",
+						"parameters": {
+							"relative_url": "HIA_Extract_Cost_Centers?format=csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "sink_edisdatalake",
+						"type": "DatasetReference",
+						"parameters": {
+							"FileName": "cost_centers",
+							"ContainerName": {
+								"value": "@pipeline().parameters.sink_container",
+								"type": "Expression"
+							},
+							"Directory": {
+								"value": "@pipeline().parameters.sink_directory",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "Raw to Bronze - cost_Centers",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Cost_Centers",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/RawToBronze/wd_cost_centers",
+					"baseParameters": {
+						"File_Path": {
+							"value": "@concat(pipeline().parameters.sink_container,'/',pipeline().parameters.sink_directory,'/cost_centers/',formatDateTime(utcnow(),'yyyyMMdd'),'.parquet')",
+							"type": "Expression"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "BronzeToSilver - cost_centers",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Raw to Bronze - cost_Centers",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/EDIS/AzureDatabricks/Include/DataPipelines/BronzeToSilver/wd_cost_centers"
+				},
+				"linkedServiceName": {
+					"referenceName": "edis_azure_databricks",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"sink_container": {
+				"type": "string",
+				"defaultValue": "edis-workday-raw"
+			},
+			"sink_directory": {
+				"type": "string",
+				"defaultValue": "workday"
+			}
+		},
+		"folder": {
+			"name": "Workday pipeline"
+		},
+		"annotations": []
+	}
+}
