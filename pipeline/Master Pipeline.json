@@ -3,35 +3,35 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "ods_corporate_finance_full_load",
+				"name": "Master Workday Data pipeline",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "ods_corporate_finance_full_load",
+						"referenceName": "_Master Workday Data pipeline",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
 					"parameters": {
-						"sink_container": "edis-gold",
-						"sink_directory": "ods_corporate_finance"
+						"sink_container": "edis-workday-raw",
+						"sink_directory": "workday"
 					}
 				}
 			},
 			{
-				"name": "salesforce full load",
+				"name": "Master Salesforce Data Pipeline",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "Salesforce full load",
+						"referenceName": "_Master Salesforce Data Pipeline",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
 					"parameters": {
-						"sink_container": "edis-bronze",
+						"sink_container": "edis-salesforce-raw",
 						"sink_directory": "salesforce"
 					}
 				}

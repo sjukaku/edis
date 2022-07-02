@@ -12,10 +12,30 @@
 						"referenceName": "Workday Data Pipeline1",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"sink_container": {
+							"value": "@pipeline().parameters.sink_container",
+							"type": "Expression"
+						},
+						"sink_directory": {
+							"value": "@pipeline().parameters.sink_directory",
+							"type": "Expression"
+						}
+					}
 				}
 			}
 		],
+		"parameters": {
+			"sink_container": {
+				"type": "string",
+				"defaultValue": "edis-workday-raw"
+			},
+			"sink_directory": {
+				"type": "string",
+				"defaultValue": "workday"
+			}
+		},
 		"folder": {
 			"name": "Workday pipeline"
 		},
