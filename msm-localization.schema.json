@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edis.huron.com/schemas/msm-localization/1.0.json",
+  "title": "MSM Localization Manifest Schema",
+  "description": "Schema for defining localized semantic models generated from the Master Semantic Model (MSM).",
+
+  "type": "object",
+  "additionalProperties": false,
+
+  "required": ["metadata", "scope", "security", "modelBehavior", "validationRules", "deployment"],
+
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["modelName", "environment", "generatedFrom", "version"],
+      "properties": {
+        "modelName": { "type": "string", "minLength": 1 },
+        "description": { "type": "string" },
+        "owner": { "type": "string" },
+        "generatedFrom": { "type": "string", "const": "Master_Semantic_Model" },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        }
+      }
+    },
+
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["facts", "dimensions"],
+      "properties": {
+        "facts": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "dimensions": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "measureGroups": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "explicitMeasures": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        }
+      },
+
+      "anyOf": [
+        { "required": ["measureGroups"] },
+        { "required": ["explicitMeasures"] }
+      ]
+    },
+
+    "security": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rls"],
+      "properties": {
+        "rls": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["inheritFromMSM"],
+          "properties": {
+            "inheritFromMSM": { "type": "boolean", "const": true },
+            "roles": {
+              "type": "array",
+              "items": { "type": "string" },
+              "uniqueItems": true
+            }
+          }
+        }
+      }
+    },
+
+    "modelBehavior": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["storageMode"],
+      "properties": {
+        "storageMode": {
+          "type": "string",
+          "enum": ["Import", "DirectQuery", "Hybrid"]
+        },
+        "allowDirectQueryFallback": { "type": "boolean" },
+        "refreshPolicy": {
+          "type": "string",
+          "enum": ["InheritFromMSM", "Manual"]
+        },
+        "enableIncrementalRefresh": { "type": "boolean" }
+      }
+    },
+
+    "exclusions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "tables": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "perspectives": {
+          "oneOf": [
+            { "type": "string", "const": "*" },
+            {
+              "type": "array",
+              "items": { "type": "string" },
+              "uniqueItems": true
+            }
+          ]
+        },
+        "diagrams": {
+          "oneOf": [
+            { "type": "string", "const": "*" },
+            {
+              "type": "array",
+              "items": { "type": "string" },
+              "uniqueItems": true
+            }
+          ]
+        }
+      }
+    },
+
+    "validationRules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enforceCentralMeasuresOnly",
+        "blockFactColumnMeasures",
+        "requireDependencyResolution",
+        "failOnMissingObjects"
+      ],
+      "properties": {
+        "enforceCentralMeasuresOnly": { "type": "boolean", "const": true },
+        "blockFactColumnMeasures": { "type": "boolean", "const": true },
+        "requireDependencyResolution": { "type": "boolean", "const": true },
+        "failOnMissingObjects": { "type": "boolean", "const": true }
+      }
+    },
+
+    "deployment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["targetWorkspace", "allowManualEdits"],
+      "properties": {
+        "targetWorkspace": { "type": "string", "minLength": 1 },
+        "datasetMode": {
+          "type": "string",
+          "enum": ["SemanticModel"]
+        },
+        "allowManualEdits": { "type": "boolean", "const": false },
+        "xmlaEndpoint": {
+          "type": "string",
+          "enum": ["Inherit"]
+        }
+      }
+    },
+
+    "strictMode": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "blockUnknownTables": { "type": "boolean" },
+        "blockUnknownMeasures": { "type": "boolean" },
+        "blockLocalRelationships": { "type": "boolean" }
+      }
+    }
+  }
+}
